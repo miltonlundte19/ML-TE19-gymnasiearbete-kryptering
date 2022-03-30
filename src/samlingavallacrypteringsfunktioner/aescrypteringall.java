@@ -1,4 +1,4 @@
-package modules.crypterings;
+package samlingavallacrypteringsfunktioner;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
