@@ -5,6 +5,7 @@ import setings.Settings;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -15,11 +16,20 @@ public class Crypteringsmodule {
     private String masige;
     private IvParameterSpec iv;
     private SecretKey key;
+    private File in, ou;
     public Crypteringsmodule(Settings settings) {
         this.id = settings.getId();
         this.masige = settings.getPlainText();
         this.iv = settings.getIv();
         this.key = settings.getKey();
+        this.in = settings.getIn();
+        this.ou = settings.getOu();
+        if (!in.exists()) {
+            in = new File(settings.getFileinstring());
+        }
+        if (!ou.exists()) {
+            ou = new File(settings.getFileoustring());
+        }
         this.settings = settings;
     }
 
@@ -45,6 +55,8 @@ public class Crypteringsmodule {
                     e.printStackTrace();
                     System.exit(-1);
                 }
+            } else {
+
             }
         }
     }
