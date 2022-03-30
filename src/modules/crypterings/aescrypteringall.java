@@ -2,14 +2,16 @@ package modules.crypterings;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.util.Base64;
 
 public class aescrypteringall {
@@ -19,6 +21,29 @@ public class aescrypteringall {
         new SecureRandom().nextBytes(iv);
         return new IvParameterSpec(iv);
     } // från https://www.baeldung.com/java-aes-encryption-decryption och (https://www.geeksforgeeks.org/symmetric-encryption-cryptography-in-java/)
+
+    // key genirator
+    public static SecretKey generatekeyrng() {
+        try {
+            SecureRandom sr = new SecureRandom();
+            KeyGenerator kg = KeyGenerator.getInstance("AES");
+            kg.init(256, sr);
+            return kg.generateKey();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    } // från https://www.geeksforgeeks.org/symmetric-encryption-cryptography-in-java/ och https://www.baeldung.com/java-aes-encryption-decryption
+    public static SecretKey generatekeypas(String password, String salt) {
+        try {
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, 256);
+            return new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+        return null;
+    } // från https://www.baeldung.com/java-aes-encryption-decryption
 
     // aes cryptering string med Secret Key
     public static String aesencryptstringseckey(String algorithm, String plainText, SecretKey key, IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeyException {
@@ -35,7 +60,8 @@ public class aescrypteringall {
     }
 
     // aes cryptering fil med Secret Key och för stor fill
-    public static void aesEncryptFilInOutSecKey(String algorithm, SecretKey key, IvParameterSpec iv, File in, File ou) {
+    public static void aesEncryptFilInOutSecKey(String algorithm, SecretKey key, IvParameterSpec iv, File in, File ou) throws NoSuchPaddingException,
+            NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, IOException, IllegalBlockSizeException, BadPaddingException {
         Cipher cipher = Cipher.getInstance(algorithm); // algorithm = AES/CBC/PKCS5Padding
         cipher.init(Cipher.ENCRYPT_MODE, key, iv);
         FileInputStream inputStream = new FileInputStream(in);
@@ -54,6 +80,5 @@ public class aescrypteringall {
         }
         inputStream.close();
         outputStream.close();
-        }
     }
 }
