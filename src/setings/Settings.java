@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.Serializable;
 
 public class Settings implements Serializable {
-    private byte[] id;
+    private byte id;
+    private Boolean stringORfile;
+    private Boolean encryptORdecrypt;
     private SecretKey key;
     private IvParameterSpec iv;
     private String plainText;
@@ -25,8 +27,26 @@ public class Settings implements Serializable {
         fileoustring = null;
     }
 
-    public void setId(byte[] id) {
+    public Settings(IvParameterSpec iv) {
+        this.iv = iv;
+        key = null;
+        plainText = null;
+        in = null;
+        ou = null;
+        fileinstring = null;
+        fileoustring = null;
+    }
+
+    public void setId(byte id) {
         this.id = id;
+    }
+
+    public void setStringORfile(Boolean stringORfile) {
+        this.stringORfile = stringORfile;
+    }
+
+    public void setEncryptORdecrypt(Boolean encryptORdecrypt) {
+        this.encryptORdecrypt = encryptORdecrypt;
     }
 
     public void setKey(SecretKey key) {
@@ -58,8 +78,16 @@ public class Settings implements Serializable {
     }
 
 
-    public byte[] getId() {
+    public byte getId() {
         return id;
+    }
+
+    public Boolean getStringORfile() {
+        return stringORfile;
+    }
+
+    public Boolean getEncryptORdecrypt() {
+        return encryptORdecrypt;
     }
 
     public SecretKey getKey() {
