@@ -10,7 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Crypteringsmodule {
-    private Object[] module = new Object[6];
+    private Object[] module = new Object[7];
     /* module[  ]
     0 = id
     1 = String or File
@@ -28,18 +28,13 @@ public class Crypteringsmodule {
     private String[] filestrings = new String[2];
     private Settings settings;
     private FileWriter looger;
-    private byte id; //
-    private String masige; //
-    private IvParameterSpec iv; //
-    private SecretKey key; //
-    private File in, ou; //
-    private boolean enORde; //
+
     public Crypteringsmodule(Settings settings) {
         module[0] = settings.getId();
         module[1] = settings.getStringORfile();
         module[2] = settings.getEncryptORdecrypt();
         if (module[0].equals((byte) 1)) {
-            module[3] = settings.getIv();
+            module[3] = new IvParameterSpec(settings.getIv());
             module[4] = settings.getKey();
             if ((boolean) module[1]) {
                 module[5] = settings.getPlainText();
@@ -58,21 +53,6 @@ public class Crypteringsmodule {
                 module[6] = file;
             }
         }
-        // --------------
-        this.id = settings.getId();
-        this.enORde = settings.getEncryptORdecrypt();
-        this.masige = settings.getPlainText();
-        this.iv = settings.getIv();
-        this.key = settings.getKey();
-        this.in = settings.getIn();
-        this.ou = settings.getOu();
-        if (!in.exists()) {
-            in = new File(settings.getFileinstring());
-        }
-        if (!ou.exists()) {
-            ou = new File(settings.getFileoustring());
-        }
-        // ----------------
         this.settings = settings;
     }
 
@@ -80,52 +60,21 @@ public class Crypteringsmodule {
         this.looger = looger;
     }
 
-    public void startt() {
-        if (id == 1) {
-            if (masige != null) {
-                try {
-                    looger.write("string:" + masige + "\ntiden crypteringen började: \n" + System.nanoTime() +
-                            "\nden krypterade strengen blev:\n");
-                    String encryptmesig;
-                    if (enORde) {
-                        encryptmesig = Cryptaes.Stringcry(iv, key, masige);
-                    } else {
-                        encryptmesig = Cryptaes.Stringdicry(iv,key, masige);
-                    }
-                    looger.write(encryptmesig);
-                    System.exit(0);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.exit(-1);
-                }
-            } else {
-                try {
-                    looger.write("File: " + settings.getFileinstring() + "\ntiden crypteringen började: \n" + System.nanoTime() +
-                            "\nden krypterade filen är har:\n" + settings.getFileoustring());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (enORde) {
-                    Cryptaes.Filebufercry((byte) 1, iv, key, in, ou);
-                } else {
-                    Cryptaes.Filebufercry((byte) 2, iv, key, in, ou);
-                }
-            }
-        } //
-    }
-
     public void start() {
         if (module[0].equals((byte) 1)) {
             if ((boolean) module[1]) {
                 try {
-                    looger.write("string:" + module[5] + "\ntiden crypteringen började: \n" + System.nanoTime() +
+                    looger.write("string:\n" + module[5] + "\ntiden crypteringen började: \n" + System.nanoTime() +
                             "\nden krypterade strengen blev:\n");
+                    looger.flush();
                     if ((boolean) module[2]) {
                         module[6] = Cryptaes.Stringcry((IvParameterSpec) module[3], (SecretKey) module[4], (String) module[5]);
                     } else {
                         module[6] = Cryptaes.Stringdicry((IvParameterSpec) module[3], (SecretKey) module[4], (String) module[5]);
                     }
                     looger.write((String) module[6]);
+                    looger.flush();
+                    looger.close();
                     System.exit(0);
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -8,6 +8,7 @@ public class cryptcontroler {
         long logtime = System.nanoTime();
         File setingsfile = new File("setingsfile.txt");
         if (!setingsfile.exists()) {
+            System.out.println("filen fins inte");
             System.exit(-1);
         }
         File startupfile = new File("startuptime.txt");
@@ -18,9 +19,11 @@ public class cryptcontroler {
             }
             startup = new FileWriter(startupfile);
             startup.write("start time:\n" + logtime + "\n");
+            startup.flush();
             ObjectInputStream setingsreder = new ObjectInputStream(new FileInputStream(setingsfile));
             Settings settings = (Settings) setingsreder.readObject();
             Crypteringsmodule crypteringsmodule = new Crypteringsmodule(settings);
+            crypteringsmodule.setLooger(startup);
             crypteringsmodule.start();
         } catch (Exception e) {
             e.printStackTrace();
