@@ -1,16 +1,16 @@
 package setings;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
 import java.io.File;
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class Settings implements Serializable {
     private byte id;
     private Boolean stringORfile;
     private Boolean encryptORdecrypt;
     private SecretKey key;
-    private IvParameterSpec iv;
+    private byte[] iv;
     private String plainText;
     private File in;
     private String fileinstring;
@@ -27,7 +27,7 @@ public class Settings implements Serializable {
         fileoustring = null;
     }
 
-    public Settings(IvParameterSpec iv) {
+    public Settings(byte[] iv) {
         this.iv = iv;
         key = null;
         plainText = null;
@@ -53,7 +53,7 @@ public class Settings implements Serializable {
         this.key = key;
     }
 
-    public void setIv(IvParameterSpec iv) {
+    public void setIv(byte[] iv) {
         this.iv = iv;
     }
 
@@ -94,7 +94,7 @@ public class Settings implements Serializable {
         return key;
     }
 
-    public IvParameterSpec getIv() {
+    public byte[] getIv() {
         return iv;
     }
 
@@ -118,4 +118,19 @@ public class Settings implements Serializable {
         return fileoustring;
     }
 
+    @Override
+    public String toString() {
+        return "Settings{" +
+                "id=" + id +
+                ", stringORfile=" + stringORfile +
+                ", encryptORdecrypt=" + encryptORdecrypt +
+                ", key=" + key +
+                ", iv=" + Arrays.toString(iv) +
+                ", plainText='" + plainText + '\'' +
+                ", in=" + in +
+                ", fileinstring='" + fileinstring + '\'' +
+                ", ou=" + ou +
+                ", fileoustring='" + fileoustring + '\'' +
+                '}';
+    }
 }

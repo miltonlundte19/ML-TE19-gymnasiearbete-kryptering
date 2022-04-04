@@ -31,7 +31,7 @@ public class SetingsModel {
     public void generateIV() {
         byte[] iv = new byte[16];
         new SecureRandom().nextBytes(iv);
-        settings = new Settings(new IvParameterSpec(iv));
+        settings = new Settings(iv);
         check[2] = true;
     }
 
@@ -76,7 +76,7 @@ public class SetingsModel {
     }
 
     public boolean check() {
-        if (id == 1) {
+        if (id == 1) { // 1 = aes
             if (check[1] && check[2]) {
                 if (check[3] && !check[4] && !check[5]) {
                     lastcheck = true;
