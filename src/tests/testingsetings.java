@@ -1,9 +1,9 @@
 package tests;
 
-import modules.Crypteringsmodule;
 import modules.SetingsModel;
 import setings.Settings;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,20 +19,12 @@ public class testingsetings {
                 e.printStackTrace();
             }
         }
+        Settings settings;
+
+        // settings = stringtest(true);
+        settings = filetest(true);
 
 
-        SetingsModel setmod = new SetingsModel();
-        setmod.setID((byte) 1);
-        setmod.generateRkey();
-        setmod.setMesige("deta är ett test av först setings modelen och senan crypteringen");
-        Settings settings = null;
-        if (setmod.check()) {
-            settings = setmod.getSettings();
-            settings.setEncryptORdecrypt(true);
-        } else {
-            System.out.println("något gik fel med att seta setings");
-            System.exit(-1);
-        }
         System.out.println(settings.toString());
         try {
             ObjectOutputStream oou = new ObjectOutputStream(new FileOutputStream(setingsfile));
@@ -40,7 +32,46 @@ public class testingsetings {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public static Settings stringtest(boolean enORde) {
+        SetingsModel setmod = new SetingsModel();
+        setmod.setID((byte) 1);
+        setmod.generateRkey();
+        setmod.setMesige("deta är ett test av först setings modelen och senan crypteringen");
+        setmod.setENorDE(enORde);
+
+
+        if (setmod.check()) {
+            return setmod.getSettings();
+        } else {
+            System.out.println("något gik fel med att seta setings");
+            System.exit(-1);
+        }
+
+        return null;
+    }
+    public static Settings filetest(boolean enORde) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showOpenDialog(null);
+        File in = fileChooser.getSelectedFile();
+        fileChooser.showOpenDialog(null);
+        File ou = fileChooser.getSelectedFile();
+
+        SetingsModel setmod = new SetingsModel();
+        setmod.setID((byte) 1);
+        setmod.generateRkey();
+        setmod.setENorDE(enORde);
+        setmod.setFiles(in, ou);
+
+        if (setmod.check()) {
+            return setmod.getSettings();
+        } else {
+            System.out.println("något gik fel med att seta setings");
+            System.out.println(setmod.checkTostring());
+            System.exit(-1);
+        }
+        return null;
     }
 }
     //  setingsfile.txt
