@@ -12,15 +12,16 @@ import java.util.Arrays;
 public class SetingsModel {
     private Settings settings;
     private byte id;
-    private boolean[] check = new boolean[6];
+    private boolean[] check = new boolean[7];
     private boolean lastcheck = false;
     /* check[    ]   check lista för att se så att alla nödvendiga settings har ett värde
     0 = id
-    1 = key
-    2 = iv
-    3 = plainText
-    4 = Filein
-    5 = Fileou
+    1 = EncryptORdecrypt    true = Encrypt  false = Decrypt
+    2 = key
+    3 = iv
+    4 = plainText
+    5 = Filein
+    6 = Fileou
      */
 
     public SetingsModel() {
@@ -32,7 +33,7 @@ public class SetingsModel {
         byte[] iv = new byte[16];
         new SecureRandom().nextBytes(iv);
         settings = new Settings(iv);
-        check[2] = true;
+        check[3] = true;
     }
 
     public void generateRkey() {
@@ -44,7 +45,7 @@ public class SetingsModel {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        check[1] = true;
+        check[2] = true;
     }
 
     public void setID(byte id) {
@@ -53,10 +54,15 @@ public class SetingsModel {
         check[0] = true;
     }
 
+    public void setENorDE(boolean EncryptORdecrypt) {
+        settings.setEncryptORdecrypt(EncryptORdecrypt);
+        check[1] = true;
+    }
+
     public void setMesige(String mesige) {
         settings.setPlainText(mesige);
         settings.setStringORfile(true);
-        check[3] = true;
+        check[4] = true;
     }
 
     public void setFiles(File in, File ou) {
@@ -67,21 +73,21 @@ public class SetingsModel {
         settings.setIn(in);
         settings.setFileinstring(in.getAbsolutePath());
         settings.setStringORfile(false);
-        check[4] = true;
+        check[5] = true;
     }
     public void setOufile(File ou) {
         settings.setOu(ou);
         settings.setFileoustring(ou.getAbsolutePath());
-        check[5] = true;
+        check[6] = true;
     }
 
     public boolean check() {
         if (id == 1) { // 1 = aes
-            if (check[1] && check[2]) {
-                if (check[3] && !check[4] && !check[5]) {
+            if (check[1] && check[2] && check[3]) {
+                if (check[4] && !check[5] && !check[6]) {
                     lastcheck = true;
                     return true;
-                } else if (!check[3] && check[4] && check[5]) {
+                } else if (!check[4] && check[5] && check[6]) {
                     lastcheck = true;
                     return true;
                 }
@@ -95,5 +101,18 @@ public class SetingsModel {
             return settings;
         }
         return null;
+    }
+
+
+    public String checkTostring() {
+        return "Check{" +
+                "id=" + check[0] +
+                ", EncryptORdecrypt=" + check[1] +
+                ", key=" + check[2] +
+                ", IV=" + check[3] +
+                ", plainText=" + check[4] +
+                ", Filein=" + check[5] +
+                ", Fileou=" + check[6] +
+                '}';
     }
 }

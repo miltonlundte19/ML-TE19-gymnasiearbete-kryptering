@@ -84,6 +84,8 @@ public class Crypteringsmodule {
                 try {
                     looger.write("File: " + filestrings[0] + "\ntiden crypteringen började: \n" + System.nanoTime() +
                             "\nden krypterade filen är har:\n" + filestrings[1]);
+                    looger.flush();
+                    looger.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
