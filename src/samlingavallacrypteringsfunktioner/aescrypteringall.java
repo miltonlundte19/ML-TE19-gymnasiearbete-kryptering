@@ -82,3 +82,15 @@ public class aescrypteringall {
         outputStream.close();
     }
 }
+
+
+
+/*
+alla länkar:
+https://www.novixys.com/blog/rsa-file-encryption-decryption-java/
+https://www.tutorialspoint.com/java_cryptography/java_cryptography_encrypting_data.htm
+https://www.geeksforgeeks.org/asymmetric-encryption-cryptography-in-java/?ref=lbp
+https://www.baeldung.com/java-rsa
+https://programmer.group/rsa-encryption-and-decryption-java.html
+https://www.javainterviewpoint.com/rsa-encryption-and-decryption/
+ */

@@ -110,3 +110,14 @@ public class rescrypteringall {
     } // från: https://www.novixys.com/blog/rsa-file-encryption-decryption-java/
     // namne på variablerna från:
 }
+
+
+/*
+alla länkar:
+https://www.geeksforgeeks.org/symmetric-encryption-cryptography-in-java/
+https://www.baeldung.com/java-cipher-input-output-stream
+https://www.baeldung.com/java-aes-encryption-decryption
+används inte:
+https://www.codejava.net/coding/file-encryption-and-decryption-simple-example
+https://howtodoinjava.com/java/java-security/java-aes-encryption-example/
+ */
