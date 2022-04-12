@@ -11,27 +11,19 @@ import java.util.Base64;
 
 public class Cryptaes {
 
-
-    public static String Stringcry(IvParameterSpec iv, SecretKey key, String masige) {
+    public static String Stringcry(boolean enORde, IvParameterSpec iv, SecretKey key, String masige) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(1, key, iv);
-            byte[] cipherText = cipher.doFinal(masige.getBytes(StandardCharsets.UTF_8));
-            return Base64.getEncoder().encodeToString(cipherText);
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
-        return null;
-    }
-
-    public static String Stringdicry(IvParameterSpec iv, SecretKey key, String masige) {
-        try {
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(2, key, iv);
-            byte[] plainText = cipher.doFinal(Base64.getDecoder().decode(masige));
-            return new String(plainText);
-        } catch (InvalidAlgorithmParameterException | NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
+            if (enORde) {
+                cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+                byte[] cipherText = cipher.doFinal(masige.getBytes(StandardCharsets.UTF_8));
+                return Base64.getEncoder().encodeToString(cipherText);
+            } else {
+                cipher.init(Cipher.DECRYPT_MODE, key, iv);
+                byte[] plainText = cipher.doFinal(Base64.getDecoder().decode(masige));
+                return new String(plainText, StandardCharsets.UTF_8);
+            }
+        } catch (InvalidAlgorithmParameterException | InvalidKeyException | BadPaddingException | NoSuchAlgorithmException | IllegalBlockSizeException | NoSuchPaddingException e) {
             e.printStackTrace();
             System.exit(-1);
         }

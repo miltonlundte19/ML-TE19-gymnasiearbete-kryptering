@@ -67,12 +67,13 @@ public class Crypteringsmodule {
                     looger.write("string:\n" + module[5] + "\ntiden crypteringen började: \n" + System.nanoTime() +
                             "\nden krypterade strengen blev:\n");
                     looger.flush();
-                    if ((boolean) module[2]) {
-                        module[6] = Cryptaes.Stringcry((IvParameterSpec) module[3], (SecretKey) module[4], (String) module[5]);
+                    String out;
+                    if ((boolean) module[2]) { // 2 = Encrypt or Decrypt
+                        out = Cryptaes.Stringcry((Boolean) module[2], (IvParameterSpec) module[3], (SecretKey) module[4], (String) module[5]);
                     } else {
-                        module[6] = Cryptaes.Stringdicry((IvParameterSpec) module[3], (SecretKey) module[4], (String) module[5]);
+                        out = Cryptaes.Stringcry((Boolean) module[2], (IvParameterSpec) module[3], (SecretKey) module[4], (String) module[5]);
                     }
-                    looger.write((String) module[6]);
+                    looger.write(out);
                     looger.flush();
                     looger.close();
                     System.exit(0);
@@ -94,6 +95,7 @@ public class Crypteringsmodule {
                 } else {
                     Cryptaes.Filebufercry((byte) 2, (IvParameterSpec) module[3], (SecretKey) module[4], (File) module[5], (File) module[6]);
                 }
+                System.exit(0);
             }
         } //
     }
