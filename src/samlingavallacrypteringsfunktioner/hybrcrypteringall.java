@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 
-public class hybrcrypteringall {
+public class hybrcrypteringall { // använder nog inte mycket från dena men den gjorde så att jag förstod mer
 
     // ( --------------------------------------------------------
     private BigInteger mod;
