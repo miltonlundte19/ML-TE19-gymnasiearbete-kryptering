@@ -39,7 +39,9 @@ public class testingsetings {
         setmod.setID((byte) 1);
         setmod.generateRkey();
         setmod.setMesige("deta är ett test av först setings modelen och senan crypteringen");
-        setmod.setENorDE(enORde);
+        if (enORde) {
+            setmod.setENorDE();
+        }
 
 
         if (setmod.check()) {
@@ -61,14 +63,16 @@ public class testingsetings {
         SetingsModel setmod = new SetingsModel();
         setmod.setID((byte) 1);
         setmod.generateRkey();
-        setmod.setENorDE(enORde);
+        if (enORde) {
+            setmod.setENorDE();
+        }
+
         setmod.setFiles(in, ou);
 
         if (setmod.check()) {
             return setmod.getSettings();
         } else {
             System.out.println("något gik fel med att seta setings");
-            System.out.println(setmod.checkTostring());
             System.exit(-1);
         }
         return null;
