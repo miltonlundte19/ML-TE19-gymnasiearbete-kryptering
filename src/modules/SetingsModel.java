@@ -1,16 +1,20 @@
 package modules;
 
+import setings.AESsettings;
+import setings.RESsettings;
 import setings.Settings;
+import setings.Settingsfile;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.IvParameterSpec;
 import java.io.File;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.security.*;
 import java.util.Arrays;
 
 public class SetingsModel {
     private Settings settings;
+    private AESsettings aes;
+    private RESsettings res;
     private byte id;
     private boolean[] check = new boolean[7];
     private boolean lastcheck = false;
@@ -23,16 +27,63 @@ public class SetingsModel {
     5 = Filein
     6 = Fileou
      */
+    private KeyPair keyPair;
+
+
 
     public SetingsModel() {
+        settings = new Settings();
+
         Arrays.fill(check, false);
-        generateIV();
     }
 
+    public void setID(byte id) {
+        this.id = id;
+        settings.setId(id);
+        check[0] = true;
+        if (id == 1) {
+            aes = new AESsettings();
+            generateIV();
+        } else if (id == 2) {
+            res = new RESsettings();
+        }
+    }
+
+    public void setENorDE() {
+        settings.setChekORen();
+        check[1] = true;
+    }
+
+    public void setMesige(String mesige) {
+        settings.setChekORstr();
+        if (id == 1) {
+            aes.setPlainText(mesige);
+        } else if (id == 2) {
+            res.setMesige(mesige);
+        }
+        check[4] = true;
+    }
+
+    public void setFiles(File in, File ou) {
+        Settingsfile files = new Settingsfile();
+        files.setIN(in);
+        files.setOU(ou);
+        if (id == 1) {
+            aes.setFiles(files);
+        } else if (id == 2) {
+            res.setFiles(files);
+        }
+    }
+
+
+
+
+
+    // metoder bara för aes
     public void generateIV() {
         byte[] iv = new byte[16];
         new SecureRandom().nextBytes(iv);
-        settings = new Settings(iv);
+        aes.setIv(iv);
         check[3] = true;
     }
 
@@ -41,45 +92,38 @@ public class SetingsModel {
             SecureRandom sr = new SecureRandom();
             KeyGenerator kg = KeyGenerator.getInstance("AES");
             kg.init(256, sr);
-            settings.setKey(kg.generateKey());
+            aes.setKey(kg.generateKey());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         check[2] = true;
     }
 
-    public void setID(byte id) {
-        this.id = id;
-        settings.setId(id);
-        check[0] = true;
+
+    // metoder bara för res
+    public void generateRkeypar() {
+        KeyPairGenerator kpg = null;
+        try {
+            kpg = KeyPairGenerator.getInstance("RSA");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        SecureRandom sr = new SecureRandom();
+        kpg.initialize(2048,sr);
+        keyPair = kpg.generateKeyPair();
     }
 
-    public void setENorDE(boolean EncryptORdecrypt) {
-        settings.setEncryptORdecrypt(EncryptORdecrypt);
-        check[1] = true;
+    public void storPublickey(File pubkeyfile) {
+
     }
 
-    public void setMesige(String mesige) {
-        settings.setPlainText(mesige);
-        settings.setStringORfile(true);
-        check[4] = true;
+    public void storPrivetkey(File prikeyfile) {
+
     }
 
-    public void setFiles(File in, File ou) {
-        setInfile(in);
-        setOufile(ou);
-    }
-    public void setInfile(File in) {
-        settings.setIn(in);
-        settings.setFileinstring(in.getAbsolutePath());
-        settings.setStringORfile(false);
-        check[5] = true;
-    }
-    public void setOufile(File ou) {
-        settings.setOu(ou);
-        settings.setFileoustring(ou.getAbsolutePath());
-        check[6] = true;
-    }
+
+
+
 
     public boolean check() {
         if (id == 1) { // 1 = aes
@@ -104,15 +148,5 @@ public class SetingsModel {
     }
 
 
-    public String checkTostring() {
-        return "Check{" +
-                "id=" + check[0] +
-                ", EncryptORdecrypt=" + check[1] +
-                ", key=" + check[2] +
-                ", IV=" + check[3] +
-                ", plainText=" + check[4] +
-                ", Filein=" + check[5] +
-                ", Fileou=" + check[6] +
-                '}';
-    }
+
 }
