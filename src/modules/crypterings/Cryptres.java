@@ -1,5 +1,7 @@
 package modules.crypterings;
 
+import setings.ResKeyholder;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -9,20 +11,29 @@ import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.util.Base64;
 
 public class Cryptres {
     // kommer ändra Key till en egen som har antingen en pub eller en pri key
     // i if satsen ändrar till respective key type
-    public static String Stringcry(boolean enORde, Key key, String input) {
+    public static String Stringcry(boolean enORde, ResKeyholder keyholder, String input) {
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             if (enORde) {
-                cipher.init(Cipher.ENCRYPT_MODE, key);
+                if (keyholder.isPriORpub()) {
+                    cipher.init(Cipher.ENCRYPT_MODE, keyholder.getPrivateKey());
+                } else {
+                    cipher.init(Cipher.ENCRYPT_MODE, keyholder.getPublicKey());
+                }
                 byte[] result = cipher.doFinal(input.getBytes(StandardCharsets.UTF_8));
                 return new String(result, StandardCharsets.UTF_8);
             } else {
-                cipher.init(Cipher.DECRYPT_MODE, key);
+                if (keyholder.isPriORpub()) {
+                    cipher.init(Cipher.DECRYPT_MODE, keyholder.getPrivateKey());
+                } else {
+                    cipher.init(Cipher.DECRYPT_MODE, keyholder.getPublicKey());
+                }
                 byte[] result = cipher.doFinal(Base64.getDecoder().decode(input));
                 return new String(result, StandardCharsets.UTF_8);
             }
@@ -33,13 +44,21 @@ public class Cryptres {
         return null;
     }
 
-    public static void Filebufercry(boolean enORde, Key key, File in, File ou) {
+    public static void Filebufercry(boolean enORde, ResKeyholder keyholder, File in, File ou) {
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             if (enORde) {
-                cipher.init(Cipher.ENCRYPT_MODE, key);
+                if (keyholder.isPriORpub()) {
+                    cipher.init(Cipher.ENCRYPT_MODE, keyholder.getPrivateKey());
+                } else {
+                    cipher.init(Cipher.ENCRYPT_MODE, keyholder.getPublicKey());
+                }
             } else {
-                cipher.init(Cipher.DECRYPT_MODE, key);
+                if (keyholder.isPriORpub()) {
+                    cipher.init(Cipher.DECRYPT_MODE, keyholder.getPrivateKey());
+                } else {
+                    cipher.init(Cipher.DECRYPT_MODE, keyholder.getPublicKey());
+                }
             }
             FileInputStream inputStream = new FileInputStream(in);
             FileOutputStream outputStream = new FileOutputStream(ou);
