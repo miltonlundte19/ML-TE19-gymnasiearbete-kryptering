@@ -41,4 +41,8 @@ public class AESsettings implements Serializable  {
     public void setFiles(Settingsfile files) {
         fileInOu = files;
     }
+
+    public Settingsfile getFileInOu() {
+        return fileInOu;
+    }
 }

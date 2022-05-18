@@ -31,10 +31,32 @@ public class Settings implements Serializable {
         chekOR[1] = true;
     }
 
+    public void setAes(AESsettings aes) {
+        this.aes = aes;
+    }
+
+    public void setRes(RESsettings res) {
+        this.res = res;
+    }
+
     public byte getId() {
         return id;
     }
 
+    public boolean getStringORfile() {
+        return chekOR[0];
+    }
 
+    public boolean getEncryptORdecrypt() {
+        return chekOR[1];
+    }
+
+    public AESsettings getAes() {
+        return aes;
+    }
+
+    public RESsettings getRes() {
+        return res;
+    }
 
 }

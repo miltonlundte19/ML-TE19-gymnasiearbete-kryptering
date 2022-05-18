@@ -6,6 +6,7 @@ import java.io.Serializable;
 public class RESsettings implements Serializable {
 
     private String mesige;
+    private boolean priORpub;
     private File keyfile;
     private String keyfilepath;
     private Settingsfile fileInOu;
@@ -35,5 +36,17 @@ public class RESsettings implements Serializable {
 
     public void setFiles(Settingsfile files) {
         fileInOu = files;
+    }
+
+    public boolean isPriORpub() {
+        return priORpub;
+    }
+
+    public void setPriORpub(boolean priORpub) {
+        this.priORpub = priORpub;
+    }
+
+    public Settingsfile getFileInOu() {
+        return fileInOu;
     }
 }

@@ -19,4 +19,20 @@ public class Settingsfile implements Serializable {
         this.ou = ou;
         fileoustring = ou.getAbsolutePath();
     }
+
+    public File getIn() {
+        return in;
+    }
+
+    public String getFileinstring() {
+        return fileinstring;
+    }
+
+    public File getOu() {
+        return ou;
+    }
+
+    public String getFileoustring() {
+        return fileoustring;
+    }
 }
