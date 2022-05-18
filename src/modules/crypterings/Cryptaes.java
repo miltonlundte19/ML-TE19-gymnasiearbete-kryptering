@@ -30,10 +30,14 @@ public class Cryptaes {
         return null;
     }
 
-    public static void Filebufercry(byte mode, IvParameterSpec iv, SecretKey key, File in, File ou) {
+    public static void Filebufercry(boolean enORde, IvParameterSpec iv, SecretKey key, File in, File ou) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(mode, key, iv);
+            if (enORde) {
+                cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+            } else {
+                cipher.init(Cipher.DECRYPT_MODE, key, iv);
+            }
             FileInputStream inputStream = new FileInputStream(in);
             FileOutputStream outputStream = new FileOutputStream(ou);
             byte[] buffer = new byte[64];
