@@ -7,8 +7,12 @@ import setings.Settingsfile;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.IvParameterSpec;
-import java.io.File;
+import java.io.*;
+import java.math.BigInteger;
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPrivateKeySpec;
+import java.security.spec.RSAPublicKeySpec;
 import java.util.Arrays;
 
 public class SetingsModel {
@@ -102,7 +106,7 @@ public class SetingsModel {
 
     // metoder bara för res
     public void generateRkeypar() {
-        KeyPairGenerator kpg = null;
+        KeyPairGenerator kpg;
         try {
             kpg = KeyPairGenerator.getInstance("RSA");
         } catch (NoSuchAlgorithmException e) {
@@ -113,17 +117,38 @@ public class SetingsModel {
         keyPair = kpg.generateKeyPair();
     }
 
-    public void storPublickey(File pubkeyfile) {
+    public void setkeyFile(File keyfile, boolean priORpub) {
 
     }
-
-    public void storPrivetkey(File prikeyfile) {
-
+    public boolean storKey(File keyfile, boolean priORpub) {
+        if (keyPair == null || !keyfile.exists()) {
+            return false;
+        }
+        res.setPriORpub(priORpub);
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(keyfile)));
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            if (priORpub) {
+                RSAPrivateKeySpec privateKeySpec = keyFactory.getKeySpec(keyPair.getPrivate(), RSAPrivateKeySpec.class);
+                outputStream.writeObject(privateKeySpec.getModulus());
+                outputStream.writeObject(privateKeySpec.getPrivateExponent());
+            } else {
+                RSAPublicKeySpec publicKeySpec = keyFactory.getKeySpec(keyPair.getPublic(), RSAPublicKeySpec.class);
+                outputStream.writeObject(publicKeySpec.getModulus());
+                outputStream.writeObject(publicKeySpec.getPublicExponent());
+            }
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        }
+        res.setKeyfile(keyfile);
+        return true;
     }
-
-
-
-
 
     public boolean check() {
         if (id == 1) { // 1 = aes
@@ -141,12 +166,7 @@ public class SetingsModel {
     }
 
     public Settings getSettings() {
-        if (lastcheck) {
-            return settings;
-        }
-        return null;
+        return settings;
     }
-
-
 
 }
