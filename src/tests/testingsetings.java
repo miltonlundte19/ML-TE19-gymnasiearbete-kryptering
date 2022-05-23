@@ -20,10 +20,12 @@ public class testingsetings {
             }
         }
         Settings settings;
+        SetingsModel setmod = new SetingsModel();
 
-        // settings = stringtest(true);
-        settings = filetest(true);
+        // settings = stringtest(true, setmod);
+        settings = filetest(true, setmod);
 
+        settings = stringtestres(true, setmod);
 
         System.out.println(settings.toString());
         try {
@@ -34,8 +36,12 @@ public class testingsetings {
         }
     }
 
-    public static Settings stringtest(boolean enORde) {
-        SetingsModel setmod = new SetingsModel();
+    private static Settings stringtestres(boolean enORde, SetingsModel setmod) {
+        setmod.setID((byte) 2);
+        return null;
+    }
+
+    public static Settings stringtest(boolean enORde, SetingsModel setmod) {
         setmod.setID((byte) 1);
         setmod.generateRkey();
         setmod.setMesige("deta är ett test av först setings modelen och senan crypteringen");
@@ -53,14 +59,13 @@ public class testingsetings {
 
         return null;
     }
-    public static Settings filetest(boolean enORde) {
+    public static Settings filetest(boolean enORde, SetingsModel setmod) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.showOpenDialog(null);
         File in = fileChooser.getSelectedFile();
         fileChooser.showOpenDialog(null);
         File ou = fileChooser.getSelectedFile();
 
-        SetingsModel setmod = new SetingsModel();
         setmod.setID((byte) 1);
         setmod.generateRkey();
         if (enORde) {
