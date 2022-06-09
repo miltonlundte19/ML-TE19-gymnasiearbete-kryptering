@@ -6,6 +6,7 @@ import setings.*;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import javax.swing.*;
 import java.io.*;
 import java.math.BigInteger;
 import java.security.KeyFactory;
@@ -41,6 +42,7 @@ public class Crypteringsmodule {
 
      */
     private String[] filestrings = new String[2];
+    private boolean manulesnapshotAlurt;
     private Settings settings;
     private FileWriter looger;
 
@@ -48,6 +50,7 @@ public class Crypteringsmodule {
         module[0] = settings.getId();
         module[1] = settings.getStringORfile();
         module[2] = settings.getEncryptORdecrypt();
+        manulesnapshotAlurt = settings.getManulesnapshot();
         if (module[0].equals((byte) 1)) {
             AESset(settings.getAes());
         } else if (module[0].equals((byte) 2)) {
@@ -145,8 +148,14 @@ public class Crypteringsmodule {
             out = Cryptaes.Stringcry((Boolean) module[2], (IvParameterSpec) module[3], (SecretKey) module[4], (String) module[5]);
 
             looger.write(out + '\n');
+            if (manulesnapshotAlurt) {
+                looger.write("keypteringen slutate \n" + System.nanoTime());
+            }
             looger.flush();
             looger.close();
+            if (manulesnapshotAlurt) {
+                JOptionPane.showMessageDialog(null, "keypteringen slutate, ta snap");
+            }
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);
@@ -158,7 +167,9 @@ public class Crypteringsmodule {
             looger.write("File: " + filestrings[0] + "\ntiden aes crypteringen började: \n" + System.nanoTime() +
                     "\nden krypterade filen är har:\n" + filestrings[1]);
             looger.flush();
-            looger.close();
+            if (!manulesnapshotAlurt) {
+                looger.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);
@@ -166,6 +177,17 @@ public class Crypteringsmodule {
 
         Cryptaes.Filebufercry((boolean) module[2], (IvParameterSpec) module[3], (SecretKey) module[4], (File) module[5], (File) module[6]);
 
+        if (manulesnapshotAlurt) {
+            try {
+                looger.write("keypteringen slutate \n" + System.nanoTime());
+                looger.flush();
+                looger.close();
+                JOptionPane.showMessageDialog(null, "keypteringen slutate, ta snap");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(-1);
+            }
+        }
         System.exit(0);
     }
 
@@ -179,6 +201,9 @@ public class Crypteringsmodule {
             out = Cryptres.Stringcry((boolean) module[2], (ResKeyholder) module[4], (String) module[5]);
 
             looger.write(out + '\n');
+            if (manulesnapshotAlurt) {
+                looger.write("keypteringen slutate \n" + System.nanoTime());
+            }
             looger.flush();
             looger.close();
         } catch (Exception e) {
@@ -192,13 +217,26 @@ public class Crypteringsmodule {
             looger.write("File: " + filestrings[0] + "\ntiden res crypteringen började: \n" + System.nanoTime() +
                     "\nden krypterade filen är har:\n" + filestrings[1]);
             looger.flush();
-            looger.close();
+            if (!manulesnapshotAlurt) {
+                looger.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(-1);
         }
         Cryptres.Filebufercry((boolean) module[2], (ResKeyholder) module[4], (File) module[5], (File) module[6]);
 
+        if (manulesnapshotAlurt) {
+            try {
+                looger.write("keypteringen slutate \n" + System.nanoTime());
+                looger.flush();
+                looger.close();
+                JOptionPane.showMessageDialog(null, "keypteringen slutate, ta snap");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(-1);
+            }
+        }
         System.exit(0);
     }
 }

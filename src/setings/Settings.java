@@ -11,6 +11,7 @@ public class Settings implements Serializable {
 
     private byte id;
     private boolean[] chekOR = new boolean[2];
+    private boolean manulesnapshot = false;
 
     private AESsettings aes;
     private RESsettings res;
@@ -57,6 +58,14 @@ public class Settings implements Serializable {
 
     public RESsettings getRes() {
         return res;
+    }
+
+    public void setManulesnapshot() {
+        manulesnapshot = true;
+    }
+
+    public boolean getManulesnapshot() {
+        return manulesnapshot;
     }
 
 }
