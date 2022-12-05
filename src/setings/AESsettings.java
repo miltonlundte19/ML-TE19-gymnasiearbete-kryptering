@@ -6,11 +6,13 @@ import java.io.Serializable;
 
 public class AESsettings implements Serializable  {
 
+    // en under kalss som har all data som AES krypteringen behöver för att fungera
+
     private SecretKey key;
     private byte[] iv;
 
     private String plainText;
-
+    // anvender en av desa två klaserna för att spara det som ska krypteras.
     private Settingsfile fileInOu;
 
 

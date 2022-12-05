@@ -5,10 +5,16 @@ import java.io.Serializable;
 
 public class RESsettings implements Serializable {
 
-    private String mesige;
+    // en under kalss som har alltför att RES krypteringen ska fungera
+
     private boolean priORpub;
     private File keyfile;
+    // Nykeln är sparad i en separrat fill så att men kan spara den på en separat plats och återanvända den.
+    // Man kan också hämta publika och privata nykeln från samma fill (typ)
     private String keyfilepath;
+
+    private String mesige;
+    // anvender en av desa två klaserna för att spara det som ska krypteras.
     private Settingsfile fileInOu;
 
 

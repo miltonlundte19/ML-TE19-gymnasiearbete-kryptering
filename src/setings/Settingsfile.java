@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.Serializable;
 
 public class Settingsfile implements Serializable {
+
+    // en under klass som har platsen för fillen in och utt,
+    // och om File objektet mislykas så fins absoluta platsen för fillen i tekst format.
     private File in;
     private String fileinstring;
     private File ou;

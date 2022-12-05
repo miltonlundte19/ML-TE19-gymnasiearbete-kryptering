@@ -7,29 +7,40 @@ import java.util.Arrays;
 
 public class Settings implements Serializable {
 
-
-
+/* ()Dena klassen är så att man kan lätt spara ner instälningara till krypteringen.
+   Den är uppdelad i en underklass så att dena klassen inte blir så stor med oanvenda variabler
+*/
     private byte id;
+    // Är till för att spesifiera vilken typ av kryptering det är med en typ indes id
     private boolean[] chekOR = new boolean[2];
+    /* Används för att spesifiera i två olika fält:
+        om det är en String eller fill som ska användas,
+        om den ska kryptera eller dekryptera
+    */
     private boolean manulesnapshot = false;
+    // används bara om man ska manuelt spara data vid ()data insamling
 
     private AESsettings aes;
     private RESsettings res;
+    // under klaser som har variablerna för sin spesifika kryptering
 
     public Settings() {
         Arrays.fill(chekOR, false);
     }
 
+    // nedan är för att sätta in värden i variabeln
     public void setId(byte id) {
         this.id = id;
     }
 
     public void setChekORstr() {
-        chekOR[0] = true;
+        chekOR[0] = true;//=string
+        // om det är en string eller fill
     }
 
     public void setChekORen() {
-        chekOR[1] = true;
+        chekOR[1] = true;//=
+        // om den ska kryptera eller dekryptera
     }
 
     public void setAes(AESsettings aes) {
@@ -40,6 +51,7 @@ public class Settings implements Serializable {
         this.res = res;
     }
 
+    // nedan är hämta från variabeln
     public byte getId() {
         return id;
     }
@@ -60,6 +72,8 @@ public class Settings implements Serializable {
         return res;
     }
 
+
+    // en variabel som seger som programet ska vänta i slutet.
     public void setManulesnapshot() {
         manulesnapshot = true;
     }
