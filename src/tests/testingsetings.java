@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class testingsetings {
+    // Dena filen är en test fill för att setta setings till programet medan sag inte har gjort den delen av programet.
+    // (Debug för krypterings biten)
     public static void main(String[] args) {
         File setingsfile = new File("setingsfile.txt");
         if (!setingsfile.exists()) {
@@ -27,6 +29,8 @@ public class testingsetings {
 
         settings = stringtestres(true, setmod);
 
+        // tester för hur setings objäktet fungerar (inte updaterat till senaste ändringarna)
+
         System.out.println(settings.toString());
         try {
             ObjectOutputStream oou = new ObjectOutputStream(new FileOutputStream(setingsfile));
@@ -36,12 +40,12 @@ public class testingsetings {
         }
     }
 
-    private static Settings stringtestres(boolean enORde, SetingsModel setmod) {
+    private static Settings stringtestres(boolean enORde, SetingsModel setmod) { // GAMAL / Inte updaterad.
         setmod.setID((byte) 2);
         return null;
     }
 
-    public static Settings stringtest(boolean enORde, SetingsModel setmod) {
+    public static Settings stringtest(boolean enORde, SetingsModel setmod) { // GAMAL / Inte updaterad. (tror jag)
         setmod.setID((byte) 1);
         setmod.generateRkey();
         setmod.setMesige("deta är ett test av först setings modelen och senan crypteringen");
@@ -59,7 +63,7 @@ public class testingsetings {
 
         return null;
     }
-    public static Settings filetest(boolean enORde, SetingsModel setmod) {
+    public static Settings filetest(boolean enORde, SetingsModel setmod) { // GAMAL / Inte updaterad. (tror jag)
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.showOpenDialog(null);
         File in = fileChooser.getSelectedFile();

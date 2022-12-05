@@ -16,6 +16,8 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Arrays;
 
 public class SetingsModel {
+
+    // har myket funktioner och variablar som inte fungerar eller används (måste tita i genome)
     private Settings settings;
     private AESsettings aes;
     private RESsettings res;
