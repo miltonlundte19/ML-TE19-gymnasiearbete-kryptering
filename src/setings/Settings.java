@@ -1,7 +1,5 @@
 package setings;
 
-import javax.crypto.SecretKey;
-import java.io.File;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -12,6 +10,7 @@ public class Settings implements Serializable {
 */
     private byte id;
     // Är till för att spesifiera vilken typ av kryptering det är med en typ indes id
+    // id: 1=aes, 2=res
     private boolean[] chekOR = new boolean[2];
     /* Används för att spesifiera i två olika fält:
         om det är en String eller fill som ska användas,
@@ -39,7 +38,7 @@ public class Settings implements Serializable {
     }
 
     public void setChekORen() {
-        chekOR[1] = true;//=
+        chekOR[1] = true;//=enkyption
         // om den ska kryptera eller dekryptera
     }
 
@@ -82,4 +81,34 @@ public class Settings implements Serializable {
         return manulesnapshot;
     }
 
+
+    @Override
+    public String toString() {
+        String typ;
+        if (chekOR[0]) {
+            typ = ", type=String";
+        } else {
+            typ = ", type=File";
+        }
+        String modeEnOrDe;
+        if (chekOR[1]) {
+            modeEnOrDe = ", encryption";
+        } else {
+            modeEnOrDe = ", decryption";
+        }
+        String mode = "";
+        if (aes != null) {
+            mode = aes.toString();
+        } else if (res != null) {
+            mode = res.toString();
+        }
+        return "Settings{" +
+                "id=" + id +
+                typ +
+                modeEnOrDe +
+                ", manulesnapshot=" + manulesnapshot +
+                ", mode=" + mode +
+                '}';
+
+    }
 }

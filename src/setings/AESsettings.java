@@ -1,8 +1,8 @@
 package setings;
 
 import javax.crypto.SecretKey;
-import java.io.File;
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class AESsettings implements Serializable  {
 
@@ -46,5 +46,23 @@ public class AESsettings implements Serializable  {
 
     public Settingsfile getFileInOu() {
         return fileInOu;
+    }
+
+    @Override
+    public String toString() {
+        String mesige;
+        if (plainText != null) {
+            mesige = ", plainText='" + plainText + '\'';
+        } else if (fileInOu != null) {
+            mesige = ", file-in=" + fileInOu.getFileinstring() +
+                    ", file-ou=" + fileInOu.getFileoustring();
+        } else {
+            mesige = "Eror - mesige";
+        }
+        return "AESsettings{" +
+                "key=" + key +
+                ", iv=" + Arrays.toString(iv) +
+                mesige +
+                '}';
     }
 }

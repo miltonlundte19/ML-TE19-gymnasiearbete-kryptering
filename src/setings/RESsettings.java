@@ -55,4 +55,28 @@ public class RESsettings implements Serializable {
     public Settingsfile getFileInOu() {
         return fileInOu;
     }
+
+    @Override
+    public String toString() {
+        String PudOrPri;
+        if (priORpub) {
+            PudOrPri = "Privet";
+        } else {
+            PudOrPri = "Publik";
+        }
+        String Mesige;
+        if (mesige != null) {
+            Mesige = ", mesige='" + mesige + '\'';
+        } else if (fileInOu != null) {
+            Mesige = ", file-in=" + fileInOu.getFileinstring() +
+                    ", file-ou=" + fileInOu.getFileoustring();
+        } else {
+            Mesige = "Eror - mesige";
+        }
+        return "RESsettings{" +
+                "PriORpub=" + PudOrPri +
+                ", keyfilepath='" + keyfilepath + '\'' +
+                Mesige +
+                '}';
+    }
 }
