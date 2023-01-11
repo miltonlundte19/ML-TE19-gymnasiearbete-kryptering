@@ -13,6 +13,7 @@ import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateKeySpec;
+import java.security.spec.RSAPublicKeySpec;
 
 public class Crypteringsmodule {
     private Object[] module = new Object[7];
@@ -124,7 +125,7 @@ public class Crypteringsmodule {
             if (priOrpub) {
                 keyholder = new ResKeyholder(keyFactory.generatePrivate(new RSAPrivateKeySpec(modulus, exponent)));
             } else {
-                keyholder = new ResKeyholder(keyFactory.generatePublic(new RSAPrivateKeySpec(modulus, exponent)));
+                keyholder = new ResKeyholder(keyFactory.generatePublic(new RSAPublicKeySpec(modulus, exponent)));
             }
             module[4] = keyholder;
         } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeySpecException e) {
