@@ -7,7 +7,7 @@ public class RESsettings implements Serializable {
 
     // en under kalss som har alltför att RES krypteringen ska fungera
 
-    private boolean priORpub;
+    private boolean priORpub; // true = privet
     private File keyfile;
     // Nykeln är sparad i en separrat fill så att men kan spara den på en separat plats och återanvända den.
     // Man kan också hämta publika och privata nykeln från samma fill (typ)
