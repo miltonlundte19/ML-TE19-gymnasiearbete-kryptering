@@ -27,7 +27,7 @@ public class Cryptres {
                     cipher.init(Cipher.ENCRYPT_MODE, keyholder.getPublicKey());
                 }
                 byte[] result = cipher.doFinal(input.getBytes(StandardCharsets.UTF_8));
-                return new String(result, StandardCharsets.UTF_8);
+                return Base64.getEncoder().encodeToString(result);
             } else {
                 if (keyholder.isPriORpub()) {
                     cipher.init(Cipher.DECRYPT_MODE, keyholder.getPrivateKey());
