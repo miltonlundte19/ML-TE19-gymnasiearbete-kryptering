@@ -107,7 +107,8 @@ public class hybrcrypteringall { // använder nog inte mycket från dena men den
     public void hRedencfile(File inFile,
                             String asymmetricAlgo, PrivateKey pvtKey,
                             String secretKeyAlgo, String symmetricAlgo) throws IOException {
-        String[] contents = extractDataElements(inFile);
+        String[] contents = new String[2];
+        contents = extractDataElements(inFile);
 
         for (int i = 0; i < contents.length; i++) {
             contents[i] = filterNewlineChars(contents[i]);

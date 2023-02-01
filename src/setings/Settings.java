@@ -23,6 +23,8 @@ public class Settings implements Serializable {
     private RESsettings res;
     // under klaser som har variablerna för sin spesifika kryptering
 
+    private HYDRIDsettings hybrid;
+
     public Settings() {
         Arrays.fill(chekOR, false);
     }
@@ -50,6 +52,10 @@ public class Settings implements Serializable {
         this.res = res;
     }
 
+    public void setHybrid(HYDRIDsettings hybrid) {
+        this.hybrid = hybrid;
+    }
+
     // nedan är hämta från variabeln
     public byte getId() {
         return id;
@@ -69,6 +75,10 @@ public class Settings implements Serializable {
 
     public RESsettings getRes() {
         return res;
+    }
+
+    public HYDRIDsettings getHybrid() {
+        return hybrid;
     }
 
 
