@@ -52,7 +52,7 @@ public class testingsetings {
 
     private static Settings testing() {
         Settings settings = new Settings();
-        byte testid = 1;
+        byte testid = 0;
 
         if (testid == 0) {
             settings = testaes();
@@ -69,8 +69,9 @@ public class testingsetings {
 
 
         settings.setId((byte) 2);
-        //settings.setChekORen();
+        settings.setChekORen();
         //settings.setChekORstr();
+        settings.setManulesnapshot();
 
         File tempkeyfilepub = new File("Temporikeyfilepub.txt");
         File tempkeyfilepri = new File("Temporikeyfilepri.txt");
@@ -146,6 +147,8 @@ public class testingsetings {
                 if (a == 0) {
                     c = false;
                 }
+            } else {
+                c = false;
             }
         }
         File in = fileChooser.getSelectedFile();
@@ -178,11 +181,12 @@ public class testingsetings {
          * */
         byte[] iv = new byte[] {-80, 65, 125, 85, -124, 70, 90, 52, -118, 116, 107, -12, -109, 89, -72, -6};
         File tempkeyfile = new File("Temporikeyfile.txt");
-        System.out.println(tempkeyfile.length());
+
 
         boolean first = false; // en variabel så att man kan genirera en ny kykeln
         try {
             if (tempkeyfile.createNewFile() || (tempkeyfile.length() == 0) || first) {
+                System.out.println("ny nykel aes");
                 SecureRandom sr = new SecureRandom();
                 KeyGenerator kg = KeyGenerator.getInstance("AES");
                 kg.init(256, sr);
@@ -190,12 +194,13 @@ public class testingsetings {
                 SecretKey key = kg.generateKey();
                 temkeywriter.writeObject(key);
                 temkeywriter.flush();
+            } else {
+                System.out.println("använder gamal nykel");
             }
-
         } catch (IOException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        System.out.println(tempkeyfile.length());
+
 
         SecretKey key;
         try {
@@ -209,20 +214,26 @@ public class testingsetings {
         Settings settings = new Settings();
         settings.setId((byte) 1);
         settings.setChekORen();
-        settings.setChekORstr();
+        //settings.setChekORstr();
+        settings.setManulesnapshot();
+        settings.setStorTOfile();
+
+
         AESsettings aes = new AESsettings();
         aes.setIv(iv);
         aes.setKey(key);
 
-        aes.setPlainText("Varför vil inte cryptering fungera");
-        //aes.setFiles(testfiles());
+        //aes.setPlainText("Varför vil inte cryptering fungera");
+        aes.setFiles(testfiles(settings.isStorTOfile()));
 
         settings.setAes(aes);
 
         return settings;
     }
-    private static Settingsfile testfiles() {
+    private static Settingsfile testfiles(boolean StorTOfile) {
         int i;
+        Settingsfile settingsfile = new Settingsfile();
+
         JFileChooser fileChooser = new JFileChooser();
         i = fileChooser.showOpenDialog(null);
         if (i == JFileChooser.CANCEL_OPTION) {
@@ -230,70 +241,23 @@ public class testingsetings {
             System.exit(1);
         }
         File in = fileChooser.getSelectedFile();
-        i = fileChooser.showOpenDialog(null);
-        if (i == JFileChooser.CANCEL_OPTION) {
-            System.out.println("user caned");
-            System.exit(1);
-        }
-        File ou = fileChooser.getSelectedFile();
-
-        Settingsfile settingsfile = new Settingsfile();
         settingsfile.setIN(in);
-        settingsfile.setOU(ou);
+
+        if (StorTOfile) {
+            i = fileChooser.showOpenDialog(null);
+            if (i == JFileChooser.CANCEL_OPTION) {
+                System.out.println("user caned");
+
+                System.exit(1);
+            }
+            File ou = fileChooser.getSelectedFile();
+            settingsfile.setOU(ou);
+        } else {
+            settingsfile.setOuToNull();
+        }
 
         return settingsfile;
     }
 
-
-
-
-
-
-    private static Settings stringtestres(boolean enORde, SetingsModel setmod) { // GAMAL / Inte updaterad.
-        setmod.setID((byte) 2);
-        return null;
-    }
-
-    public static Settings stringtest(boolean enORde, SetingsModel setmod) { // GAMAL / Inte updaterad. (tror jag)
-        setmod.setID((byte) 1);
-        setmod.generateRkey();
-        setmod.setMesige("deta är ett test av först setings modelen och senan crypteringen");
-        if (enORde) {
-            setmod.setENorDE();
-        }
-
-
-        if (setmod.check()) {
-            return setmod.getSettings();
-        } else {
-            System.out.println("något gik fel med att seta setings");
-            System.exit(-1);
-        }
-
-        return null;
-    }
-    public static Settings filetest(boolean enORde, SetingsModel setmod) { // GAMAL / Inte updaterad. (tror jag)
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.showOpenDialog(null);
-        File in = fileChooser.getSelectedFile();
-        fileChooser.showOpenDialog(null);
-        File ou = fileChooser.getSelectedFile();
-
-        setmod.setID((byte) 1);
-        setmod.generateRkey();
-        if (enORde) {
-            setmod.setENorDE();
-        }
-
-        setmod.setFiles(in, ou);
-
-        if (setmod.check()) {
-            return setmod.getSettings();
-        } else {
-            System.out.println("något gik fel med att seta setings");
-            System.exit(-1);
-        }
-        return null;
-    }
 }
     //  setingsfile.txt
