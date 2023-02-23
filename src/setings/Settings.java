@@ -16,9 +16,14 @@ public class Settings implements Serializable {
         om det är en String eller fill som ska användas,
         om den ska kryptera eller dekryptera
     */
-    private boolean manulesnapshot = false;
+    private boolean manulesnapshot;
     // används bara om man ska manuelt spara data vid ()data insamling
-
+    private boolean storTOfile = true;
+    // variabel som dikterar om hur utkastet från krypteringen ska hanteras
+    // true = "normal operation" fals = "spara inte den krypterade utkastet"/"titar inte om det fins en fill ut"
+    private byte numOFrepeteson = 1;
+    // varabel som sejer hur många gånger krypteringen ska repiteras
+    // om storTOfile är true så lagras bara första operationen
     private AESsettings aes;
     private RESsettings res;
     // under klaser som har variablerna för sin spesifika kryptering
@@ -91,6 +96,26 @@ public class Settings implements Serializable {
         return manulesnapshot;
     }
 
+    //
+    public boolean isStorTOfile() {
+        return storTOfile;
+    }
+
+    public void setStorTOfile(boolean storTOfile) {
+        this.storTOfile = storTOfile;
+    }
+    public void setStorTOfile() {
+        storTOfile = false;
+    }
+
+    public byte getNumOFrepeteson() {
+        return numOFrepeteson;
+    }
+
+    public void setNumOFrepeteson(byte numOFrepeteson) {
+        this.numOFrepeteson = numOFrepeteson;
+    }
+
 
     @Override
     public String toString() {
@@ -117,6 +142,8 @@ public class Settings implements Serializable {
                 typ +
                 modeEnOrDe +
                 ", manulesnapshot=" + manulesnapshot +
+                ", output=" + storTOfile +
+                ", repetisons=" + numOFrepeteson +
                 ", mode=" + mode +
                 '}';
 

@@ -23,6 +23,11 @@ public class Settingsfile implements Serializable {
         fileoustring = ou.getAbsolutePath();
     }
 
+    public void setOuToNull() {
+        ou = null;
+        fileoustring = null;
+    }
+
     public File getIn() {
         return in;
     }
