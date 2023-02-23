@@ -24,23 +24,35 @@ public class Crypteringsmodule {
     0 = id
     1 = String or File
     2 = Encrypt or Decrypt
+    3 = If the shal stor the first output
+    4 = num of repetisons
     ----------------------------------------------------------
     -------- aes -----------------------------------------
-        3 = IV
-        4 = key
+        5 = IV
+        6 = key
+            (3 = IV
+            (4 = key
     --------- String ------------------------------------
-            5 = Playne text
+            7 = Playne text
+                (5 = Playne text
     ---------- File ---------------------------------------
-            5 = in put File
-            6 = ou put File
+            7 = in put File
+            8 = ou put File
+                (5 = in put File
+                (6 = ou put File
     ----------------------------------------------------------
     -------- ras -----------------------------------------
-        4 = keyholder
+        5 = null
+        6 = keyholder
+            (4 = keyholder
     --------- String ------------------------------------
-            5 = Playne text
+            7 = Playne text
+                (5 = Playne text
     ---------- File ---------------------------------------
-            5 = in put File
-            6 = ou put File
+            7 = in put File
+            8 = ou put File
+                (5 = in put File
+                (6 = ou put File
     ----------------------------------------------------------
 
      */
