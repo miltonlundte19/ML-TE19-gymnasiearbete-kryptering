@@ -1,7 +1,13 @@
+
+
 import modules.Crypteringsmodule;
 import setings.Settings;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.ObjectInputStream;
+
 
 public class cryptcontroler {
     public static void main(String[] args) {

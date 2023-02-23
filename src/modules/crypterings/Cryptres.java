@@ -6,12 +6,13 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.util.Base64;
 
 public class Cryptres {

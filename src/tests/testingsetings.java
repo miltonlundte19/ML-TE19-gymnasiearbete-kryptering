@@ -1,10 +1,11 @@
 package tests;
 
-import modules.SetingsModel;
 import setings.AESsettings;
 import setings.RESsettings;
 import setings.Settings;
 import setings.Settingsfile;
+
+import modules.SetingsModel;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
