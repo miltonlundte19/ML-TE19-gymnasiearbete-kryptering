@@ -139,6 +139,13 @@ public class Crypteringsmodule {
     } // för över loog fillens skrivare.
 
     public void start() { // Starten på krypteringen. Funktionerna med en s är för String och f är för File.
+        try {
+            System.out.println("början på pausen");
+            Thread.sleep(900);
+            System.out.println("slut på pausen");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         if (module[0].equals((byte) 1)) {
             if ((boolean) module[1]) { // 1 = String or File
                 AESs();
