@@ -2,7 +2,6 @@ package modules;
 
 import modules.crypterings.Cryptaes;
 import modules.crypterings.Cryptres;
-
 import setings.*;
 
 import javax.crypto.SecretKey;
@@ -25,8 +24,8 @@ public class Crypteringsmodule {
     0 = id
     1 = String or File
     2 = Encrypt or Decrypt
-    3 = If the shal stor the first output
-    4 = num of repetisons
+    3 = If the shall stor the first output
+    4 = num of repetitions
     ----------------------------------------------------------
     -------- aes -----------------------------------------
         5 = IV
@@ -88,14 +87,13 @@ public class Crypteringsmodule {
         if (!file.exists()) {
             file = new File(filestrings[0]);
         } // om inte så görden en ny fil och försöker med filens absoluta väg ((men det kanske inte gör någonting))
-        module[5] = file;
+        module[7] = file;
         // setter in filen och gör samma sak med filen som den ska skriva till
         file = fileseter.getOu();
-        if (module[3] == null && filestrings[1] == null && file == null) {
+        if (!((boolean) module[3]) && filestrings[1] == null && file == null) {
             module[8] = null;
         } else if (file == null && filestrings[1] == null) {
-            NullPointerException e = new NullPointerException();
-            throw new RuntimeException(e);
+            throw new RuntimeException(new NullPointerException());
         } else {
             if (file == null) {
                 file = new File(filestrings[1]);
@@ -160,6 +158,8 @@ public class Crypteringsmodule {
         try {
             System.out.println("början på pausen");
             Thread.sleep(900);
+            System.out.println("början på andra pausen");
+            Thread.sleep(1000);
             System.out.println("slut på pausen");
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -209,9 +209,15 @@ public class Crypteringsmodule {
         System.exit(0);
     }
     private void AESf() {
+        byte nMAX = (byte) module[4];
+
         try {
             looger.write("File: " + filestrings[0] + "\ntiden aes crypteringen började: \n" + System.nanoTime() +
-                    "\nden krypterade filen är har:\n" + filestrings[1]);
+                    "\ni ms: " + System.currentTimeMillis() +
+                    "\nden krypterade filen är har: " + filestrings[1] + "\n");
+            if (nMAX > 1) {
+                looger.write("krypteringen kördes: " + nMAX + "\n");
+            }
             looger.flush();
             if (!manulesnapshotAlurt) {
                 looger.close();
@@ -222,17 +228,27 @@ public class Crypteringsmodule {
         }
 
         boolean storchek = (boolean) module[3];
-        boolean f = (boolean) module[3];
-        byte nMAX = (byte) module[4];
+        boolean f = true;
+
+        System.out.println("module={" +
+                            "0=" + module[0] +
+                            ", 1=" + module[1] +
+                            ", 2=" + module[2] +
+                            ", 3=" + module[3] +
+                            ", 4=" + module[4] +
+                            ", 5=" + module[5] +
+                            ", 6=" + module[6] +
+                            ", 7=" + module[7] +
+                            ", 8=" + module[8]); /* test kåd ta bort sen */ //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
         for (int n = 0; n < nMAX; n++) {
-
+            System.out.println("omgång " + (n+1) + " (" + n + ")" + " av " + nMAX); /* test kåd ta bort sen */ //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
             Cryptaes.Filebufercry((boolean) module[2], storchek, (IvParameterSpec) module[5], (SecretKey) module[6], (File) module[7], (File) module[8]);
 
             if (f) {
                 if (manulesnapshotAlurt) {
                     try {
-                        looger.write("första krypteringen slutade: \n" + System.nanoTime());
+                        looger.write("första krypteringen slutade:\n" + System.nanoTime() + "\n");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -244,7 +260,8 @@ public class Crypteringsmodule {
 
         if (manulesnapshotAlurt) {
             try {
-                looger.write("keypteringen slutate: \n" + System.nanoTime());
+                looger.write("keypteringen slutate: \n" + System.nanoTime() +
+                        "\ni ms: " + System.currentTimeMillis());
                 looger.flush();
                 looger.close();
                 JOptionPane.showMessageDialog(null, "keypteringen slutate, ta snap");
