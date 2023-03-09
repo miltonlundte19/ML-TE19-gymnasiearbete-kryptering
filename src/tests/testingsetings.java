@@ -211,21 +211,22 @@ public class testingsetings {
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        boolean storTOfile = false;
 
         Settings settings = new Settings();
         settings.setId((byte) 1);
         settings.setChekORen();
         //settings.setChekORstr();
         settings.setManulesnapshot();
-        settings.setStorTOfile();
-
+        settings.setStorTOfile(storTOfile);
+        settings.setNumOFrepeteson(100);
 
         AESsettings aes = new AESsettings();
         aes.setIv(iv);
         aes.setKey(key);
 
         //aes.setPlainText("Varför vil inte cryptering fungera");
-        aes.setFiles(testfiles(settings.isStorTOfile()));
+        aes.setFiles(testfiles(storTOfile));
 
         settings.setAes(aes);
 
