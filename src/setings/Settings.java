@@ -115,7 +115,9 @@ public class Settings implements Serializable {
     public void setNumOFrepeteson(byte numOFrepeteson) {
         this.numOFrepeteson = numOFrepeteson;
     }
-
+    public void setNumOFrepeteson(int numOFrepeteson) {
+        this.numOFrepeteson = (byte) numOFrepeteson;
+    }
 
     @Override
     public String toString() {
