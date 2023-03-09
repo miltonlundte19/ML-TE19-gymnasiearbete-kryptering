@@ -43,8 +43,6 @@ public class Cryptaes {
             if (s) {
                 System.out.println("\nskriver till filen");
                 outputStream = new FileOutputStream(ou);
-            } else {
-                System.out.println("skriver inte till filen");
             }
             byte[] buffer = new byte[1024];
             int bytesRead;

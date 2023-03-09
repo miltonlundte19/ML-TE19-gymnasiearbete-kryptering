@@ -230,23 +230,12 @@ public class Crypteringsmodule {
         boolean storchek = (boolean) module[3];
         boolean f = true;
 
-        System.out.println("module={" +
-                            "0=" + module[0] +
-                            ", 1=" + module[1] +
-                            ", 2=" + module[2] +
-                            ", 3=" + module[3] +
-                            ", 4=" + module[4] +
-                            ", 5=" + module[5] +
-                            ", 6=" + module[6] +
-                            ", 7=" + module[7] +
-                            ", 8=" + module[8]); /* test kåd ta bort sen */ //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 
         for (int n = 0; n < nMAX; n++) {
-            System.out.println("omgång " + (n+1) + " (" + n + ")" + " av " + nMAX); /* test kåd ta bort sen */ //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
             Cryptaes.Filebufercry((boolean) module[2], storchek, (IvParameterSpec) module[5], (SecretKey) module[6], (File) module[7], (File) module[8]);
 
             if (f) {
-                if (manulesnapshotAlurt) {
+                if (manulesnapshotAlurt && (nMAX > 1)) {
                     try {
                         looger.write("första krypteringen slutade:\n" + System.nanoTime() + "\n");
                     } catch (IOException e) {
