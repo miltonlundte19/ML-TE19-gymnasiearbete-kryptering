@@ -203,7 +203,7 @@ public class Crypteringsmodule {
         System.exit(0);
     }
     private void AESf() {
-        byte nMAX = (byte) module[4];
+        short nMAX = (short) module[4];
 
         try {
             looger.write("File: " + filestrings[0] + "\ntiden aes crypteringen började: \n" +

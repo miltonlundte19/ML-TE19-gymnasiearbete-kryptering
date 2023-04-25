@@ -21,7 +21,7 @@ public class Settings implements Serializable {
     private boolean storTOfile = true;
     // variabel som dikterar om hur utkastet från krypteringen ska hanteras
     // true = "normal operation" fals = "spara inte den krypterade utkastet"/"titar inte om det fins en fill ut"
-    private byte numOFrepeteson = 1;
+    private short numOFrepeteson = 1;
     // varabel som sejer hur många gånger krypteringen ska repiteras
     // om storTOfile är true så lagras bara första operationen
     private AESsettings aes;
@@ -108,15 +108,15 @@ public class Settings implements Serializable {
         storTOfile = false;
     }
 
-    public byte getNumOFrepeteson() {
+    public short getNumOFrepeteson() {
         return numOFrepeteson;
     }
 
-    public void setNumOFrepeteson(byte numOFrepeteson) {
+    public void setNumOFrepeteson(short numOFrepeteson) {
         this.numOFrepeteson = numOFrepeteson;
     }
     public void setNumOFrepeteson(int numOFrepeteson) {
-        this.numOFrepeteson = (byte) numOFrepeteson;
+        this.numOFrepeteson = (short) numOFrepeteson;
     }
 
     @Override
