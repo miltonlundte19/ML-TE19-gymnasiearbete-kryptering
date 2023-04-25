@@ -1,4 +1,4 @@
-
+package controlers;
 
 import modules.Crypteringsmodule;
 import setings.Settings;
