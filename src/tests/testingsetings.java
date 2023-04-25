@@ -219,7 +219,7 @@ public class testingsetings {
         //settings.setChekORstr();
         settings.setManulesnapshot();
         settings.setStorTOfile(storTOfile);
-        settings.setNumOFrepeteson(100);
+        settings.setNumOFrepeteson(8);
 
         AESsettings aes = new AESsettings();
         aes.setIv(iv);
@@ -235,8 +235,10 @@ public class testingsetings {
     private static Settingsfile testfiles(boolean StorTOfile) {
         int i;
         Settingsfile settingsfile = new Settingsfile();
-
-        JFileChooser fileChooser = new JFileChooser();
+        //----------------------------- test
+        File test = new File("C:\\code\\krypt-test-fils");
+        //----------------------------- test
+        JFileChooser fileChooser = new JFileChooser(test);
         i = fileChooser.showOpenDialog(null);
         if (i == JFileChooser.CANCEL_OPTION) {
             System.out.println("user caned");
