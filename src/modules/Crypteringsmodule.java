@@ -14,6 +14,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Crypteringsmodule {
     private Object[] module = new Object[9];
@@ -155,15 +157,7 @@ public class Crypteringsmodule {
     } // för över loog fillens skrivare.
 
     public void start() { // Starten på krypteringen. Funktionerna med en s är för String och f är för File.
-        try {
-            System.out.println("början på pausen");
-            Thread.sleep(900);
-            System.out.println("början på andra pausen");
-            Thread.sleep(1000);
-            System.out.println("slut på pausen");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        JOptionPane.showMessageDialog(null,"Vänta tills Profiler programmet har hittat java programmet.");
         if (module[0].equals((byte) 1)) {
             if ((boolean) module[1]) { // 1 = String or File
                 AESs();
@@ -212,8 +206,8 @@ public class Crypteringsmodule {
         byte nMAX = (byte) module[4];
 
         try {
-            looger.write("File: " + filestrings[0] + "\ntiden aes crypteringen började: \n" + System.nanoTime() +
-                    "\ni ms: " + System.currentTimeMillis() +
+            looger.write("File: " + filestrings[0] + "\ntiden aes crypteringen började: \n" +
+                    LocalDateTime.now() +
                     "\nden krypterade filen är har: " + filestrings[1] + "\n");
             if (nMAX > 1) {
                 looger.write("krypteringen kördes: " + nMAX + "\n");
@@ -237,7 +231,7 @@ public class Crypteringsmodule {
             if (f) {
                 if (manulesnapshotAlurt && (nMAX > 1)) {
                     try {
-                        looger.write("första krypteringen slutade:\n" + System.nanoTime() + "\n");
+                        looger.write("första krypteringen slutade:\n" + LocalTime.now() + "\n");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -249,8 +243,7 @@ public class Crypteringsmodule {
 
         if (manulesnapshotAlurt) {
             try {
-                looger.write("keypteringen slutate: \n" + System.nanoTime() +
-                        "\ni ms: " + System.currentTimeMillis());
+                looger.write("keypteringen slutate: \n" + LocalDateTime.now());
                 looger.flush();
                 looger.close();
                 JOptionPane.showMessageDialog(null, "keypteringen slutate, ta snap");

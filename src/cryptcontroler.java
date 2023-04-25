@@ -7,11 +7,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.ObjectInputStream;
-
+import java.time.LocalDateTime;
 
 public class cryptcontroler {
     public static void main(String[] args) {
-        long logtime = System.nanoTime();
+        LocalDateTime starttime = LocalDateTime.now();
         // Börjar med att sparar tiden som programet börjar.
 
         File setingsfile = new File("setingsfile.txt");
@@ -29,7 +29,7 @@ public class cryptcontroler {
                 startupfile.createNewFile();
             }
             startup = new FileWriter(startupfile);
-            startup.write("start time: " + logtime + "\n");
+            startup.write("start time:\n" + starttime + "\n");
             startup.flush();
             /* skriver tiden som programet startade i logg filen
                så att men kan räkna ut hur lång tid upstarten tog.
