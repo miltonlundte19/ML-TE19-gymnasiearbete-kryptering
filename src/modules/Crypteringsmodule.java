@@ -14,9 +14,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Crypteringsmodule {
-    private Object[] module = new Object[7];
+    private Object[] module = new Object[9];
     /* Visar vilka värden som hamnav vart beroende på vilken krypterings metod som används
      och om det är en text eller fill.
      module[  ]
@@ -24,29 +26,31 @@ public class Crypteringsmodule {
     0 = id
     1 = String or File
     2 = Encrypt or Decrypt
+    3 = If the shall stor the first output
+    4 = num of repetitions
     ----------------------------------------------------------
     -------- aes -----------------------------------------
-        3 = IV
-        4 = key
+        5 = IV
+        6 = key
     --------- String ------------------------------------
-            5 = Playne text
+            7 = Playne text
     ---------- File ---------------------------------------
-            5 = in put File
-            6 = ou put File
+            7 = in put File
+            8 = ou put File
     ----------------------------------------------------------
     -------- ras -----------------------------------------
-        4 = keyholder
+        5 = null
+        6 = keyholder
     --------- String ------------------------------------
-            5 = Playne text
+            7 = Playne text
     ---------- File ---------------------------------------
-            5 = in put File
-            6 = ou put File
+            7 = in put File
+            8 = ou put File
     ----------------------------------------------------------
 
      */
     private String[] filestrings = new String[2];
-    private boolean manulesnapshotAlurt;
-    private Settings settings;
+    private final boolean manulesnapshotAlurt;
     private FileWriter looger;
 
     // startar kass för att få in värderna på rätt stäle.
@@ -54,6 +58,8 @@ public class Crypteringsmodule {
         module[0] = settings.getId();
         module[1] = settings.getStringORfile();
         module[2] = settings.getEncryptORdecrypt();
+        module[3] = settings.isStorTOfile();
+        module[4] = settings.getNumOFrepeteson();
         manulesnapshotAlurt = settings.getManulesnapshot();
         // hämtar datan från settings till en objekt array så att det ska vara lättare att läga in datan.
 
@@ -62,16 +68,13 @@ public class Crypteringsmodule {
         } else if (module[0].equals((byte) 2)) {
             RESset(settings.getRes());
         } // titar efter vilken krypterings model som ska användas
-
-        // anvends inte men är fortfarande kvar (komer att ta bort).
-        this.settings = settings;
     }
 
     private void AESset(AESsettings aes) {
-        module[3] = new IvParameterSpec(aes.getIv());
-        module[4] = aes.getKey();
+        module[5] = new IvParameterSpec(aes.getIv());
+        module[6] = aes.getKey();
         if ((boolean) module[1]) {
-            module[5] = aes.getPlainText();
+            module[7] = aes.getPlainText();
         } else { // titar om det är en string eller fil
             Settingsfile fileseter = aes.getFileInOu();
             setFilemod(fileseter);
@@ -86,16 +89,31 @@ public class Crypteringsmodule {
         if (!file.exists()) {
             file = new File(filestrings[0]);
         } // om inte så görden en ny fil och försöker med filens absoluta väg ((men det kanske inte gör någonting))
-        module[5] = file;
+        module[7] = file;
         // setter in filen och gör samma sak med filen som den ska skriva till
         file = fileseter.getOu();
-        if (!file.exists()) {
-            file = new File(filestrings[1]);
+        if (!((boolean) module[3]) && filestrings[1] == null && file == null) {
+            module[8] = null;
+        } else if (file == null && filestrings[1] == null) {
+            throw new RuntimeException(new NullPointerException());
+        } else {
+            if (file == null) {
+                file = new File(filestrings[1]);
+                if (!file.isFile()) {
+                    throw new RuntimeException("Platsen som fillen pekar på är inte en fill");
+                }
+            } else if (!file.exists()) {
+                file = new File(filestrings[1]);
+                if (!file.isFile()) {
+                    throw new RuntimeException("Platsen som fillen pekar på är inte en fill");
+                }
+            }
+            module[8] = file;
         }
-        module[6] = file;
         // krypteringen behöver en ut fill eftersom att den skriver inte över orginala fillen utan krypterar/dekrypterar
         // inehålet av fillen (som en lång string)
     }
+
     private void RESset(RESsettings res) {
         File keyfile = res.getKeyfile();
         if (!keyfile.exists()) {
@@ -106,7 +124,7 @@ public class Crypteringsmodule {
         // en funktion som hämtar och byger i-hop nykeln
 
         if ((boolean) module[1]) {
-            module[5] = res.getMesige();
+            module[7] = res.getMesige();
         } else { // titar om det är en string eller fil
             Settingsfile fileseter = res.getFileInOu();
             setFilemod(fileseter);
@@ -127,7 +145,7 @@ public class Crypteringsmodule {
             } else {
                 keyholder = new ResKeyholder(keyFactory.generatePublic(new RSAPublicKeySpec(modulus, exponent)));
             }
-            module[4] = keyholder;
+            module[6] = keyholder;
         } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             e.printStackTrace();
             System.exit(-1);
@@ -139,6 +157,7 @@ public class Crypteringsmodule {
     } // för över loog fillens skrivare.
 
     public void start() { // Starten på krypteringen. Funktionerna med en s är för String och f är för File.
+        JOptionPane.showMessageDialog(null,"Vänta tills Profiler programmet har hittat java programmet.");
         if (module[0].equals((byte) 1)) {
             if ((boolean) module[1]) { // 1 = String or File
                 AESs();
@@ -157,13 +176,13 @@ public class Crypteringsmodule {
     // upstarten för AES krypteringen med några skilnader melan dem som mest hanlar om skriva ner resultatet.
     private void AESs() {
         try {
-            looger.write("string:\n" + module[5] + "\ntiden aes crypteringen började: \n" + System.nanoTime() +
+            looger.write("string:\n" + module[7] + "\ntiden aes crypteringen började: \n" + System.nanoTime() +
                     "\nden krypterade strengen blev:\n");
             // skriver ner vad stringen var och tiden det tog att sätta upp allt
             looger.flush();
             String out;
 
-            out = Cryptaes.Stringcry((Boolean) module[2], (IvParameterSpec) module[3], (SecretKey) module[4], (String) module[5]);
+            out = Cryptaes.Stringcry((Boolean) module[2], (IvParameterSpec) module[5], (SecretKey) module[6], (String) module[7]);
             // Här krypteraren och får utt den krypterade strengen som sedan blir nedsriven.
 
             looger.write(out + '\n');
@@ -184,9 +203,15 @@ public class Crypteringsmodule {
         System.exit(0);
     }
     private void AESf() {
+        short nMAX = (short) module[4];
+
         try {
-            looger.write("File: " + filestrings[0] + "\ntiden aes crypteringen började: \n" + System.nanoTime() +
-                    "\nden krypterade filen är har:\n" + filestrings[1]);
+            looger.write("File: " + filestrings[0] + "\ntiden aes crypteringen började: \n" +
+                    LocalDateTime.now() +
+                    "\nden krypterade filen är har: " + filestrings[1] + "\n");
+            if (nMAX > 1) {
+                looger.write("krypteringen kördes: " + nMAX + "\n");
+            }
             looger.flush();
             if (!manulesnapshotAlurt) {
                 looger.close();
@@ -196,11 +221,29 @@ public class Crypteringsmodule {
             System.exit(-1);
         }
 
-        Cryptaes.Filebufercry((boolean) module[2], (IvParameterSpec) module[3], (SecretKey) module[4], (File) module[5], (File) module[6]);
+        boolean storchek = (boolean) module[3];
+        boolean f = true;
+
+
+        for (int n = 0; n < nMAX; n++) {
+            Cryptaes.Filebufercry((boolean) module[2], storchek, (IvParameterSpec) module[5], (SecretKey) module[6], (File) module[7], (File) module[8]);
+
+            if (f) {
+                if (manulesnapshotAlurt && (nMAX > 1)) {
+                    try {
+                        looger.write("första krypteringen slutade:\n" + LocalTime.now() + "\n");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                storchek = false;
+                f = false;
+            }
+        }
 
         if (manulesnapshotAlurt) {
             try {
-                looger.write("keypteringen slutate \n" + System.nanoTime());
+                looger.write("keypteringen slutate: \n" + LocalDateTime.now());
                 looger.flush();
                 looger.close();
                 JOptionPane.showMessageDialog(null, "keypteringen slutate, ta snap");
@@ -219,7 +262,7 @@ public class Crypteringsmodule {
             looger.flush();
 
             String out;
-            out = Cryptres.Stringcry((boolean) module[2], (ResKeyholder) module[4], (String) module[5]);
+            out = Cryptres.Stringcry((boolean) module[2], (ResKeyholder) module[6], (String) module[7]);
 
             looger.write(out + '\n');
             if (manulesnapshotAlurt) {
@@ -245,7 +288,7 @@ public class Crypteringsmodule {
             e.printStackTrace();
             System.exit(-1);
         }
-        Cryptres.Filebufercry((boolean) module[2], (ResKeyholder) module[4], (File) module[5], (File) module[6]);
+        Cryptres.Filebufercry((boolean) module[2], (ResKeyholder) module[6], (File) module[7], (File) module[8]);
 
         if (manulesnapshotAlurt) {
             try {

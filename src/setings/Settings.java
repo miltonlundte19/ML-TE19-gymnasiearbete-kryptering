@@ -16,12 +16,19 @@ public class Settings implements Serializable {
         om det är en String eller fill som ska användas,
         om den ska kryptera eller dekryptera
     */
-    private boolean manulesnapshot = false;
+    private boolean manulesnapshot;
     // används bara om man ska manuelt spara data vid ()data insamling
-
+    private boolean storTOfile = true;
+    // variabel som dikterar om hur utkastet från krypteringen ska hanteras
+    // true = "normal operation" fals = "spara inte den krypterade utkastet"/"titar inte om det fins en fill ut"
+    private short numOFrepeteson = 1;
+    // varabel som sejer hur många gånger krypteringen ska repiteras
+    // om storTOfile är true så lagras bara första operationen
     private AESsettings aes;
     private RESsettings res;
     // under klaser som har variablerna för sin spesifika kryptering
+
+    private HYDRIDsettings hybrid;
 
     public Settings() {
         Arrays.fill(chekOR, false);
@@ -50,6 +57,10 @@ public class Settings implements Serializable {
         this.res = res;
     }
 
+    public void setHybrid(HYDRIDsettings hybrid) {
+        this.hybrid = hybrid;
+    }
+
     // nedan är hämta från variabeln
     public byte getId() {
         return id;
@@ -71,6 +82,10 @@ public class Settings implements Serializable {
         return res;
     }
 
+    public HYDRIDsettings getHybrid() {
+        return hybrid;
+    }
+
 
     // en variabel som seger som programet ska vänta i slutet.
     public void setManulesnapshot() {
@@ -81,6 +96,28 @@ public class Settings implements Serializable {
         return manulesnapshot;
     }
 
+    //
+    public boolean isStorTOfile() {
+        return storTOfile;
+    }
+
+    public void setStorTOfile(boolean storTOfile) {
+        this.storTOfile = storTOfile;
+    }
+    public void setStorTOfile() {
+        storTOfile = false;
+    }
+
+    public short getNumOFrepeteson() {
+        return numOFrepeteson;
+    }
+
+    public void setNumOFrepeteson(short numOFrepeteson) {
+        this.numOFrepeteson = numOFrepeteson;
+    }
+    public void setNumOFrepeteson(int numOFrepeteson) {
+        this.numOFrepeteson = (short) numOFrepeteson;
+    }
 
     @Override
     public String toString() {
@@ -107,6 +144,8 @@ public class Settings implements Serializable {
                 typ +
                 modeEnOrDe +
                 ", manulesnapshot=" + manulesnapshot +
+                ", output=" + storTOfile +
+                ", repetisons=" + numOFrepeteson +
                 ", mode=" + mode +
                 '}';
 

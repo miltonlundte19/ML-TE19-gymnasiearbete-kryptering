@@ -30,7 +30,7 @@ public class Cryptaes {
         return null;
     }
 
-    public static void Filebufercry(boolean enORde, IvParameterSpec iv, SecretKey key, File in, File ou) {
+    public static void Filebufercry(boolean enORde, boolean s, IvParameterSpec iv, SecretKey key, File in, File ou) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             if (enORde) {
@@ -39,22 +39,28 @@ public class Cryptaes {
                 cipher.init(Cipher.DECRYPT_MODE, key, iv);
             }
             FileInputStream inputStream = new FileInputStream(in);
-            FileOutputStream outputStream = new FileOutputStream(ou);
-            byte[] buffer = new byte[64];
+            FileOutputStream outputStream = null;
+            if (s) {
+                System.out.println("\nskriver till filen");
+                outputStream = new FileOutputStream(ou);
+            }
+            byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 byte[] output = cipher.update(buffer, 0, bytesRead);
-                if (output != null) {
+                if (output != null && s) {
                     outputStream.write(output);
                 }
             }
             byte[] outputBytes = cipher.doFinal();
-            if (outputBytes != null) {
+            if (outputBytes != null & s) {
                 outputStream.write(outputBytes);
             }
             inputStream.close();
-            outputStream.flush();
-            outputStream.close();
+            if (s) {
+                outputStream.flush();
+                outputStream.close();
+            }
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException | InvalidKeyException | IllegalBlockSizeException | IOException | BadPaddingException e) {
             e.printStackTrace();
             System.exit(-1);
