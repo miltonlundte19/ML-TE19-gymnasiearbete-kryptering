@@ -96,12 +96,14 @@ public class Filecerator {
                 } else {
                     lentchek = true;
                     int contensdottxt = newFilename.lastIndexOf(".txt");
-                    if (contensdottxt >= 4) {
-                        txtchek = true;
-                    } else if (contensdottxt != -1) {
-                        lentchek = false;
-                        FileNameTestStateslabel.setText("Name to short");
-                        FileNameTestStateslabel.setForeground(defaltcolor);
+                    if (contensdottxt != -1) {
+                        if (((lentofname - contensdottxt) == 4) && (contensdottxt >= 4)) {
+                            txtchek = true;
+                        } else {
+                            lentchek = false;
+                            FileNameTestStateslabel.setForeground(defaltcolor);
+                            FileNameTestStateslabel.setText("Name to short");
+                        }
                     }
                 }
                 /*
