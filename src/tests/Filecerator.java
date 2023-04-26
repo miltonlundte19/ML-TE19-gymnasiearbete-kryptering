@@ -104,7 +104,10 @@ public class Filecerator {
                         FileNameTestStateslabel.setForeground(defaltcolor);
                     }
                 }
-
+                /*
+                    chek till att se så att namnet går att använda.
+                    implementering senare.
+                */
                 if (lentchek) {
                     if (chekse[0]) {
                         if (!txtchek) {
@@ -115,11 +118,7 @@ public class Filecerator {
 
                     }
                 }
-                /*
-                        if (contensdottxt != -1) {
-                            System.out.println(lentofname + " | " + contensdottxt);
-                        }
-                         */
+
             }
         });
     }
