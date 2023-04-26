@@ -60,16 +60,16 @@ public class Filecerator {
                         if (!chekse[0]) {
                             chekse[0] = true;
                             DirektorytextField.setText(nameOfDiraktory);
-                            DirektoryStatesLabel.setText("successfully got the directory");
                             DirektoryStatesLabel.setForeground(Color.green);
+                            DirektoryStatesLabel.setText("successfully got the directory");
                         }
                     } else {
-                        DirektoryStatesLabel.setText("Someting went wrong geting the selekted directory");
                         DirektoryStatesLabel.setForeground(Color.red);
+                        DirektoryStatesLabel.setText("Someting went wrong geting the selekted directory");
                     }
                 } else if (o != JFileChooser.CANCEL_OPTION){
-                    DirektoryStatesLabel.setText("something vent wrong");
                     DirektoryStatesLabel.setForeground(Color.red);
+                    DirektoryStatesLabel.setText("something vent wrong");
                 }
             }
         });
@@ -88,11 +88,11 @@ public class Filecerator {
 
                 int lentofname = newFilename.length();
                 if (lentofname < 4) {
+                    FileNameTestStateslabel.setForeground(defaltcolor);
                     FileNameTestStateslabel.setText("Name to short");
-                    FileNameTestStateslabel.setForeground(defaltcolor);
                 } else if (lentofname >= 200) {
-                    FileNameTestStateslabel.setText("Name to long");
                     FileNameTestStateslabel.setForeground(defaltcolor);
+                    FileNameTestStateslabel.setText("Name to long");
                 } else {
                     lentchek = true;
                     int contensdottxt = newFilename.lastIndexOf(".txt");
