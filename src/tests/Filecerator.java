@@ -27,8 +27,10 @@ public class Filecerator {
     private File newFilefile;
     private String newFilename;
 
-    private boolean[] chekse = new boolean[4];
+    private boolean[] chekse = new boolean[]{false,false,false,false};
     private final Color defaltcolor = new Color(51,51,51);
+    private final Color betergrin = null;
+    private final Color beterred = null;
 
     private final Pattern iligalchars = Pattern.compile("[<>:?*\\\\/\"|]");
     private final Pattern iligalstrings = Pattern.compile(
