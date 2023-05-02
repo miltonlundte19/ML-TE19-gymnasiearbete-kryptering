@@ -67,6 +67,7 @@
             </constraints>
             <properties>
               <text value=" "/>
+              <toolTipText value="illegal characters: &lt; &gt; : ? * \ | / &quot;"/>
             </properties>
           </component>
         </children>
