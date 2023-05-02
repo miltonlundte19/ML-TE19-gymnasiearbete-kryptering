@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -142,14 +141,29 @@ public class Filecerator {
                     check till att se så att namnet går att använda.
                     implementering senare.
                 */
-                if (lentchek) {
+                if (validecheck) {
+                    if (!txtcheck) {
+                        newFilename = newFilename + ".txt";
+                    }
                     if (chekse[0]) {
-                        if (!txtchek) {
-                            newFilename = newFilename + ".txt";
-                        }
                         newFilefile = new File(diraktoryFile, newFilename);
-                        System.out.println(diraktoryFile.getAbsolutePath() + " | ");
+                        System.out.println(newFilefile.getName() + "  |");
 
+                    } else {
+                        newFilefile = new File(newFilename);
+                        System.out.println(newFilefile.getName() + "  ||\n" + newFilefile.getAbsolutePath());
+                    }
+                    try {
+                        if (newFilefile.createNewFile()) {
+                            FileNameTestStateslabel.setForeground(Color.green);
+                            FileNameTestStateslabel.setText("File successfully created");
+                            chekse[1] = true;
+                        }
+                    } catch (IOException ex) {
+                        newFilefile = null;
+                        FileNameTestStateslabel.setForeground(Color.red);
+                        FileNameTestStateslabel.setText("something vent wrong");
+                        throw new RuntimeException(ex);
                     }
                 }
 
