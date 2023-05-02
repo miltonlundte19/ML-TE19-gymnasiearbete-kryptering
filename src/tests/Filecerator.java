@@ -134,10 +134,12 @@ public class Filecerator {
                             FileNameTestStateslabel.setForeground(Color.red);
                             FileNameTestStateslabel.setText("Name contains illegal characters");
                         }
+
                     }
                 }
+
                 /*
-                    chek till att se så att namnet går att använda.
+                    check till att se så att namnet går att använda.
                     implementering senare.
                 */
                 if (lentchek) {
