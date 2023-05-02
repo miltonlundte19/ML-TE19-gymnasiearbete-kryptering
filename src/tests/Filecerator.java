@@ -54,6 +54,8 @@ public class Filecerator {
         DirektoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                DirektoryStatesLabel.setForeground(defaltcolor);
+                DirektoryStatesLabel.setText("");
                 JFileChooser diraktorychooser = new JFileChooser();
                 diraktorychooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 int o;
@@ -89,7 +91,7 @@ public class Filecerator {
         TestFilebutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nameOfnewFile = FileNametextField.getText();
+                String nameOfnewFile = FileNametextField.getText().trim();
                 if (!Objects.equals(nameOfnewFile, newFilename)) {
                     newFilename = nameOfnewFile;
                     chekse[1] = false;
