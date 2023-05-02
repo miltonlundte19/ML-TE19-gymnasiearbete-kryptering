@@ -12,15 +12,18 @@ import java.util.regex.Pattern;
 
 public class Filecerator {
     private JPanel panel1;
+    private JPanel siseinput;
+    private JPanel filegenirator;
+    private JPanel creationpanel;
     private JTextField DirektorytextField;
-    private JTextField FileNametextField;
-    private JButton DirektoryButton;
+    private JTextField FileNamntextField;
+    private JButton DirectoryButton;
     private JButton TestFilebutton;
     private JTextField GBtextField;
     private JButton Okbutton;
     private JLabel StatusLabel;
     private JLabel GBlabel;
-    private JLabel DirektoryStatesLabel;
+    private JLabel DirectoryStatesLabel;
     private JLabel FileNameTestStateslabel;
     private JLabel StatusValuLabel;
     private File diraktoryFile;
@@ -28,7 +31,7 @@ public class Filecerator {
     private File newFilefile;
     private String newFilename;
 
-    private boolean[] chekse = new boolean[]{false,false,false,false};
+    private final boolean[] chekse = new boolean[]{false,false,false,false};
     private final Color defaltcolor = new Color(51,51,51);
     private final Color betergrin = null;
     private final Color beterred = null;
@@ -52,11 +55,11 @@ public class Filecerator {
 
     public Filecerator() {
 
-        DirektoryButton.addActionListener(new ActionListener() {
+        DirectoryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DirektoryStatesLabel.setForeground(defaltcolor);
-                DirektoryStatesLabel.setText("");
+                DirectoryStatesLabel.setForeground(defaltcolor);
+                DirectoryStatesLabel.setText("");
                 JFileChooser diraktorychooser = new JFileChooser();
                 diraktorychooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 int o;
@@ -75,16 +78,16 @@ public class Filecerator {
                         if (!chekse[0]) {
                             chekse[0] = true;
                             DirektorytextField.setText(nameOfDiraktory);
-                            DirektoryStatesLabel.setForeground(Color.green);
-                            DirektoryStatesLabel.setText("successfully got the directory");
+                            DirectoryStatesLabel.setForeground(Color.green);
+                            DirectoryStatesLabel.setText("successfully got the directory");
                         }
                     } else {
-                        DirektoryStatesLabel.setForeground(Color.red);
-                        DirektoryStatesLabel.setText("Someting went wrong geting the selekted directory");
+                        DirectoryStatesLabel.setForeground(Color.red);
+                        DirectoryStatesLabel.setText("Someting went wrong geting the selekted directory");
                     }
                 } else if (o != JFileChooser.CANCEL_OPTION){
-                    DirektoryStatesLabel.setForeground(Color.red);
-                    DirektoryStatesLabel.setText("something vent wrong");
+                    DirectoryStatesLabel.setForeground(Color.red);
+                    DirectoryStatesLabel.setText("something vent wrong");
                 }
             }
         });
@@ -92,7 +95,7 @@ public class Filecerator {
         TestFilebutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nameOfnewFile = FileNametextField.getText().trim();
+                String nameOfnewFile = FileNamntextField.getText().trim();
                 if (!Objects.equals(nameOfnewFile, newFilename)) {
                     newFilename = nameOfnewFile;
                     chekse[1] = false;
