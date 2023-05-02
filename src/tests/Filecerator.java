@@ -30,12 +30,22 @@ public class Filecerator {
     private boolean[] chekse = new boolean[4];
     private final Color defaltcolor = new Color(51,51,51);
 
+    private final Pattern iligalchars = Pattern.compile("[<>:?*\\\\/\"|]");
+    private final Pattern iligalstrings = Pattern.compile(
+            "\\A(CON\\.|PRN\\.|AUX\\.|NUL\\.|COM0\\.|COM1\\.|COM2\\.|COM3\\.|COM4\\.|" +
+                    "COM5\\.|COM6\\.|COM7\\.|COM8\\.|COM9\\.|LPT0\\.|LPT1\\.|LPT2\\.|LPT3\\.|" +
+                    "LPT4\\.|LPT5\\.|LPT6\\.|LPT7\\.|LPT8\\.|LPT9\\.)"
+    );
+
+    /*
     private final char[] iligalchars = new char[]{'<','>',':','"','/','\\','|','?','*',};
     private final String[] iligalstrings = new String[]{
-            "CON","PRN","AUX","NUL","CON","PRN","AUX","NUL","COM0","COM1","COM2","COM3","COM4","COM5","COM6","COM7",
-            "COM8","COM9","LPT0","LPT1","LPT2","LPT3","LPT4","LPT5","LPT6","LPT7","LPT8","LPT9"
+            "CON.","PRN.","AUX.","NUL.","COM0.","COM1.","COM2.","COM3.","COM4.","COM5.","COM6.","COM7.",
+            "COM8.","COM9.","LPT0.","LPT1.","LPT2.","LPT3.","LPT4.","LPT5.","LPT6.","LPT7.","LPT8.","LPT9."
     };
-    private final char[] iligalLastchars = new char[]{' '};
+    "CON","PRN","AUX","NUL","COM0","COM1","COM2","COM3","COM4","COM5","COM6","COM7","COM8","COM9","LPT0","LPT1","LPT2","LPT3","LPT4","LPT5","LPT6","LPT7","LPT8","LPT9",
+    "CON.","PRN.","AUX.","NUL.","COM0.","COM1.","COM2.","COM3.","COM4.","COM5.","COM6.","COM7.","COM8.","COM9.","LPT0.","LPT1.","LPT2.","LPT3.","LPT4.","LPT5.","LPT6.","LPT7.","LPT8.","LPT9."
+    */
 
     public Filecerator() {
 
