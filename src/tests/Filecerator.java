@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Filecerator {
     private JPanel panel1;
@@ -97,26 +99,40 @@ public class Filecerator {
                     chekse[1] = false;
                 }
 
-                boolean lentchek = false;
-                boolean txtchek = false;
+                boolean validecheck = false;
+                boolean txtcheck = false;
+                if (!chekse[1]) {
+                    int lentofname = newFilename.length();
+                    if (lentofname < 4) {
+                        FileNameTestStateslabel.setForeground(defaltcolor);
+                        FileNameTestStateslabel.setText("Name to short");
+                    } else if (lentofname >= 200) {
+                        FileNameTestStateslabel.setForeground(defaltcolor);
+                        FileNameTestStateslabel.setText("Name to long");
+                    } else {
+                        validecheck = true;
+                        if (!iligalchars.matcher(newFilename).find()) {
+                            System.out.println(newFilename);
+                            Matcher iligalstingsmach = iligalstrings.matcher(newFilename);
 
-                int lentofname = newFilename.length();
-                if (lentofname < 4) {
-                    FileNameTestStateslabel.setForeground(defaltcolor);
-                    FileNameTestStateslabel.setText("Name to short");
-                } else if (lentofname >= 200) {
-                    FileNameTestStateslabel.setForeground(defaltcolor);
-                    FileNameTestStateslabel.setText("Name to long");
-                } else {
-                    lentchek = true;
-                    int contensdottxt = newFilename.lastIndexOf(".txt");
-                    if (contensdottxt != -1) {
-                        if (((lentofname - contensdottxt) == 4) && (contensdottxt >= 4)) {
-                            txtchek = true;
+                            boolean fond = iligalstingsmach.find();
+                            System.out.println(fond);
+
+
+                            int contensdottxt = newFilename.lastIndexOf(".txt");
+                            if (contensdottxt != -1) {
+                                if (((lentofname - contensdottxt) == 4) && (contensdottxt >= 4)) {
+                                    txtcheck = true;
+                                } else {
+                                    validecheck = false;
+                                    FileNameTestStateslabel.setForeground(defaltcolor);
+                                    FileNameTestStateslabel.setText("Name to short");
+                                }
+                            }
                         } else {
-                            lentchek = false;
-                            FileNameTestStateslabel.setForeground(defaltcolor);
-                            FileNameTestStateslabel.setText("Name to short");
+                            validecheck = false;
+                            FileNameTestStateslabel.setForeground(Color.red);
+                            FileNameTestStateslabel.setText("Name contains illegal characters");
                         }
                     }
                 }
