@@ -147,26 +147,47 @@ public class Filecerator {
                     }
                     if (chekse[0]) {
                         newFilefile = new File(diraktoryFile, newFilename);
-                        System.out.println(newFilefile.getName() + "  |");
-
+                        System.out.println(newFilefile.getName() + "  ||\n" + newFilefile.getAbsolutePath());
                     } else {
                         newFilefile = new File(newFilename);
                         System.out.println(newFilefile.getName() + "  ||\n" + newFilefile.getAbsolutePath());
                     }
+                    boolean filecreate;
+                    boolean eror = false;
                     try {
-                        if (newFilefile.createNewFile()) {
-                            FileNameTestStateslabel.setForeground(Color.green);
-                            FileNameTestStateslabel.setText("File successfully created");
-                            chekse[1] = true;
-                        }
+                        filecreate = newFilefile.createNewFile();
                     } catch (IOException ex) {
                         newFilefile = null;
+                        filecreate = false;
+                        chekse[1] = false;
+                        eror = true;
                         FileNameTestStateslabel.setForeground(Color.red);
-                        FileNameTestStateslabel.setText("something vent wrong");
+                        FileNameTestStateslabel.setText("something vent wrong (EROR!)");
                         throw new RuntimeException(ex);
                     }
+                    if (!eror) {
+                        if (filecreate) {
+                            chekse[1] = true;
+                            if (chekse[0]) {
+                                FileNameTestStateslabel.setForeground(Color.green);
+                                FileNameTestStateslabel.setText("File successfully created");
+                                chekse[2] = true;
+                            } else {
+                                FileNameTestStateslabel.setForeground(defaltcolor);
+                                FileNameTestStateslabel.setText("File name is valid");
+                                newFilefile.delete();
+                            }
+                        } else {
+                            if (newFilefile.exists()) {
+                                FileNameTestStateslabel.setForeground(defaltcolor);
+                                FileNameTestStateslabel.setText("The given name is valid but a file vid dat name already exists");
+                            } else {
+                                FileNameTestStateslabel.setForeground(Color.red);
+                                FileNameTestStateslabel.setText("something vent wrong");
+                            }
+                        }
+                    }
                 }
-
             }
         });
     }
