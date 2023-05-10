@@ -1,4 +1,4 @@
-package controlers;
+package controllers;
 
 import modules.Crypteringsmodule;
 import setings.Settings;
@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.time.LocalDateTime;
 
-public class cryptcontroler {
+public class Cryptcontroller {
     public static void main(String[] args) {
         LocalDateTime starttime = LocalDateTime.now();
         // Börjar med att sparar tiden som programet börjar.
