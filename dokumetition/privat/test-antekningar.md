@@ -244,7 +244,7 @@ Tiden res crypteringen började:
 Den krypterade filen är har:
 C:\code\krypt-test-fils\lorum-ut-test-crypt.txt  
 
-20. File (res)
+20. File (res)  
     { set key, decrypt, pri }
 
 Start time:
@@ -256,3 +256,23 @@ Tiden res crypteringen började:
 Den krypterade filen är har:
 C:\code\krypt-test-fils\lorum-ut-de-test-ceypt.txt  
 
+---
+
+21. File (aes)  
+    { set key, encrypt }
+
+Start time:
+2023-05-10T12:44:12.231125100  
+File: 
+C:\code\test av programet\testtext.txt  
+Starlet: 1 GB  
+Tiden aes krypteringen började:
+2023-05-10T12:44:17.425138700  
+Den krypterade filen är har: 
+null  
+Krypteringen kördes: 
+8  
+Första krypteringen slutade:
+12:44:21.543264700  
+Krypteringen slutade:
+2023-05-10T12:45:14.584649  
