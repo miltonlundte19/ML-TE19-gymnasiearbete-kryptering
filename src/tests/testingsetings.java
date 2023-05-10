@@ -5,8 +5,6 @@ import setings.RESsettings;
 import setings.Settings;
 import setings.Settingsfile;
 
-import modules.SetingsModel;
-
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.swing.*;
@@ -201,7 +199,6 @@ public class testingsetings {
         } catch (IOException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-
 
         SecretKey key;
         try {
