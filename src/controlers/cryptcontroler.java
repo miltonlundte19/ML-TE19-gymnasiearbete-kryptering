@@ -29,7 +29,7 @@ public class cryptcontroler {
                 startupfile.createNewFile();
             }
             startup = new FileWriter(startupfile);
-            startup.write("start time:\n" + starttime + "\n");
+            startup.write("Start time:\n" + starttime + "\n");
             startup.flush();
             /* skriver tiden som programet startade i logg filen
                så att men kan räkna ut hur lång tid upstarten tog.

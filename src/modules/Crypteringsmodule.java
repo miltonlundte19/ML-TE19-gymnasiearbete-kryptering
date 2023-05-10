@@ -206,9 +206,9 @@ public class Crypteringsmodule {
         short nMAX = (short) module[4];
 
         try {
-            looger.write("File: " + filestrings[0] + "\ntiden aes crypteringen började: \n" +
-                    LocalDateTime.now() +
-                    "\nden krypterade filen är har: " + filestrings[1] + "\n");
+            looger.write("File:\n" + filestrings[0] + "\nTiden aes krypteringen började: \n" +
+                    LocalTime.now() +
+                    "\nDen krypterade filen är har:\n" + filestrings[1] + "\n");
             if (nMAX > 1) {
                 looger.write("krypteringen kördes: " + nMAX + "\n");
             }
@@ -231,7 +231,7 @@ public class Crypteringsmodule {
             if (f) {
                 if (manulesnapshotAlurt && (nMAX > 1)) {
                     try {
-                        looger.write("första krypteringen slutade:\n" + LocalTime.now() + "\n");
+                        looger.write("Första krypteringen slutade:\n" + LocalTime.now() + "\n");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -243,7 +243,7 @@ public class Crypteringsmodule {
 
         if (manulesnapshotAlurt) {
             try {
-                looger.write("keypteringen slutate: \n" + LocalDateTime.now());
+                looger.write("Krypteringen slutade: \n" + LocalTime.now());
                 looger.flush();
                 looger.close();
                 JOptionPane.showMessageDialog(null, "keypteringen slutate, ta snap");
