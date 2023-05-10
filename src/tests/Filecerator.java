@@ -25,7 +25,7 @@ public class Filecerator {
     private JLabel GBlabel;
     private JLabel DirectoryStatesLabel;
     private JLabel FileNameTestStateslabel;
-    private JLabel StatusValuLabel;
+    private JLabel StatusValueLabel;
     private File diraktoryFile;
     private String diraktoryString;
     private File newFilefile;
