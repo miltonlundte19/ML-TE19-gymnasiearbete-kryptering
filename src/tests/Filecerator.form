@@ -12,7 +12,7 @@
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="860" height="-1"/>
+            <preferred-size width="739" height="119"/>
           </grid>
         </constraints>
         <properties/>
@@ -76,7 +76,7 @@
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="860" height="-1"/>
+            <preferred-size width="739" height="34"/>
           </grid>
         </constraints>
         <properties/>
@@ -104,7 +104,7 @@
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="860" height="34"/>
+            <preferred-size width="739" height="34"/>
           </grid>
         </constraints>
         <properties/>
@@ -155,14 +155,14 @@
       </vspacer>
       <hspacer id="1847e">
         <constraints>
-          <grid row="0" column="2" row-span="5" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+          <grid row="1" column="2" row-span="4" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <minimum-size width="10" height="-1"/>
           </grid>
         </constraints>
       </hspacer>
       <hspacer id="88b41">
         <constraints>
-          <grid row="0" column="0" row-span="5" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+          <grid row="1" column="0" row-span="4" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <minimum-size width="10" height="-1"/>
           </grid>
         </constraints>
