@@ -5,7 +5,7 @@ import javax.swing.*;
 public class Fillecreitrorview {
     private JPanel panel1;
     private JLabel ivlabel;
-    private JComboBox comboBox1;
+    private JComboBox ivselektorcombox;
     private JPanel ivselekterpanel;
     private JPanel pasvirdpanel;
     private JLabel Passwirde;
@@ -14,9 +14,49 @@ public class Fillecreitrorview {
     private JTextField pasvirddisplayfield;
     private JPanel filesilektorpanel;
     private JLabel filemesigelabel;
-    private JButton button1;
-    private JTextField textField1;
-    private JCheckBox checkBox1;
-    private JButton button2;
-    private JTextField textField2;
+    private JButton fileinbutton;
+    private JTextField fileintextfild;
+    private JCheckBox fileoutcheckBox;
+    private JButton fileoutbutton;
+    private JTextField fileouttextField;
+
+    public JPanel getPanel1() {
+        return panel1;
+    }
+
+    public JComboBox getIvselektorcombox() {
+        return ivselektorcombox;
+    }
+
+    public JButton getSelektpasbutton() {
+        return selektpasbutton;
+    }
+
+    public JButton getGeniraitepasbutton() {
+        return geniraitepasbutton;
+    }
+
+    public JTextField getPasvirddisplayfield() {
+        return pasvirddisplayfield;
+    }
+
+    public JButton getFileinbutton() {
+        return fileinbutton;
+    }
+
+    public JTextField getFileintextfild() {
+        return fileintextfild;
+    }
+
+    public JCheckBox getFileoutcheckBox() {
+        return fileoutcheckBox;
+    }
+
+    public JButton getFileoutbutton() {
+        return fileoutbutton;
+    }
+
+    public JTextField getFileouttextField() {
+        return fileouttextField;
+    }
 }
