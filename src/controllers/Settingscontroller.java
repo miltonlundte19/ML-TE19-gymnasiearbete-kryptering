@@ -1,6 +1,6 @@
 package controllers;
 
-import modules.SetingsModel;
+import modules.SettingsModel;
 import view.Settingsview;
 
 import javax.swing.*;
@@ -13,14 +13,14 @@ import java.awt.event.ItemListener;
 
 public class Settingscontroller {
     private Settingsview view;
-    private SetingsModel modell;
+    private SettingsModel modell;
 
     public static void main(String[] args) {
         Settingscontroller fillecreitorcontroller = new Settingscontroller();
     }
     public Settingscontroller() {
         view = new Settingsview();
-        modell = new SetingsModel();
+        modell = new SettingsModel();
 
         JFrame frame = new JFrame("Fillecreitrorview");
         frame.setContentPane(view.getPanel1());
