@@ -21,6 +21,7 @@ public class Settingscontroller {
     public Settingscontroller() {
         view = new Settingsview();
         modell = new SettingsModel();
+        modell.setId((byte) 0); // temporary (coming son)
 
         JFrame frame = new JFrame("Fillecreitrorview");
         frame.setContentPane(view.getPanel1());
