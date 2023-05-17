@@ -41,6 +41,9 @@ public class Settingsview {
     public JComboBox getIvselektorcombox() {
         return ivselektorcombox;
     }
+    public JButton getIvselektbutton() {
+        return ivselektbutton;
+    }
 
     public JButton getSelektpasbutton() {
         return selektpasbutton;
