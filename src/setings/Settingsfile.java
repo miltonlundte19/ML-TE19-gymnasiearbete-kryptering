@@ -12,6 +12,16 @@ public class Settingsfile implements Serializable {
     private File ou;
     private String fileoustring;
 
+    public Settingsfile() {
+    }
+    public Settingsfile(File in) {
+        setIN(in);
+    }
+    public Settingsfile(File in, File ou) {
+        setIN(in);
+        setOU(ou);
+    }
+
 
     public void setIN(File in) {
         this.in = in;
