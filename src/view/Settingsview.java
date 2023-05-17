@@ -22,8 +22,11 @@ public class Settingsview {
     private JSpinner repetisonkonter;
     private JLabel repetisonlabel;
     private JButton ivselektbutton;
-    private JButton button1;
+    private JButton doneButton;
     private JLabel genirationstatuslabel;
+    private JCheckBox mesidecheckbox;
+    private JCheckBox enkryptionCheckBox;
+    private JLabel statuslabel;
 
     public JPanel getPanel1() {
         return panel1;
