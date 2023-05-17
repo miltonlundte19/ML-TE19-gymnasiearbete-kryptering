@@ -68,7 +68,7 @@ public class testingsetings {
 
 
         settings.setId((byte) 2);
-        settings.setChekORen();
+        settings.setCheekEncryption();
         //settings.setChekORstr();
         settings.setManulesnapshot();
 
@@ -212,7 +212,7 @@ public class testingsetings {
 
         Settings settings = new Settings();
         settings.setId((byte) 1);
-        settings.setChekORen();
+        settings.setCheekEncryption();
         //settings.setChekORstr();
         settings.setManulesnapshot();
         settings.setStorTOfile(storTOfile);

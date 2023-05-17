@@ -54,12 +54,12 @@ public class SetingsModelOLD {
     }
 
     public void setENorDE() {
-        settings.setChekORen();
+        settings.setCheekEncryption();
         check[1] = true;
     }
 
     public void setMesige(String mesige) {
-        settings.setChekORstr();
+        settings.setCheekString();
         if (id == 1) {
             aes.setPlainText(mesige);
         } else if (id == 2) {
