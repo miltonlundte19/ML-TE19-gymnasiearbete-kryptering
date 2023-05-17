@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+import java.awt.Color;
+
 
 public class Settingsview {
     private JPanel panel1;
@@ -27,6 +29,10 @@ public class Settingsview {
     private JCheckBox mesidecheckbox;
     private JCheckBox enkryptionCheckBox;
     private JLabel statuslabel;
+
+    private static final Color defaltcolor = new Color(51,51,51);
+    private static final Color betergrin = null;
+    private static final Color beterred = null;
 
     public JPanel getPanel1() {
         return panel1;
