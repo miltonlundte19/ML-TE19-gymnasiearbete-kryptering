@@ -26,9 +26,8 @@ public class Settings implements Serializable {
     // om storTOfile är true så lagras bara första operationen
     private AESsettings aes;
     private RESsettings res;
-    // under klaser som har variablerna för sin spesifika kryptering
-
     private HYDRIDsettings hybrid;
+    // under klaser som har variablerna för sin spesifika kryptering
 
     public Settings() {
         Arrays.fill(chekOR, false);
@@ -38,17 +37,39 @@ public class Settings implements Serializable {
     public void setId(byte id) {
         this.id = id;
     }
-
-    public void setChekORstr() {
-        chekOR[0] = true;//=string
+    public void setCheekString() {
+        setCheekString(true);
+    }
+    public void setCheekString(boolean string) {
+        chekOR[0] = string;//=string
         // om det är en string eller fill
     }
-
-    public void setChekORen() {
-        chekOR[1] = true;//=enkyption
+    public void setCheekEncryption() {
+        setCheekEncryption(true);
+    }
+    public void setCheekEncryption(boolean encryption) {
+        chekOR[1] = encryption;//=encryption
         // om den ska kryptera eller dekryptera
     }
-
+    public void setManulesnapshot() {
+        manulesnapshot = true;
+    }
+    public void setStorTOfile(boolean storTOfile) {
+        this.storTOfile = storTOfile;
+    }
+    public void setStorTOfile() {
+        storTOfile = true;
+    }
+    public void setNumOFrepeteson(short numOFrepeteson) {
+        if (numOFrepeteson < 0) {
+            numOFrepeteson *= -1;
+        }
+        this.numOFrepeteson = numOFrepeteson;
+    }
+    public void setNumOFrepeteson(int numOFrepeteson) {
+        short shortnumrep = (short) numOFrepeteson;
+        setNumOFrepeteson(shortnumrep);
+    }
     public void setAes(AESsettings aes) {
         this.aes = aes;
     }
@@ -65,59 +86,32 @@ public class Settings implements Serializable {
     public byte getId() {
         return id;
     }
-
     public boolean getStringORfile() {
         return chekOR[0];
     }
-
     public boolean getEncryptORdecrypt() {
         return chekOR[1];
+    }
+    public boolean getManulesnapshot() {
+        return manulesnapshot;
+    }
+    public boolean isStorTOfile() {
+        return storTOfile;
+    }
+    public short getNumOFrepeteson() {
+        return numOFrepeteson;
     }
 
     public AESsettings getAes() {
         return aes;
     }
-
     public RESsettings getRes() {
         return res;
     }
-
     public HYDRIDsettings getHybrid() {
         return hybrid;
     }
 
-
-    // en variabel som seger som programet ska vänta i slutet.
-    public void setManulesnapshot() {
-        manulesnapshot = true;
-    }
-
-    public boolean getManulesnapshot() {
-        return manulesnapshot;
-    }
-
-    //
-    public boolean isStorTOfile() {
-        return storTOfile;
-    }
-
-    public void setStorTOfile(boolean storTOfile) {
-        this.storTOfile = storTOfile;
-    }
-    public void setStorTOfile() {
-        storTOfile = false;
-    }
-
-    public short getNumOFrepeteson() {
-        return numOFrepeteson;
-    }
-
-    public void setNumOFrepeteson(short numOFrepeteson) {
-        this.numOFrepeteson = numOFrepeteson;
-    }
-    public void setNumOFrepeteson(int numOFrepeteson) {
-        this.numOFrepeteson = (short) numOFrepeteson;
-    }
 
     @Override
     public String toString() {
@@ -133,11 +127,20 @@ public class Settings implements Serializable {
         } else {
             modeEnOrDe = ", decryption";
         }
-        String mode = "";
-        if (aes != null) {
-            mode = aes.toString();
-        } else if (res != null) {
-            mode = res.toString();
+        String mode = "ERROE set mod";
+        if (id == 0) {
+            if (aes != null) {
+                mode = aes.toString();
+            } else {
+                mode = "aes ERROR!";
+            }
+        }
+        if (id == 1) {
+            if (res != null) {
+                mode = res.toString();
+            } else {
+                mode = "res ERROR!";
+            }
         }
         return "Settings{" +
                 "id=" + id +
@@ -148,6 +151,5 @@ public class Settings implements Serializable {
                 ", repetisons=" + numOFrepeteson +
                 ", mode=" + mode +
                 '}';
-
     }
 }
