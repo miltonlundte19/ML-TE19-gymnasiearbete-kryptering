@@ -80,4 +80,8 @@ public class Settingsview {
     public JSpinner getRepetisonkonter() {
         return repetisonkonter;
     }
+
+    public void setPasvirddisplayfieldtext(String s) {
+        pasvirddisplayfield.setText(s);
+    }
 }
