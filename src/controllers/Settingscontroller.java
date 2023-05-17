@@ -33,7 +33,7 @@ public class Settingscontroller {
     }
 
     private void setButtons() {
-        view.getIvselektorcombox().addActionListener(new setcrypidAL());
+        view.getIvselektbutton().addActionListener(new setivAL());
         view.getSelektpasbutton().addActionListener(new selektpaswerdAL());
         view.getGeniraitepasbutton().addActionListener(new getpaswirdeAL());
         view.getFileinbutton().addActionListener(new getfilinAL());
@@ -45,6 +45,15 @@ public class Settingscontroller {
     private class setcrypidAL implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    private class setivAL implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int posison = view.getIvselektorcombox().getSelectedIndex();
+            System.out.println(posison);
 
         }
     }
