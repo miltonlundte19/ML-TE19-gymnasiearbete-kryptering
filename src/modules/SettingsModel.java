@@ -67,6 +67,19 @@ public class SettingsModel {
         settings.setNumOFrepeteson(repetison);
     }
 
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public boolean FINALcheck() {
+        for (boolean value : check) {
+            if (!value) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     // ---------------------- AES ----------------------------------------------------------------------------------- //
     public void setAesiv(byte aesiv) {
