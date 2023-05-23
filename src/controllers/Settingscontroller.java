@@ -55,7 +55,7 @@ public class Settingscontroller {
         public void actionPerformed(ActionEvent e) {
             int posison = view.getIvselektorcombox().getSelectedIndex();
             System.out.println(posison);
-
+            modell.setAesiv((byte) posison);
         }
     }
 
