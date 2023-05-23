@@ -8,6 +8,7 @@ import setings.Settingsfile;
 import javax.crypto.SecretKey;
 import java.io.*;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class SettingsModel {
     private Settings settings;
@@ -17,7 +18,7 @@ public class SettingsModel {
     private Settingsfile settingsfile = null;
 
 
-    private boolean[] check = new boolean[9];
+    private final boolean[] check = new boolean[9];
 
 
     public SettingsModel() {
@@ -25,15 +26,21 @@ public class SettingsModel {
         Arrays.fill(check, false);
     }
     public void setId(Byte id) {
-        this.id = id;
+        boolean b = true;
+        if (!(Objects.equals(id, this.id))) {
+            Arrays.fill(check, false);
+        }
         check[0] = true;
         if (id == 0) {
             aes = new AESsettings();
             settings.setAes(aes);
+            settings.setRes(null);
         } else if (id == 1) {
             res = new RESsettings();
             settings.setRes(res);
+            settings.setAes(null);
         }
+        this.id = id;
     }
     public void setencrypton() {
         setencryption(true);
