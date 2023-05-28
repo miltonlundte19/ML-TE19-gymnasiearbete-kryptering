@@ -29,6 +29,7 @@ public class Settingsview {
     private JCheckBox mesidecheckbox;
     private JCheckBox enkryptionCheckBox;
     private JLabel statuslabel;
+    private JButton saveButton;
 
     private static final Color defaltcolor = new Color(51,51,51);
     private static final Color betergrin = null;
@@ -81,7 +82,20 @@ public class Settingsview {
         return repetisonkonter;
     }
 
+    public JButton getSaveButton() {
+        return saveButton;
+    }
+
     public void setPasvirddisplayfieldtext(String s) {
+        pasvirddisplayfield.setBackground(defaltcolor);
         pasvirddisplayfield.setText(s);
+    }
+    public void setPasvirddisplayfieldtextError(String s) {
+        pasvirddisplayfield.setBackground(Color.red);
+        pasvirddisplayfield.setText(s);
+    }
+
+    public void enebilsavebuton() {
+        saveButton.setEnabled(true);
     }
 }
