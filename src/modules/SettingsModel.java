@@ -95,22 +95,24 @@ public class SettingsModel {
         check[5] = true;
     }
     public boolean setAeskey(File keyfile) {
+        boolean status = true;
         SecretKey key = null;
         try {
             ObjectInputStream temkeyred = new ObjectInputStream(new BufferedInputStream(new FileInputStream(keyfile)));
             key = (SecretKey) temkeyred.readObject();
             temkeyred.close();
         } catch (IOException | ClassNotFoundException e) {
+            status = false;
             key = null;
             throw new RuntimeException(e);
         }
-        if (key != null)
-            return setAeskey(key);
-        return false;
+        if (key != null) {
+            aes.setKey(key);
+        }
+        return status;
     }
-    public boolean setAeskey(SecretKey key) {
+    public void setAeskey(SecretKey key) {
         aes.setKey(key);
-        return true;
     }
 
     // -------------------------------------------------------------------------------------------------------------- //
