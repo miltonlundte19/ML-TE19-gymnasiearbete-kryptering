@@ -3,10 +3,7 @@ package controllers;
 import modules.Crypteringsmodule;
 import setings.Settings;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.time.LocalDateTime;
 
 public class Cryptcontroller {
@@ -28,26 +25,39 @@ public class Cryptcontroller {
             if (!startupfile.exists()) {
                 startupfile.createNewFile();
             }
-            startup = new FileWriter(startupfile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            startup = new FileWriter(setingsfile);
             startup.write("Start time:\n" + starttime + "\n");
             startup.flush();
             /* skriver tiden som programet startade i logg filen
                så att men kan räkna ut hur lång tid upstarten tog.
             */
-            ObjectInputStream setingsreder = new ObjectInputStream(new FileInputStream(setingsfile));
-            Settings settings = (Settings) setingsreder.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Settings settings;
+        try {
+            ObjectInputStream setingsreder;
+            FileInputStream fileInputStream;
+            fileInputStream = new FileInputStream(setingsfile);
+            setingsreder = new ObjectInputStream(fileInputStream);
+            settings = (Settings) setingsreder.readObject();
             setingsreder.close();
             // Läser in en egen jord variabel som har alltför krypteringen för dig gjort
             // mer om Settings varabeln fins /setings/Settings
-
-            Crypteringsmodule crypteringsmodule = new Crypteringsmodule(settings);
-            crypteringsmodule.setLooger(startup);
-            crypteringsmodule.start();
-            // ladar in några objekt till krypteringen och sedan startar klasen.
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(-1);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+        Crypteringsmodule crypteringsmodule = new Crypteringsmodule(settings);
+        crypteringsmodule.setLooger(startup);
+        crypteringsmodule.start();
+        // ladar in några objekt till krypteringen och sedan startar klasen.
     }
 }
