@@ -26,7 +26,7 @@ public class Settings implements Serializable {
     // om storTOfile är true så lagras bara första operationen
     private AESsettings aes;
     private RESsettings res;
-    private HYDRIDsettings hybrid;
+    private HYBRIDsettings hybrid;
     // under klaser som har variablerna för sin spesifika kryptering
 
     public Settings() {
@@ -78,7 +78,7 @@ public class Settings implements Serializable {
         this.res = res;
     }
 
-    public void setHybrid(HYDRIDsettings hybrid) {
+    public void setHybrid(HYBRIDsettings hybrid) {
         this.hybrid = hybrid;
     }
 
@@ -108,7 +108,7 @@ public class Settings implements Serializable {
     public RESsettings getRes() {
         return res;
     }
-    public HYDRIDsettings getHybrid() {
+    public HYBRIDsettings getHybrid() {
         return hybrid;
     }
 
