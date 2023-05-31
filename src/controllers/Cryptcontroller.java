@@ -29,7 +29,7 @@ public class Cryptcontroller {
             throw new RuntimeException(e);
         }
         try {
-            startup = new FileWriter(setingsfile);
+            startup = new FileWriter(startupfile);
             startup.write("Start time:\n" + starttime + "\n");
             startup.flush();
             /* skriver tiden som programet startade i logg filen
