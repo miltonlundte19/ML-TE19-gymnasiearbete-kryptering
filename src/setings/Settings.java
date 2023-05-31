@@ -128,14 +128,14 @@ public class Settings implements Serializable {
             modeEnOrDe = ", decryption";
         }
         String mode = "ERROE set mod";
-        if (id == 0) {
+        if (id == 1) {
             if (aes != null) {
                 mode = aes.toString();
             } else {
                 mode = "aes ERROR!";
             }
         }
-        if (id == 1) {
+        if (id == 2) {
             if (res != null) {
                 mode = res.toString();
             } else {
