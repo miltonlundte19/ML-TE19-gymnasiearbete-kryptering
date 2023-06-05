@@ -54,6 +54,9 @@ public class Settings implements Serializable {
     public void setManulesnapshot() {
         manulesnapshot = true;
     }
+    public void setManulesnapshot(boolean b) {
+        manulesnapshot = b;
+    }
     public void setStorTOfile(boolean storTOfile) {
         this.storTOfile = storTOfile;
     }
@@ -128,14 +131,14 @@ public class Settings implements Serializable {
             modeEnOrDe = ", decryption";
         }
         String mode = "ERROE set mod";
-        if (id == 1) {
+        if (id == 0) {
             if (aes != null) {
                 mode = aes.toString();
             } else {
                 mode = "aes ERROR!";
             }
         }
-        if (id == 2) {
+        if (id == 1) {
             if (res != null) {
                 mode = res.toString();
             } else {
