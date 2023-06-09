@@ -3,7 +3,8 @@
 ---
 (När programet kompileras)  
 Java verson: 
-Openjdk-11 
+Openjdk-20  
+https://jdk.java.net/20/
 
 ---
 
