@@ -46,7 +46,6 @@ public class Crypteringsmodule {
             7 = in put File
             8 = ou put File
     ----------------------------------------------------------
-
      */
     private String[] filestrings = new String[2];
     private final boolean manulesnapshotAlurt;
@@ -61,10 +60,9 @@ public class Crypteringsmodule {
         module[4] = settings.getNumOFrepeteson();
         manulesnapshotAlurt = settings.getManulesnapshot();
         // hämtar datan från settings till en objekt array så att det ska vara lättare att läga in datan.
-
-        if (module[0].equals((byte) 1)) {
+        if (module[0].equals((byte) 0)) {
             AESset(settings.getAes());
-        } else if (module[0].equals((byte) 2)) {
+        } else if (module[0].equals((byte) 1)) {
             RESset(settings.getRes());
         } // titar efter vilken krypterings model som ska användas
     }
@@ -85,9 +83,9 @@ public class Crypteringsmodule {
         filestrings[1] = fileseter.getFileoustring();
         // Hämtar filernas plats i string format
         File file = fileseter.getIn();// titar om den kan hämta filen från ett fill objekt
-        if (!file.exists()) {
+        if (!file.exists())
             file = new File(filestrings[0]);
-        } // om inte så görden en ny fil och försöker med filens absoluta väg ((men det kanske inte gör någonting))
+        // om inte så görden en ny fil och försöker med filens absoluta väg ((men det kanske inte gör någonting))
         module[7] = file;
         // setter in filen och gör samma sak med filen som den ska skriva till
         file = fileseter.getOu();
@@ -98,14 +96,12 @@ public class Crypteringsmodule {
         } else {
             if (file == null) {
                 file = new File(filestrings[1]);
-                if (!file.isFile()) {
+                if (!file.isFile())
                     throw new RuntimeException("Platsen som fillen pekar på är inte en fill");
-                }
             } else if (!file.exists()) {
                 file = new File(filestrings[1]);
-                if (!file.isFile()) {
+                if (!file.isFile())
                     throw new RuntimeException("Platsen som fillen pekar på är inte en fill");
-                }
             }
             module[8] = file;
         }
@@ -157,13 +153,13 @@ public class Crypteringsmodule {
 
     public void start() { // Starten på krypteringen. Funktionerna med en s är för String och f är för File.
         JOptionPane.showMessageDialog(null,"Vänta tills Profiler programmet har hittat java programmet.");
-        if (module[0].equals((byte) 1)) {
+        if (module[0].equals((byte) 0)) {
             if ((boolean) module[1]) { // 1 = String or File
                 AESs();
             } else {
                 AESf();
             }
-        } else if (module[0].equals((byte) 2)) {
+        } else if (module[0].equals((byte) 1)) {
             if ((boolean) module[1]) {
                 RESs();
             } else {
@@ -227,16 +223,13 @@ public class Crypteringsmodule {
             e.printStackTrace();
             System.exit(-1);
         }
-
         boolean storchek = (boolean) module[3];
         boolean f = true;
-
-
+        System.out.println("crypt start");
         for (int n = 0; n < nMAX; n++) {
             Cryptaes.Filebufercry((boolean) module[2], storchek, (IvParameterSpec) module[5], (SecretKey) module[6], (File) module[7], (File) module[8]);
-
             if (f) {
-                if (manulesnapshotAlurt && (nMAX > 1)) {
+                if (manulesnapshotAlurt && (nMAX == 1)) {
                     try {
                         looger.write("Första krypteringen slutade:\n" + LocalTime.now() + "\n");
                     } catch (IOException e) {
@@ -247,7 +240,6 @@ public class Crypteringsmodule {
                 f = false;
             }
         }
-
         if (manulesnapshotAlurt) {
             try {
                 looger.write("Krypteringen slutade: \n" + LocalTime.now());
