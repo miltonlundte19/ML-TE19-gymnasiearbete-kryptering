@@ -119,7 +119,12 @@ public class SettingsModel {
     public Settings getSettings() {
         return settings;
     }
-
+    public AESsettings getAes() {
+        return aes;
+    }
+    public Settingsfile getSettingsfile() {
+        return settingsfile;
+    }
     // ---------------------- AES ----------------------------------------------------------------------------------- //
 
     public boolean setAESiv(int aesIv) {
