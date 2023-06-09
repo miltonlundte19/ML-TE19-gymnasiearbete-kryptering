@@ -203,7 +203,15 @@ public class Crypteringsmodule {
     }
     private void AESf() {
         short nMAX = (short) module[4];
-
+        if (nMAX++ > 0)
+            nMAX++;
+        if (nMAX < 0)
+            try {
+                looger.write("\nError: ingen kryptering händer nMAX är negativt\n" +nMAX+ '\n');
+                System.err.println("Error: nMAX är negativ: " + nMAX);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         try {
             looger.write("File:\n" + filestrings[0] + "\nTiden aes krypteringen började: \n" +
                     LocalTime.now() +
