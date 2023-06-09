@@ -1,39 +1,35 @@
 package view;
 
 import javax.swing.*;
-import java.awt.Color;
-
+import java.awt.*;
 
 public class Settingsview {
+
     private JPanel panel1;
-    private JLabel ivlabel;
-    private JComboBox ivselektorcombox;
     private JPanel ivselekterpanel;
     private JPanel pasvirdpanel;
-    private JLabel Passwirde;
+    private JPanel filesilektorpanel;
+
+
+    private JComboBox ivselektorcombox;
+    private JButton ivselektbutton;
     private JButton selektpasbutton;
     private JButton geniraitepasbutton;
-    private JTextField pasvirddisplayfield;
-    private JPanel filesilektorpanel;
-    private JLabel filemesigelabel;
-    private JButton fileinbutton;
-    private JTextField fileintextfild;
-    private JCheckBox fileoutcheckBox;
-    private JButton fileoutbutton;
-    private JTextField fileouttextField;
-    private JSpinner repetisonkonter;
-    private JLabel repetisonlabel;
-    private JButton ivselektbutton;
-    private JButton doneButton;
-    private JLabel genirationstatuslabel;
-    private JCheckBox mesidecheckbox;
-    private JCheckBox enkryptionCheckBox;
-    private JLabel statuslabel;
     private JButton saveButton;
+    private JTextField pasvirddisplayfield;
+    private JLabel genirationstatuslabel;
+    private JCheckBox mesideCheckBox;
+    private JCheckBox enkryptionCheckBox;
+    private JButton inFileButton;
+    private JTextField fileInTextField;
+    private JCheckBox outputFileCheckBox;
+    private JSpinner repetisonKonterSpinner;
+    private JButton outFileButton;
+    private JTextField outFileTextField;
+    private JButton doneButton;
+    private JLabel statusLabel;
+    private JCheckBox manulSnapshotCheckBox;
 
-    private static final Color defaltcolor = new Color(51,51,51);
-    private static final Color betergrin = null;
-    private static final Color beterred = null;
 
     public JPanel getPanel1() {
         return panel1;
@@ -42,60 +38,74 @@ public class Settingsview {
     public JComboBox getIvselektorcombox() {
         return ivselektorcombox;
     }
+    public int getIvselektedcombox() {
+        return ivselektorcombox.getSelectedIndex();
+    }
+
     public JButton getIvselektbutton() {
         return ivselektbutton;
     }
-
     public JButton getSelektpasbutton() {
         return selektpasbutton;
     }
-
     public JButton getGeniraitepasbutton() {
         return geniraitepasbutton;
+    }
+    public JButton getSaveButton() {
+        return saveButton;
+    }
+    public JButton getInFileButton() {
+        return inFileButton;
+    }
+    public JButton getOutFileButton() {
+        return outFileButton;
+    }
+    public JButton getDoneButton() {
+        return doneButton;
+    }
+
+    public JLabel getGenirationstatuslabel() {
+        return genirationstatuslabel;
+    }
+    public JLabel getStatusLabel() {
+        return statusLabel;
     }
 
     public JTextField getPasvirddisplayfield() {
         return pasvirddisplayfield;
     }
-
-    public JButton getFileinbutton() {
-        return fileinbutton;
+    public JTextField getFileInTextField() {
+        return fileInTextField;
+    }
+    public JTextField getOutFileTextField() {
+        return outFileTextField;
     }
 
-    public JTextField getFileintextfild() {
-        return fileintextfild;
+    public boolean getsavebuttonenabeld() {
+        return saveButton.isEnabled();
+    }
+    public void setGenirationstatuslabeltext(String text) {
+        genirationstatuslabel.setText(text);
     }
 
-    public JCheckBox getFileoutcheckBox() {
-        return fileoutcheckBox;
+    public void setGenirationstatuslabelcolor(Color color) {
+        genirationstatuslabel.setBackground(color);
+    }
+    public void enebulsavbutton(boolean b) {
+        saveButton.setEnabled(b);
     }
 
-    public JButton getFileoutbutton() {
-        return fileoutbutton;
+    public JCheckBox getEnkryptionCheckBox() {
+        return enkryptionCheckBox;
+    }
+    public JCheckBox getOutputFileCheckBox() {
+        return outputFileCheckBox;
+    }
+    public JCheckBox getManulSnapshotCheckBox() {
+        return manulSnapshotCheckBox;
     }
 
-    public JTextField getFileouttextField() {
-        return fileouttextField;
-    }
-
-    public JSpinner getRepetisonkonter() {
-        return repetisonkonter;
-    }
-
-    public JButton getSaveButton() {
-        return saveButton;
-    }
-
-    public void setPasvirddisplayfieldtext(String s) {
-        pasvirddisplayfield.setBackground(defaltcolor);
-        pasvirddisplayfield.setText(s);
-    }
-    public void setPasvirddisplayfieldtextError(String s) {
-        pasvirddisplayfield.setBackground(Color.red);
-        pasvirddisplayfield.setText(s);
-    }
-
-    public void enebilsavebuton() {
-        saveButton.setEnabled(true);
+    public JSpinner getRepetisonKonterSpinner() {
+        return repetisonKonterSpinner;
     }
 }
