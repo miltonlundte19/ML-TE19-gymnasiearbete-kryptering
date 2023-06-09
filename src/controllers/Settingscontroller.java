@@ -1,6 +1,7 @@
 package controllers;
 
 import modules.SettingsModel;
+import setings.Settingsfile;
 import view.Settingsview;
 
 import javax.crypto.KeyGenerator;
@@ -430,6 +431,7 @@ public class Settingscontroller {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (model.isCheckTrue()) {
+                model.updattSettings();
                 ObjectOutputStream outputStream;
                 try {
                     outputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(settingsfile)));
@@ -457,10 +459,20 @@ public class Settingscontroller {
     private class debugmenuAL implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("debug");
-            System.out.println(model.getSettings().toString());
-            System.out.println(Arrays.toString(model.getCheck()));
-            System.out.println(Arrays.toString(model.getNumofNonCheck()));
+            model.updattSettings();
+            System.out.println("--------- debug -----------\n" +
+                    model.getSettings() + '\n' +
+                    Arrays.toString(model.getCheck()) + '\n' +
+                    Arrays.toString(model.getNumofNonCheck()) + "\n\n" +
+                    model.getAes());
+            Settingsfile settingsfile1 = model.getSettingsfile();
+            String files;
+            if (settingsfile1 == null) {
+                files = "settingsfile = null";
+            } else
+                files = settingsfile1.toString();
+            System.out.println(files);
+            System.out.println("--------- debug -----------");
         }
     }
 }
