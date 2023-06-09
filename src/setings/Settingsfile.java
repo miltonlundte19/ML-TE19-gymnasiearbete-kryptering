@@ -53,4 +53,12 @@ public class Settingsfile implements Serializable {
     public String getFileoustring() {
         return fileoustring;
     }
+    public String toString() {
+        return "Settingsfile{" +
+                "File in=" + in +
+                ", File in String=" + fileinstring +
+                ", File out=" + ou +
+                ", File out String=" + fileoustring +
+                "} ";
+    }
 }
