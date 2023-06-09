@@ -39,25 +39,41 @@ public class Cryptcontroller {
             throw new RuntimeException(e);
         }
         Settings settings;
+        ObjectInputStream setingsreder;
+        FileInputStream fileInputStream;
         try {
-            ObjectInputStream setingsreder;
-            FileInputStream fileInputStream;
             fileInputStream = new FileInputStream(setingsfile);
-            setingsreder = new ObjectInputStream(fileInputStream);
-            settings = (Settings) setingsreder.readObject();
-            setingsreder.close();
-            // Läser in en egen jord variabel som har alltför krypteringen för dig gjort
-            // mer om Settings varabeln fins /setings/Settings
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+        }
+        try {
+            setingsreder = new ObjectInputStream(fileInputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Object setingsobjekt;
+        try {
+            setingsobjekt = setingsreder.readObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        Crypteringsmodule crypteringsmodule = new Crypteringsmodule(settings);
-        crypteringsmodule.setLooger(startup);
-        crypteringsmodule.start();
-        // ladar in några objekt till krypteringen och sedan startar klasen.
+        if (setingsobjekt.getClass() == Settings.class) {
+            settings = (Settings) setingsobjekt;
+            // Läser in en egen jord variabel som har alltför krypteringen för dig gjort
+            // mer om Settings varabeln fins /setings/Settings
+            try {
+                setingsreder.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Crypteringsmodule crypteringsmodule = new Crypteringsmodule(settings);
+            crypteringsmodule.setLooger(startup);
+            crypteringsmodule.start();
+            // ladar in några objekt till krypteringen och sedan startar klasen.
+        } else {
+            System.exit(7);
+        }
     }
 }
