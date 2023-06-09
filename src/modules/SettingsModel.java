@@ -42,15 +42,12 @@ public class SettingsModel {
     public void setId(byte id) {
         if (!(Objects.equals(id, this.id))) {
             Arrays.fill(check, false);
+            this.id = id;
         }
         settings.setId(id);
         check[0] = true;
-        if (id == 0) {
+        if (id == 0)
             aes = new AESsettings();
-            settings.setAes(aes);
-            settings.setRes(null);
-            this.id = id;
-        }
     }
 
     public void setEncryption(boolean b) {
@@ -111,7 +108,7 @@ public class SettingsModel {
         return check;
     }
     public void updattSettings() {
-        if (id == 1) {
+        if (id == 0) {
             aes.setFiles(settingsfile);
             settings.setAes(aes);
         }
@@ -196,33 +193,22 @@ public class SettingsModel {
 
     //---------------------------------------------------------------------------------------------------------------//
 
-    public void setSettingsfile() {
-        if (id == 1) {
-            aes.setFiles(settingsfile);
-        }
-        System.out.println(settingsfile.toString());
-    }
     public void setSettingsFile(File in, File ou) {
         settingsfile = new Settingsfile(in,ou);
-        setSettingsfile();
     }
     public void setSettingsFile(Settingsfile settingsfile) {
         this.settingsfile = settingsfile;
-        setSettingsfile();
     }
 
     public void setSettingsFileIn(File in) {
-        setSettingsfile();
         settingsfile.setIN(in);
         check[7] = true;
     }
     public void setSettingsFileOu(File ou) {
-        setSettingsfile();
         settingsfile.setOU(ou);
         check[8] = true;
     }
     public void setSettingsFileOuNull() {
-        setSettingsfile();
         settingsfile.setOuToNull();
         check[8] = true;
     }
