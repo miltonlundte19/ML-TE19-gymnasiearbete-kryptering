@@ -57,7 +57,7 @@ public class AESsettings implements Serializable  {
             mesige = ", file-in=" + fileInOu.getFileinstring() +
                     ", file-ou=" + fileInOu.getFileoustring();
         } else {
-            mesige = ", Eror - mesige";
+            mesige = ", Eror - mesige=null";
         }
         return "AESsettings{" +
                 "key=" + key +
