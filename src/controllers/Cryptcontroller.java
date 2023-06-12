@@ -22,9 +22,8 @@ public class Cryptcontroller {
         // en fill som loggar skrivs till.
         FileWriter startup;
         try {
-            if (!startupfile.exists()) {
+            if (!startupfile.exists())
                 startupfile.createNewFile();
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -77,3 +76,11 @@ public class Cryptcontroller {
         }
     }
 }
+/*
+ Å = U+00C5  c3 85
+ Ä = U+00C4  c3 84
+ Ö = U+00D6  c3 96
+ å = U+00E5  c3 a5
+ ä = U+00E4  c3 a4
+ ö = U+00F6  c3 b6
+ */
