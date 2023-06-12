@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="ML-TE19-gymnasiearbete-kryptering:jar2">
-    <output-path>$PROJECT_DIR$/out/artifacts/ML_TE19_gymnasiearbete_kryptering_jar2</output-path>
-    <root id="archive" name="ML-TE19-gymnasiearbete-kryptering.jar">
+  <artifact type="jar" name="ML-TE19-gymnasiearbete-kryptering-Settings:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ML_TE19_gymnasiearbete_kryptering_Settings_jar</output-path>
+    <root id="archive" name="ML-TE19-gymnasiearbete-kryptering-Settings.jar">
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/src/main/settingsman/META-INF/MANIFEST.MF" />
       </element>
