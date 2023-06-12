@@ -57,20 +57,20 @@ public class Filecerator {
     */
 
     public Filecerator() {
+        JFrame frame = new JFrame("Filecerator");
+        frame.setContentPane(panel1);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setActionListeners();
+        frame.pack();
+        frame.setVisible(true);
+    }
 
+    public void setActionListeners() {
         DirectoryButton.addActionListener(new diraktorygetor());
 
         TestFilebutton.addActionListener(new filegenirator());
 
         Okbutton.addActionListener(new geniratorAL());
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Filecerator");
-        frame.setContentPane(new Filecerator().panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
     }
 
     private static void resetlabels(JLabel label) {
