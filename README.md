@@ -8,6 +8,13 @@ https://jdk.java.net/20/
 
 ---
 
+För att mäta datan från java programet kan en av desa java profilers användas:  
+[VisualVM](https://visualvm.github.io/)  
+[Jprofiler](https://www.ej-technologies.com/products/jprofiler/overview.html)  
+[YourKit](https://www.yourkit.com/)  
+
+---
+
 codat i intellij:
 https://www.jetbrains.com/idea/download/?fromIDE=#section=windows
 
