@@ -87,7 +87,7 @@ public class Settingscontroller {
         }
         if (settingsfile == null)
             return "error geting setingsfile can not komplet";
-        return "Fillecreitrorview";
+        return "Setingscreitor";
     }
     private void modelStartup() {
         model.setId((byte) 0);
