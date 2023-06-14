@@ -5,8 +5,6 @@ import setings.RESsettings;
 import setings.Settings;
 import setings.Settingsfile;
 
-import modules.SetingsModel;
-
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.swing.*;
@@ -70,7 +68,7 @@ public class testingsetings {
 
 
         settings.setId((byte) 2);
-        settings.setChekORen();
+        settings.setCheekEncryption();
         //settings.setChekORstr();
         settings.setManulesnapshot();
 
@@ -202,7 +200,6 @@ public class testingsetings {
             e.printStackTrace();
         }
 
-
         SecretKey key;
         try {
             ObjectInputStream temkeyred = new ObjectInputStream(new BufferedInputStream(new FileInputStream(tempkeyfile)));
@@ -215,7 +212,7 @@ public class testingsetings {
 
         Settings settings = new Settings();
         settings.setId((byte) 1);
-        settings.setChekORen();
+        settings.setCheekEncryption();
         //settings.setChekORstr();
         settings.setManulesnapshot();
         settings.setStorTOfile(storTOfile);

@@ -1,6 +1,6 @@
 package setings;
 
-public class HYDRIDsettings {
+public class HYBRIDsettings {
     private Boolean keyinfile;
     private boolean storkeyInFile;
 

@@ -6,16 +6,14 @@ import setings.Settings;
 import setings.Settingsfile;
 
 import javax.crypto.KeyGenerator;
-import javax.crypto.spec.IvParameterSpec;
 import java.io.*;
-import java.math.BigInteger;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Arrays;
 
-public class SetingsModel {
+public class SetingsModelOLD {
 
     // har myket funktioner och variablar som inte fungerar eller används (måste tita i genome)
     private Settings settings;
@@ -37,7 +35,7 @@ public class SetingsModel {
 
 
 
-    public SetingsModel() {
+    public SetingsModelOLD() {
         settings = new Settings();
 
         Arrays.fill(check, false);
@@ -56,12 +54,12 @@ public class SetingsModel {
     }
 
     public void setENorDE() {
-        settings.setChekORen();
+        settings.setCheekEncryption();
         check[1] = true;
     }
 
     public void setMesige(String mesige) {
-        settings.setChekORstr();
+        settings.setCheekString();
         if (id == 1) {
             aes.setPlainText(mesige);
         } else if (id == 2) {
