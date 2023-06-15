@@ -94,7 +94,7 @@ public class Settingscontroller {
         model.setmesigetyp(false);
         model.setEncryption(true);
         model.setManusnapshot();
-        model.setNumofRepit((short) 0);
+        model.setNumofRepit((short) 1);
     }
 
     private void setButtons() {
@@ -108,6 +108,7 @@ public class Settingscontroller {
         view.getOutputFileCheckBox().addItemListener(new outFileTogelIL());
         view.getManulSnapshotCheckBox().addItemListener(new manulSnapsoTogelIL());
         view.getRepetisonKonterSpinner().addChangeListener(new repetisonsCL());
+        view.getRepetisonKonterSpinner().setValue(1);
         view.getDoneButton().addActionListener(new doneSettingsAL());
     }
 
@@ -413,15 +414,15 @@ public class Settingscontroller {
             }
             int numint = (Integer) view.getRepetisonKonterSpinner().getValue();
             short num = (short) numint;
-            if (num < 0) {
-                view.getRepetisonKonterSpinner().setValue(0);
-                model.setNumofRepit(0);
+            if (num < 1) {
+                view.getRepetisonKonterSpinner().setValue(1);
+                model.setNumofRepit(1);
             }
             if (num > max) {
                 view.getRepetisonKonterSpinner().setValue(max);
                 model.setNumofRepit(max);
             }
-            if ((num >= 0) && (num < max)) {
+            if ((num >= 1) && (num < max)) {
                 model.setNumofRepit(num);
             }
         }
