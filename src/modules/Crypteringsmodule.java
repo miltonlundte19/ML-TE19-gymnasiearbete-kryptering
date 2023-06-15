@@ -97,11 +97,11 @@ public class Crypteringsmodule {
             if (file == null) {
                 file = new File(filestrings[1]);
                 if (!file.isFile())
-                    throw new RuntimeException("Platsen som fillen pekar på \u00E4r inte en fill");
+                    throw new RuntimeException("Platsen som fillen pekar på är inte en fill");
             } else if (!file.exists()) {
                 file = new File(filestrings[1]);
                 if (!file.isFile())
-                    throw new RuntimeException("Platsen som fillen pekar på \u00E4r inte en fill");
+                    throw new RuntimeException("Platsen som fillen pekar på är inte en fill");
             }
             module[8] = file;
         }
@@ -152,7 +152,7 @@ public class Crypteringsmodule {
     } // för över loog fillens skrivare.
 
     public void start() { // Starten på krypteringen. Funktionerna med en s är för String och f är för File.
-        JOptionPane.showMessageDialog(null,"V\u00E4nta tills Profiler programmet har hittat java programmet.");
+        JOptionPane.showMessageDialog(null,"Vänta tills Profiler programmet har hittat java programmet.");
         if (module[0].equals((byte) 0)) {
             if ((boolean) module[1]) { // 1 = String or File
                 AESs();
@@ -171,7 +171,7 @@ public class Crypteringsmodule {
     // upstarten för AES krypteringen med några skilnader melan dem som mest hanlar om skriva ner resultatet.
     private void AESs() {
         try {
-            looger.write("string:\n" + module[7] + "\ntiden aes crypteringen b\u00f6rjade: \n" + System.nanoTime() +
+            looger.write("string:\n" + module[7] + "\ntiden aes crypteringen började: \n" + System.nanoTime() +
                     "\nden krypterade strengen blev:\n");
             // skriver ner vad stringen var och tiden det tog att sätta upp allt
             looger.flush();
@@ -202,18 +202,18 @@ public class Crypteringsmodule {
 
         if (nMAX <= 0) {
             try {
-                looger.write("\nError: ingen kryptering h\u00E4nder nMAX \u00E4r negativt\n" + nMAX + '\n');
+                looger.write("\nError: ingen kryptering händer nMAX är negativt\n" + nMAX + '\n');
                 System.err.println("Error: nMAX är negativ: " + nMAX);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
         try {
-            looger.write("File:\n" + filestrings[0] + "\nTiden aes krypteringen b\u00F6rjade: \n" +
+            looger.write("File:\n" + filestrings[0] + "\nTiden aes krypteringen började: \n" +
                     LocalTime.now() +
-                    "\nDen krypterade filen \u00e4r har:\n" + filestrings[1] + "\n");
+                    "\nDen krypterade filen är har:\n" + filestrings[1] + "\n");
             if (nMAX > 1) {
-                looger.write("krypteringen k\u00f6rdes: " + nMAX + "\n");
+                looger.write("krypteringen kördes: " + nMAX + "\n");
             }
             looger.flush();
             if (!manulesnapshotAlurt) {
@@ -231,7 +231,7 @@ public class Crypteringsmodule {
             if (f) {
                 if (manulesnapshotAlurt && (nMAX == 1)) {
                     try {
-                        looger.write("F\u00f6rsta krypteringen slutade:\n" + LocalTime.now() + "\n");
+                        looger.write("Första krypteringen slutade:\n" + LocalTime.now() + "\n");
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -256,7 +256,7 @@ public class Crypteringsmodule {
 
     private void RESs() {
         try {
-            looger.write("string:\n" + module[5] + "\ntiden res crypteringen b\u00f6rjade: \n" + System.nanoTime() +
+            looger.write("string:\n" + module[5] + "\ntiden res crypteringen började: \n" + System.nanoTime() +
                     "\nden krypterade strengen blev:\n");
             looger.flush();
 
@@ -277,8 +277,8 @@ public class Crypteringsmodule {
     }
     private void RESf() {
         try {
-            looger.write("File: " + filestrings[0] + "\ntiden res crypteringen b\u00f6rjade: \n" + System.nanoTime() +
-                    "\nden krypterade filen \u00E4r har:\n" + filestrings[1]);
+            looger.write("File: " + filestrings[0] + "\ntiden res crypteringen började: \n" + System.nanoTime() +
+                    "\nden krypterade filen är har:\n" + filestrings[1]);
             looger.flush();
             if (!manulesnapshotAlurt) {
                 looger.close();
