@@ -61,9 +61,9 @@ public class Settingscontroller {
 
     private JMenuBar setMenu() {
         JMenuBar mb = new JMenuBar();
-        JMenu menulode = new JMenu("Lode");
-        JMenuItem menuItemlode = new JMenuItem("Lode in setings");
-        menuItemlode.setToolTipText("Lode in an alredy set settings in a file");
+        JMenu menulode = new JMenu("Load");
+        JMenuItem menuItemlode = new JMenuItem("Load in settings");
+        menuItemlode.setToolTipText("Load in an already set settings in a file");
         //menuItemlode.addActionListener(new );
         menulode.add(menuItemlode);
         mb.add(menulode);
@@ -86,8 +86,8 @@ public class Settingscontroller {
             settingsfile = null;
         }
         if (settingsfile == null)
-            return "error geting setingsfile can not komplet";
-        return "Setingscreitor";
+            return "error geting settingsfile can not complete";
+        return "Settingscreator";
     }
     private void modelStartup() {
         model.setId((byte) 0);

@@ -152,7 +152,7 @@ public class Crypteringsmodule {
     } // för över loog fillens skrivare.
 
     public void start() { // Starten på krypteringen. Funktionerna med en s är för String och f är för File.
-        JOptionPane.showMessageDialog(null,"Vänta tills Profiler programmet har hittat java programmet.");
+        JOptionPane.showMessageDialog(null,"Vänta tills Profiler-programmet har hittat java-programmet.");
         if (module[0].equals((byte) 0)) {
             if ((boolean) module[1]) { // 1 = String or File
                 AESs();
@@ -213,7 +213,7 @@ public class Crypteringsmodule {
                     LocalTime.now() +
                     "\nDen krypterade filen är har:\n" + filestrings[1] + "\n");
             if (nMAX > 1) {
-                looger.write("krypteringen kördes: " + nMAX + "\n");
+                looger.write("krypteringen kördes: " + nMAX + " gånger\n");
             }
             looger.flush();
             if (!manulesnapshotAlurt) {
@@ -245,7 +245,7 @@ public class Crypteringsmodule {
                 looger.write("Krypteringen slutade: \n" + LocalTime.now());
                 looger.flush();
                 looger.close();
-                JOptionPane.showMessageDialog(null, "keypteringen slutate, ta snap");
+                JOptionPane.showMessageDialog(null, "Krypteringen slutade, ta snap");
             } catch (IOException e) {
                 e.printStackTrace();
                 System.exit(-1);

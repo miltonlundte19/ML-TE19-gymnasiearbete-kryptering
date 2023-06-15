@@ -16,7 +16,7 @@ public class Filecerator {
     private JPanel siseinput;
     private JPanel filegenirator;
     private JPanel creationpanel;
-    private JTextField DirektorytextField;
+    private JTextField DirectorytextField;
     private JTextField FileNamntextField;
     private JButton DirectoryButton;
     private JButton TestFilebutton;
@@ -57,7 +57,7 @@ public class Filecerator {
     */
 
     public Filecerator() {
-        JFrame frame = new JFrame("Filecerator");
+        JFrame frame = new JFrame("Filcreator");
         frame.setContentPane(panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setActionListeners();
@@ -102,7 +102,7 @@ public class Filecerator {
                     }
                     if (!chekse[0]) {
                         chekse[0] = true;
-                        DirektorytextField.setText(nameOfDiraktory);
+                        DirectorytextField.setText(nameOfDiraktory);
                         DirectoryStatesLabel.setForeground(Color.green);
                         DirectoryStatesLabel.setText("successfully got the directory");
                     }
