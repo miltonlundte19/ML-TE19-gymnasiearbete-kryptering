@@ -199,9 +199,8 @@ public class Crypteringsmodule {
     }
     private void AESf() {
         short nMAX = (short) module[4];
-        if ((nMAX + 1)  > 0)
-            nMAX++;
-        if (nMAX < 0) {
+
+        if (nMAX <= 0) {
             try {
                 looger.write("\nError: ingen kryptering h\u00E4nder nMAX \u00E4r negativt\n" + nMAX + '\n');
                 System.err.println("Error: nMAX är negativ: " + nMAX);
