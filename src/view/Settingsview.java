@@ -18,7 +18,6 @@ public class Settingsview {
     private JButton saveButton;
     private JTextField pasvirddisplayfield;
     private JLabel genirationstatuslabel;
-    private JCheckBox mesideCheckBox;
     private JCheckBox enkryptionCheckBox;
     private JButton inFileButton;
     private JTextField fileInTextField;
