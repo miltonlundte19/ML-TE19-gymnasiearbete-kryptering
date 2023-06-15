@@ -56,7 +56,7 @@
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Selekt iv"/>
+              <text value="Select iv"/>
             </properties>
           </component>
         </children>
@@ -74,7 +74,7 @@
               <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="pasvirde"/>
+              <text value="Password"/>
             </properties>
           </component>
           <component id="eed14" class="javax.swing.JButton" binding="selektpasbutton">
@@ -82,7 +82,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="chose"/>
+              <text value="choose"/>
               <toolTipText value="from a file"/>
             </properties>
           </component>
@@ -91,8 +91,8 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Genirat"/>
-              <toolTipText value="Genirat a new paswerd"/>
+              <text value="Generate"/>
+              <toolTipText value="Generate a new password"/>
             </properties>
           </component>
           <component id="3055f" class="javax.swing.JButton" binding="saveButton">
@@ -147,7 +147,7 @@
               <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="File/Meside"/>
+              <text value="File/Message"/>
             </properties>
           </component>
           <hspacer id="e4721">
@@ -155,24 +155,6 @@
               <grid row="0" column="3" row-span="4" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
-          <component id="62f2" class="javax.swing.JCheckBox" binding="mesideCheckBox" default-binding="true">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <enabled value="false"/>
-              <text value="Meside"/>
-            </properties>
-          </component>
-          <component id="231fa" class="javax.swing.JCheckBox" binding="enkryptionCheckBox" default-binding="true">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <selected value="true"/>
-              <text value="Enkryption"/>
-            </properties>
-          </component>
           <component id="23ffa" class="javax.swing.JButton" binding="inFileButton" default-binding="true">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -206,7 +188,7 @@
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Repetisons:"/>
+              <text value="Repetition:"/>
             </properties>
           </component>
           <component id="1e44f" class="javax.swing.JSpinner" binding="repetisonKonterSpinner">
@@ -235,13 +217,22 @@
               <editable value="false"/>
             </properties>
           </component>
-          <component id="49cfd" class="javax.swing.JCheckBox" binding="manulSnapshotCheckBox" default-binding="true">
+          <component id="231fa" class="javax.swing.JCheckBox" binding="enkryptionCheckBox" default-binding="true">
             <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <selected value="true"/>
-              <text value="Manul snapshot"/>
+              <text value="Encryption"/>
+            </properties>
+          </component>
+          <component id="49cfd" class="javax.swing.JCheckBox" binding="manulSnapshotCheckBox" default-binding="true">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <selected value="true"/>
+              <text value="Manual snapshot"/>
             </properties>
           </component>
         </children>
