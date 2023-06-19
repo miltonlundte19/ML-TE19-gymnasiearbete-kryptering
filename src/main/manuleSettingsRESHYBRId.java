@@ -2,46 +2,45 @@ package main;
 
 import setings.Settings;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class manuleSettingsRESHYBRId {
     //------- globala -------------------------------------
-    byte id = 2;
-    // 0 = AES : 1 = RES : 2 = Hybrid.
+    static byte id = 2;
+    // 1 = RES : 2 = Hybrid.
 
-    boolean encrypt = true;
+    static boolean encrypt = true;
     // true = encryption : fals = decryption.
 
-    boolean storToFile = false;
+    static boolean storToFile = false;
     // true = stors output to a file.
 
-    boolean manualSnapthot = true;
+    static boolean manualSnapthot = true;
     // true = if the program shall pause for the user to take a snapshot.
 
-    short numOfRepetitions = 1;
+    static short numOfRepetitions = 1;
 
     //----------------------------------------------------------
-    //-------- ras -----------------------------------------
-    boolean PrivetKey = true;
+    //-------- res -----------------------------------------
+    static boolean PrivetKey = true;
     // true = privet : // fals = publik.
 
-    File messageStartPaf = new File("");
+    static File messageStartPath = new File("");
     // start path for a file choser for the message.
 
-    File keyStartPaf = new File("");
+    static File keyStartPath = new File("");
     // start path for a file choser for the keyfile.
 
     //----------------------------------------------------------
     //-------- Hybrid -----------------------------------------
     // set variable for res also
-    byte iv = 0;
+    static byte iv = 0;
     // 0-12 for a set of pre generated iv:s (-1 for override, manual inserting at:[rad]).
 
-    boolean aesKeyStordInFile = false;
-    // If the key for aes is stord in the file
+    static boolean aesKeystoredInFile = false;
+    // If the key for aes is stored in the file
 
-    File aesKeyStartPaf = new File("");
+    static File aesKeyStartPath = new File("");
     // start path for a file choser for the keyfile.
 
     // message is res message variable
@@ -56,13 +55,40 @@ public class manuleSettingsRESHYBRId {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
+        if (id == 0) {
+            System.out.println("Manual AES settings not implemented");
+            System.exit(404);
+        }
+        if (id == 1)
+            settings = resSettings();
+        if (id == 2)
+            settings = hybridSettings();
+        System.out.println(settings.toString());
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(settingsfile));
+            objectOutputStream.writeObject(settings);
+            objectOutputStream.flush();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
+
     //------------ Fixt variable ----------------------------------
-    Settings settings;
+    static Settings settings;
     static File settingsfile;
 
     //-------------------------------------------------------------
+
+    private static Settings resSettings() {
+        return new Settings();
+    }
+
+    private static Settings hybridSettings() {
+        return new Settings();
+    }
+
 }
