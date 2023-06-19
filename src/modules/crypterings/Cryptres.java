@@ -45,7 +45,7 @@ public class Cryptres {
         return null;
     }
 
-    public static void Filebufercry(boolean enORde, ResKeyholder keyholder, File in, File ou) {
+    public static void Filebufercry(boolean enORde, boolean s, ResKeyholder keyholder, File in, File ou) {
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             if (enORde) {
@@ -62,22 +62,28 @@ public class Cryptres {
                 }
             }
             FileInputStream inputStream = new FileInputStream(in);
-            FileOutputStream outputStream = new FileOutputStream(ou);
+            FileOutputStream outputStream = null;
+            if (s) {
+                System.out.println("\nskriver till filen");
+                outputStream = new FileOutputStream(ou);
+            }
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 byte[] output = cipher.update(buffer,0,bytesRead);
-                if (output != null) {
+                if (output != null && s) {
                     outputStream.write(output);
                 }
             }
             byte[] outputBytes = cipher.doFinal();
-            if (outputBytes != null) {
+            if (outputBytes != null && s) {
                 outputStream.write(outputBytes);
             }
             inputStream.close();
-            outputStream.flush();
-            outputStream.close();
+            if (s) {
+                outputStream.flush();
+                outputStream.close();
+            }
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException e) {
             e.printStackTrace();
             System.exit(-1);
