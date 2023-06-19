@@ -199,11 +199,10 @@ public class Crypteringsmodule {
     }
     private void AESf() {
         short nMAX = (short) module[4];
-
-        if (nMAX <= 0) {
+        if (nMAX < 1) {
+            System.err.println("Error: nMAX är negativ: " + nMAX);
             try {
                 looger.write("\nError: ingen kryptering händer nMAX är negativt\n" + nMAX + '\n');
-                System.err.println("Error: nMAX är negativ: " + nMAX);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -240,17 +239,16 @@ public class Crypteringsmodule {
                 f = false;
             }
         }
-        if (manulesnapshotAlurt) {
-            try {
-                looger.write("Krypteringen slutade: \n" + LocalTime.now());
-                looger.flush();
-                looger.close();
-                JOptionPane.showMessageDialog(null, "Krypteringen slutade, ta snap");
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.exit(-1);
-            }
+        try {
+            looger.write("Krypteringen slutade: \n" + LocalTime.now());
+            looger.flush();
+            looger.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
         }
+        if (manulesnapshotAlurt)
+            JOptionPane.showMessageDialog(null, "Krypteringen slutade, ta snap");
         System.exit(0);
     }
 
@@ -276,9 +274,22 @@ public class Crypteringsmodule {
         System.exit(0);
     }
     private void RESf() {
+        short nMAX  = (short) module[4];
+        if (nMAX < 1) {
+            System.err.println("Error: nMAX är negativ: " + nMAX);
+            try {
+                looger.write("\nError: ingen kryptering händer nMAX är negativt\n" + nMAX + '\n');
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         try {
-            looger.write("File: " + filestrings[0] + "\ntiden res crypteringen började: \n" + System.nanoTime() +
-                    "\nden krypterade filen är har:\n" + filestrings[1]);
+            looger.write("File: " + filestrings[0] + "\nTiden res krypteringen började: \n" +
+                    LocalTime.now() +
+                    "\nDen krypterade filen är har:\n" + filestrings[1]);
+            if (nMAX > 1) {
+                looger.write("krypteringen kördes: " + nMAX + " gånger\n");
+            }
             looger.flush();
             if (!manulesnapshotAlurt) {
                 looger.close();
@@ -287,19 +298,38 @@ public class Crypteringsmodule {
             e.printStackTrace();
             System.exit(-1);
         }
-        Cryptres.Filebufercry((boolean) module[2], (ResKeyholder) module[6], (File) module[7], (File) module[8]);
-
-        if (manulesnapshotAlurt) {
-            try {
-                looger.write("keypteringen slutate \n" + System.nanoTime());
-                looger.flush();
-                looger.close();
-                JOptionPane.showMessageDialog(null, "keypteringen slutate, ta snap");
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.exit(-1);
+        boolean storchek = (boolean) module[3];
+        boolean f = true;
+        short i = 1;
+        for (int n = 0; n < nMAX; n++) {
+            Cryptres.Filebufercry((boolean) module[2], storchek,(ResKeyholder) module[6], (File) module[7], (File) module[8]);
+            if (i == 1000) {
+                System.out.print(n + 1 + ",");
+                i = 0;
             }
+            if (f) {
+                if (manulesnapshotAlurt && (nMAX == 1)) {
+                    try {
+                        looger.write("Första krypteringen slutade:\n" + LocalTime.now() + "\n");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                storchek = false;
+                f = false;
+            }
+            i++;
         }
+        try {
+            looger.write("Krypteringen slutade: \n" + LocalTime.now());
+            looger.flush();
+            looger.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        if (manulesnapshotAlurt)
+            JOptionPane.showMessageDialog(null, "Krypteringen slutade, ta snap");
         System.exit(0);
     }
 }
