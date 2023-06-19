@@ -51,7 +51,7 @@ public class testingsetings {
 
     private static Settings testing() {
         Settings settings = new Settings();
-        byte testid = 0;
+        byte testid = 1;
 
         if (testid == 0) {
             settings = testaes();
@@ -64,13 +64,15 @@ public class testingsetings {
 
     private static Settings testres() {
         Settings settings = new Settings();
+        boolean storTOfile = false;
 
 
-
-        settings.setId((byte) 2);
+        settings.setId((byte) 1);
         settings.setCheekEncryption();
-        //settings.setChekORstr();
+        //settings.setCheekString();
         settings.setManulesnapshot();
+        settings.setNumOFrepeteson(500);
+        settings.setStorTOfile(storTOfile);
 
         File tempkeyfilepub = new File("Temporikeyfilepub.txt");
         File tempkeyfilepri = new File("Temporikeyfilepri.txt");
@@ -119,15 +121,19 @@ public class testingsetings {
             System.err.println("mesige är för långt. Max:245 kurent:" + mesige.length());
         }
         //res.setMesige(mesige); */
-        res.setFiles(testfilesres());
+        res.setFiles(testfilesres(storTOfile));
 
         settings.setRes(res);
 
         return settings;
     }
 
-    private static Settingsfile testfilesres() {
-        JFileChooser fileChooser = new JFileChooser();
+    private static Settingsfile testfilesres(boolean storTOfile) {
+        Settingsfile settingsfile = new Settingsfile();
+        //----------------------------- test
+        File test = new File("C:\\code\\krypt-test-fils");
+        //----------------------------- test
+        JFileChooser fileChooser = new JFileChooser(test);
         int i;
         long lengt;
         boolean c = true;
@@ -138,7 +144,6 @@ public class testingsetings {
                 System.exit(1);
             }
             lengt = fileChooser.getSelectedFile().length();
-
             if (lengt > 245) {
                 int a = JOptionPane.showConfirmDialog(null,"filen som är vald har " + lengt +
                                 " taken och kan vara för stor för krypteringen \n (Max storlek är 245 taken) \n Tryk på ok om du vill fortseta"
@@ -150,20 +155,16 @@ public class testingsetings {
                 c = false;
             }
         }
-        File in = fileChooser.getSelectedFile();
-        i = fileChooser.showOpenDialog(null);
-        if (i == JFileChooser.CANCEL_OPTION) {
-            System.out.println("user caned");
-            System.exit(1);
+        settingsfile.setIN(fileChooser.getSelectedFile());
+        if (storTOfile) {
+            i = fileChooser.showOpenDialog(null);
+            if (i == JFileChooser.CANCEL_OPTION) {
+                System.out.println("user caned");
+                System.exit(1);
+            }
+            settingsfile.setOU(fileChooser.getSelectedFile());
         }
-        File ou = fileChooser.getSelectedFile();
-
-        Settingsfile settingsfile = new Settingsfile();
-        settingsfile.setIN(in);
-        settingsfile.setOU(ou);
-
         return settingsfile;
-
     }
 
     private  static Settings testaes() {
@@ -241,22 +242,17 @@ public class testingsetings {
             System.out.println("user caned");
             System.exit(1);
         }
-        File in = fileChooser.getSelectedFile();
-        settingsfile.setIN(in);
-
+        settingsfile.setIN(fileChooser.getSelectedFile());
         if (StorTOfile) {
             i = fileChooser.showOpenDialog(null);
             if (i == JFileChooser.CANCEL_OPTION) {
                 System.out.println("user caned");
-
                 System.exit(1);
             }
-            File ou = fileChooser.getSelectedFile();
-            settingsfile.setOU(ou);
+            settingsfile.setOU(fileChooser.getSelectedFile());
         } else {
             settingsfile.setOuToNull();
         }
-
         return settingsfile;
     }
 
