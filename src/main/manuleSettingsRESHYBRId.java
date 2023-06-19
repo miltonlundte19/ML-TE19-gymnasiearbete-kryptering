@@ -1,5 +1,7 @@
 package main;
 
+import setings.HYBRIDsettings;
+import setings.RESsettings;
 import setings.Settings;
 
 import java.io.*;
@@ -55,14 +57,15 @@ public class manuleSettingsRESHYBRId {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        setSettings();
         if (id == 0) {
             System.out.println("Manual AES settings not implemented");
             System.exit(404);
         }
         if (id == 1)
-            settings = resSettings();
+            resSettings();
         if (id == 2)
-            settings = hybridSettings();
+            hybridSettings();
         System.out.println(settings.toString());
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(settingsfile));
@@ -75,20 +78,29 @@ public class manuleSettingsRESHYBRId {
         }
     }
 
-
-
     //------------ Fixt variable ----------------------------------
-    static Settings settings;
+    static Settings settings = new Settings();
     static File settingsfile;
+    static RESsettings res;
+    static HYBRIDsettings hybrid;
 
     //-------------------------------------------------------------
 
-    private static Settings resSettings() {
-        return new Settings();
+    private static void setSettings() {
+        settings.setId(id);
+        settings.setCheekEncryption(encrypt);
+        settings.setStorTOfile(storToFile);
+        settings.setManulesnapshot(manualSnapthot);
+        settings.setNumOFrepeteson(numOfRepetitions);
     }
 
-    private static Settings hybridSettings() {
-        return new Settings();
+    private static void resSettings() {
+        res = new RESsettings();
+
+    }
+
+    private static void hybridSettings() {
+
     }
 
 }
