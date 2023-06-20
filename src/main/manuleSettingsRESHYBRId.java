@@ -95,6 +95,7 @@ public class manuleSettingsRESHYBRId {
     static File settingsfile;
     static RESsettings res;
     static HYBRIDsettings hybrid;
+    static FileNameExtensionFilter keyfilter = new FileNameExtensionFilter("Key file filter", "key");
 
     //-------------------------------------------------------------
 
@@ -106,11 +107,20 @@ public class manuleSettingsRESHYBRId {
         settings.setNumOFrepeteson(numOfRepetitions);
     }
 
-    FileNameExtensionFilter keyfilter = new FileNameExtensionFilter("Key file filter", "key");
-    private static File getFile(File startPath, boolean lengtchek, FileNameExtensionFilter filter) {
+    private static File getFile(File startPath, boolean lengtchek, boolean diraktory) {
+        return getFile(startPath,lengtchek,diraktory,null);
+    }
+    private static File getFile(File startPath, boolean lengtchek, boolean diraktory, FileNameExtensionFilter filter) {
         JFileChooser fileChooser = new JFileChooser(startPath);
-        if (filter != null)
+        if (filter != null) {
+            fileChooser.setDialogTitle("select a key file.");
             fileChooser.setFileFilter(filter);
+        }
+        if (diraktory) {
+            fileChooser.setDialogTitle("select a directory for the key:s");
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            lengtchek = false;
+        }
         int i;
         long lengt;
         boolean c = true;
