@@ -36,7 +36,7 @@ public class manuleSettingsRESHYBRId {
     static File messageOutStartPath = new File("");
     // Start Path for the enkrypted or dekrypted messige out.
 
-    static File keyStartPath = new File("");
+    static File resKeyStartPath = new File("");
     // start path for a file choser for the keyfile.
 
     static boolean generateNyResKey = false;
