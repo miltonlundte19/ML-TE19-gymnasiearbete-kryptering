@@ -7,6 +7,12 @@ import setings.Settings;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
+import java.math.BigInteger;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPrivateCrtKeySpec;
+import java.security.spec.RSAPrivateKeySpec;
+import java.security.spec.RSAPublicKeySpec;
 
 public class manuleSettingsRESHYBRId {
     //------- globala -------------------------------------
@@ -185,7 +191,161 @@ public class manuleSettingsRESHYBRId {
 
     private static void resSettings() {
         res = new RESsettings();
+        res.setPriORpub(PrivetKey);
+        File resKeyDir;
+        File resKeyPrivet = null;
+        File resKeyPublik = null;
+        if (generateNyResKey) {
+            resKeyDir = getFile(resKeyStartPath, false, true);
+            if (resKeyDir == null) {
+                System.err.println("inte implementerat om direktory är null!!!");
+                System.exit(-4);
+            } else {
+                String nameFile = JOptionPane.showInputDialog(null, "name of the res key files.\n(adds .publik.key or .privet.key to the end");
+                resKeyPrivet = new File(resKeyDir, nameFile + ".Privet.key");
+                resKeyPublik = new File(resKeyDir, nameFile + ".Publik.key");
+                try {
+                    if (!resKeyPrivet.createNewFile()) {
+                        if (resKeyPrivet.length() != 0) {
+                            if ( JOptionPane.showConfirmDialog(null,"inte tom, privet") != 0) {
+                                System.err.println("inte implementerat om svarar är inte ja!!!");
+                                System.exit(-4);
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    if (!resKeyPublik.createNewFile()) {
+                        if (resKeyPublik.length() != 0) {
+                            if (JOptionPane.showConfirmDialog(null, "int tom, publik") != 0) {
+                                System.err.println("inte implementerat om svarar är inte ja!!!");
+                                System.exit(-4);
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                KeyPairGenerator keyPairGenerator;
+                KeyFactory keyFactory;
+                try {
+                    keyPairGenerator = KeyPairGenerator.getInstance("RES");
+                    keyFactory = KeyFactory.getInstance("RES");
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                }
+                keyPairGenerator.initialize(2048, new SecureRandom());
+                KeyPair keyPair = keyPairGenerator.generateKeyPair();
+                RSAPrivateKeySpec privateKeySpec;
+                RSAPublicKeySpec publicKeySpec;
+                try {
+                    privateKeySpec = keyFactory.getKeySpec(keyPair.getPrivate(), RSAPrivateCrtKeySpec.class);
+                    publicKeySpec = keyFactory.getKeySpec(keyPair.getPrivate(), RSAPublicKeySpec.class);
+                } catch (InvalidKeySpecException e) {
+                    throw new RuntimeException(e);
+                }
+                ObjectOutputStream outputStream;
+                try {
+                    outputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(resKeyPrivet)));
+                    outputStream.writeObject(privateKeySpec.getModulus());
+                    outputStream.writeObject(privateKeySpec.getPrivateExponent());
+                    outputStream.flush();
+                    outputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(resKeyPublik)));
+                    outputStream.writeObject(publicKeySpec.getModulus());
+                    outputStream.writeObject(publicKeySpec.getPublicExponent());
+                    outputStream.flush();
+                    outputStream.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
 
+            }
+        } else {
+            if (PrivetKey) {
+                resKeyPrivet = getFile(resKeyStartPath,false,false, keyfilter);
+                try {
+                    if (!resKeyPrivet.createNewFile()) {
+                        if (resKeyPrivet.length() != 0) {
+                            if ( JOptionPane.showConfirmDialog(null,"inte tom, privet") != 0) {
+                                System.err.println("inte implementerat om svarar är inte ja!!!");
+                                System.exit(-4);
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                resKeyPublik = getFile(resKeyStartPath, false, false, keyfilter);
+                try {
+                    if (!resKeyPublik.createNewFile()) {
+                        if (resKeyPublik.length() != 0) {
+                            if (JOptionPane.showConfirmDialog(null, "int tom, publik") != 0) {
+                                System.err.println("inte implementerat om svarar är inte ja!!!");
+                                System.exit(-4);
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        if (PrivetKey) {
+            if (testResKey(PrivetKey, resKeyPrivet)) {
+                assert resKeyPrivet != null;
+                res.setKeyfile(resKeyPrivet);
+            }
+        } else {
+            if (testResKey(PrivetKey, resKeyPublik)) {
+                assert resKeyPublik != null;
+                res.setKeyfile(resKeyPublik);
+            }
+        }
+    }
+
+    private static boolean testResKey(boolean privetKey, File resKeyFile) {
+        ObjectInputStream objectInputStream;
+        BigInteger modulus;
+        BigInteger exponent;
+        try {
+            objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(resKeyFile)));
+            modulus = (BigInteger) objectInputStream.readObject();
+            exponent = (BigInteger) objectInputStream.readObject();
+            objectInputStream.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        KeyFactory keyFactory;
+        try {
+            keyFactory = KeyFactory.getInstance("RES");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        if (privetKey) {
+            try {
+                keyFactory.generatePrivate(new RSAPrivateKeySpec(modulus,exponent));
+            } catch (InvalidKeySpecException e) {
+                System.err.println(e);
+                return false;
+                //throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                keyFactory.generatePublic(new RSAPublicKeySpec(modulus,exponent));
+            } catch (InvalidKeySpecException e) {
+                System.out.println(e);
+                return false;
+                //throw new RuntimeException(e);
+            }
+        }
+        return true;
     }
 
     private static void hybridSettings() {
