@@ -35,6 +35,9 @@ Start Path for the enkrypted or dekrypted messige out.
     static File keyStartPath = new File("");
 start path for a file choser for the keyfile.
 
+    static boolean generateNyResKey = false;
+true = program generats a ny key
+
 ---
 
 ## Hybrid 
@@ -51,6 +54,9 @@ If the key for aes is stored in the file
 
     static File aesKeyStartPath = new File("");
 start path for a file choser for the keyfile.
+
+    static boolean generateNyAesKey = false;
+true = program generats a ny key
 
 message is res message variable.
 
