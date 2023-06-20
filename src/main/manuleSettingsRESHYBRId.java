@@ -4,6 +4,8 @@ import setings.HYBRIDsettings;
 import setings.RESsettings;
 import setings.Settings;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 
 public class manuleSettingsRESHYBRId {
@@ -102,6 +104,73 @@ public class manuleSettingsRESHYBRId {
         settings.setStorTOfile(storToFile);
         settings.setManulesnapshot(manualSnapthot);
         settings.setNumOFrepeteson(numOfRepetitions);
+    }
+
+    FileNameExtensionFilter keyfilter = new FileNameExtensionFilter("Key file filter", "key");
+    private static File getFile(File startPath, boolean lengtchek, FileNameExtensionFilter filter) {
+        JFileChooser fileChooser = new JFileChooser(startPath);
+        if (filter != null)
+            fileChooser.setFileFilter(filter);
+        int i;
+        long lengt;
+        boolean c = true;
+        File file = new File("");
+        while (c) {
+            i = fileChooser.showOpenDialog(null);
+            if (i == 0) {
+                lengt = fileChooser.getSelectedFile().length();
+                if (lengtchek) {
+                    if (lengt > 245) {
+                        String m = "filen som är vald har " + lengt +
+                                " taken och kan vara för stor för krypteringen" +
+                                "\n (Max storlek är 245 taken) \n Tryk på ok om du vill fortseta";
+                        int a = JOptionPane.showConfirmDialog(null, m,
+                                "Filen kan vara för stor",
+                                JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+                        if (a == 0) {
+                            file = fileChooser.getSelectedFile();
+                            c = false;
+                        } else {
+                            if (a == JFileChooser.CANCEL_OPTION) {
+                                if (JOptionPane.showConfirmDialog(null,
+                                        "user\n" + "pres ok to continue") != 0) {
+                                    c = false;
+                                    file = null;
+                                }
+                            }
+                            if (a == JFileChooser.ERROR_OPTION) {
+                                if (JOptionPane.showConfirmDialog(
+                                        null,
+                                        "error\n" + "pres ok to continue") != 0) {
+                                    c = false;
+                                    file = null;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    file = fileChooser.getSelectedFile();
+                    c = false;
+                }
+            }
+            if (i != 0) {
+                if (i == JFileChooser.CANCEL_OPTION) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "user\n" + "pres ok to continue") != 0) {
+                        c = false;
+                        file = null;
+                    }
+                }
+                if (i == JFileChooser.ERROR_OPTION) {
+                    if (JOptionPane.showConfirmDialog(null,
+                            "error\n" + "pres ok to continue") != 0) {
+                        c = false;
+                        file = null;
+                    }
+                }
+            }
+        }
+        return file;
     }
 
     private static void resSettings() {
