@@ -77,7 +77,7 @@ public class manuleSettingsRESHYBRId {
         setSettings();
         if (id == 0) {
             System.out.println("Manual AES settings not implemented");
-            System.exit(504);
+            System.exit(404);
         }
         if (id == 1)
             resSettings();
