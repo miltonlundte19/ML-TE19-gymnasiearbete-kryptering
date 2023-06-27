@@ -46,7 +46,7 @@ public class manuleSettingsRESHYBRId {
     // start path for a file choser for the keyfile.
 
     static boolean generateNyResKey = false;
-    // true = program generats a ny key
+    // true = program generats ny key:s
 
     //----------------------------------------------------------
     //-------- Hybrid -----------------------------------------
@@ -68,17 +68,16 @@ public class manuleSettingsRESHYBRId {
     //----------------------------------------------------------
 
     public static void main(String[] args) {
-        settingsfile = new File("ssetingsfile.txt");
-        if (!settingsfile.exists())
-            try {
-                settingsfile.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        settingsfile = new File("setingsfile.txt");
+        try {
+            settingsfile.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         setSettings();
         if (id == 0) {
             System.out.println("Manual AES settings not implemented");
-            System.exit(404);
+            System.exit(504);
         }
         if (id == 1)
             resSettings();
@@ -340,7 +339,7 @@ public class manuleSettingsRESHYBRId {
             try {
                 keyFactory.generatePublic(new RSAPublicKeySpec(modulus,exponent));
             } catch (InvalidKeySpecException e) {
-                System.out.println(e);
+                System.err.println(e);
                 return false;
                 //throw new RuntimeException(e);
             }
