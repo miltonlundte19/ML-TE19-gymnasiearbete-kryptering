@@ -194,9 +194,9 @@ public class manuleSettingsRESHYBRId {
         File resKeyDir;
         if (generateNyResKey) {
             File[] resKeyPair;
-            resKeyDir = getFile(resKeyStartPath, false, true);
+            resKeyDir = getFile(resKeyStartPath, false, true, "Select the res key directory");
             if (resKeyDir == null) {
-                System.err.println("inte implementerat om direktory är null!!!");
+                System.err.println("inte implementerat om directory är null!!!");
                 System.exit(-4);
             }
             resKeyPair = getResFilePair(resKeyDir);
@@ -230,7 +230,7 @@ public class manuleSettingsRESHYBRId {
             if (PrivetKey) {
                 File resKeyPrivet;
                 while (true) {
-                    resKeyPrivet = getFile(resKeyStartPath,false,false, keyfilter);
+                    resKeyPrivet = getFile(resKeyStartPath,false,false, "Select the res privet password file", keyfilter);
                     if (resKeyPrivet.exists())
                         if (resKeyPrivet.length() != 0)
                             if (testResKey(PrivetKey, resKeyPrivet)) {
@@ -244,7 +244,7 @@ public class manuleSettingsRESHYBRId {
             } else {
                 File resKeyPublik;
                 while (true) {
-                    resKeyPublik = getFile(resKeyStartPath, false, false, keyfilter);
+                    resKeyPublik = getFile(resKeyStartPath, false, false, "Select the res publik password file", keyfilter);
                     if (resKeyPublik.exists())
                         if (resKeyPublik.length() != 0)
                             if (testResKey(PrivetKey, resKeyPublik)) {
