@@ -115,6 +115,7 @@ public class manuleSettingsRESHYBRId {
     private static File getFile(File startPath, boolean lengtchek, boolean diraktory) {
         return getFile(startPath,lengtchek,diraktory,null);
     }
+
     private static File getFile(File startPath, boolean lengtchek, boolean diraktory, FileNameExtensionFilter filter) {
         JFileChooser fileChooser = new JFileChooser(startPath);
         if (filter != null) {
@@ -192,120 +193,143 @@ public class manuleSettingsRESHYBRId {
         res = new RESsettings();
         res.setPriORpub(PrivetKey);
         File resKeyDir;
-        File resKeyPrivet = null;
-        File resKeyPublik = null;
         if (generateNyResKey) {
+            File[] resKeyPair;
             resKeyDir = getFile(resKeyStartPath, false, true);
             if (resKeyDir == null) {
                 System.err.println("inte implementerat om direktory är null!!!");
                 System.exit(-4);
+            }
+            resKeyPair = getResFilePair(resKeyDir);
+            riteResKeyToFile(resKeyPair);
+            if (PrivetKey) {
+                if (testResKey(PrivetKey, resKeyPair[0])) {
+                    res.setKeyfile(resKeyPair[0]);
+                } else {
+                    System.err.println("An error a kurade setting the privet key");
+                    System.exit(-3);
+                }
             } else {
-                String nameFile = JOptionPane.showInputDialog(null, "name of the res key files.\n(adds .publik.key or .privet.key to the end");
-                resKeyPrivet = new File(resKeyDir, nameFile + ".Privet.key");
-                resKeyPublik = new File(resKeyDir, nameFile + ".Publik.key");
-                try {
-                    if (!resKeyPrivet.createNewFile()) {
-                        if (resKeyPrivet.length() != 0) {
-                            if ( JOptionPane.showConfirmDialog(null,"inte tom, privet") != 0) {
-                                System.err.println("inte implementerat om svarar är inte ja!!!");
-                                System.exit(-4);
-                            }
-                        }
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                if (testResKey(PrivetKey, resKeyPair[1])) {
+                    res.setKeyfile(resKeyPair[1]);
+                } else {
+                    System.err.println("An error a kurade setting the publik key");
+                    System.exit(-3);
                 }
-                try {
-                    if (!resKeyPublik.createNewFile()) {
-                        if (resKeyPublik.length() != 0) {
-                            if (JOptionPane.showConfirmDialog(null, "int tom, publik") != 0) {
-                                System.err.println("inte implementerat om svarar är inte ja!!!");
-                                System.exit(-4);
-                            }
-                        }
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                KeyPairGenerator keyPairGenerator;
-                KeyFactory keyFactory;
-                try {
-                    keyPairGenerator = KeyPairGenerator.getInstance("RES");
-                    keyFactory = KeyFactory.getInstance("RES");
-                } catch (NoSuchAlgorithmException e) {
-                    throw new RuntimeException(e);
-                }
-                keyPairGenerator.initialize(2048, new SecureRandom());
-                KeyPair keyPair = keyPairGenerator.generateKeyPair();
-                RSAPrivateKeySpec privateKeySpec;
-                RSAPublicKeySpec publicKeySpec;
-                try {
-                    privateKeySpec = keyFactory.getKeySpec(keyPair.getPrivate(), RSAPrivateCrtKeySpec.class);
-                    publicKeySpec = keyFactory.getKeySpec(keyPair.getPrivate(), RSAPublicKeySpec.class);
-                } catch (InvalidKeySpecException e) {
-                    throw new RuntimeException(e);
-                }
-                ObjectOutputStream outputStream;
-                try {
-                    outputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(resKeyPrivet)));
-                    outputStream.writeObject(privateKeySpec.getModulus());
-                    outputStream.writeObject(privateKeySpec.getPrivateExponent());
-                    outputStream.flush();
-                    outputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(resKeyPublik)));
-                    outputStream.writeObject(publicKeySpec.getModulus());
-                    outputStream.writeObject(publicKeySpec.getPublicExponent());
-                    outputStream.flush();
-                    outputStream.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
             }
         } else {
+            String nyckelError = """
+                    Nyckeln som är vald är inte en res nyckel
+                    vill du försöka i gen
+                    (annars stängs programmet av)
+                    """;
+            String fileError = """
+                    Filen som valdes existera inte eller så den tom
+                    vill du försöka i gen
+                    (annars stängs programmet av)
+                    """;
             if (PrivetKey) {
-                resKeyPrivet = getFile(resKeyStartPath,false,false, keyfilter);
-                try {
-                    if (!resKeyPrivet.createNewFile()) {
-                        if (resKeyPrivet.length() != 0) {
-                            if ( JOptionPane.showConfirmDialog(null,"inte tom, privet") != 0) {
-                                System.err.println("inte implementerat om svarar är inte ja!!!");
-                                System.exit(-4);
-                            }
-                        }
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                File resKeyPrivet;
+                while (true) {
+                    resKeyPrivet = getFile(resKeyStartPath,false,false, keyfilter);
+                    if (resKeyPrivet.exists())
+                        if (resKeyPrivet.length() != 0)
+                            if (testResKey(PrivetKey, resKeyPrivet)) {
+                                res.setKeyfile(resKeyPrivet);
+                                break;
+                            } else if (JOptionPane.showConfirmDialog(null, nyckelError) != 0)
+                                System.exit(1);
+                    if (JOptionPane.showConfirmDialog(null, fileError) != 0)
+                        System.exit(1);
                 }
             } else {
-                resKeyPublik = getFile(resKeyStartPath, false, false, keyfilter);
-                try {
-                    if (!resKeyPublik.createNewFile()) {
-                        if (resKeyPublik.length() != 0) {
-                            if (JOptionPane.showConfirmDialog(null, "int tom, publik") != 0) {
-                                System.err.println("inte implementerat om svarar är inte ja!!!");
-                                System.exit(-4);
-                            }
-                        }
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                File resKeyPublik;
+                while (true) {
+                    resKeyPublik = getFile(resKeyStartPath, false, false, keyfilter);
+                    if (resKeyPublik.exists())
+                        if (resKeyPublik.length() != 0)
+                            if (testResKey(PrivetKey, resKeyPublik)) {
+                                res.setKeyfile(resKeyPublik);
+                                break;
+                            } else if (JOptionPane.showConfirmDialog(null, nyckelError) != 0)
+                                System.exit(1);
+                    if (JOptionPane.showConfirmDialog(null, fileError) != 0)
+                        System.exit(1);
                 }
             }
         }
-        if (PrivetKey) {
-            if (testResKey(PrivetKey, resKeyPrivet)) {
-                assert resKeyPrivet != null;
-                res.setKeyfile(resKeyPrivet);
+
+    }
+
+    private static File[] getResFilePair(File resKeyDir) {
+        String nameFile = JOptionPane.showInputDialog(null, "name of the res key files.\n(adds .publik.key or .privet.key to the end");
+        File resKeyPrivet = new File(resKeyDir, nameFile + ".Privet.key");
+        File resKeyPublik = new File(resKeyDir, nameFile + ".Publik.key");
+        try {
+            if (!resKeyPrivet.createNewFile()) {
+                if (resKeyPrivet.length() != 0) {
+                    if ( JOptionPane.showConfirmDialog(null,"inte tom, privet") != 0) {
+                        System.err.println("inte implementerat om svarar är inte ja!!!");
+                        System.exit(-4);
+                    }
+                }
             }
-        } else {
-            if (testResKey(PrivetKey, resKeyPublik)) {
-                assert resKeyPublik != null;
-                res.setKeyfile(resKeyPublik);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            if (!resKeyPublik.createNewFile()) {
+                if (resKeyPublik.length() != 0) {
+                    if (JOptionPane.showConfirmDialog(null, "int tom, publik") != 0) {
+                        System.err.println("inte implementerat om svarar är inte ja!!!");
+                        System.exit(-4);
+                    }
+                }
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new File[] {resKeyPrivet,resKeyPublik};
+    }
+
+    private static void riteResKeyToFile(File[] resKeyPair) {
+        KeyPairGenerator keyPairGenerator;
+        KeyFactory keyFactory;
+        try {
+            keyPairGenerator = KeyPairGenerator.getInstance("RES");
+            keyFactory = KeyFactory.getInstance("RES");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        keyPairGenerator.initialize(2048, new SecureRandom());
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+        RSAPrivateKeySpec privateKeySpec;
+        RSAPublicKeySpec publicKeySpec;
+        try {
+            privateKeySpec = keyFactory.getKeySpec(keyPair.getPrivate(), RSAPrivateCrtKeySpec.class);
+            publicKeySpec = keyFactory.getKeySpec(keyPair.getPrivate(), RSAPublicKeySpec.class);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        }
+        ObjectOutputStream outputStream;
+        try {
+            outputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(resKeyPair[0])));
+            outputStream.writeObject(privateKeySpec.getModulus());
+            outputStream.writeObject(privateKeySpec.getPrivateExponent());
+            outputStream.flush();
+            outputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(resKeyPair[1])));
+            outputStream.writeObject(publicKeySpec.getModulus());
+            outputStream.writeObject(publicKeySpec.getPublicExponent());
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     private static boolean testResKey(boolean privetKey, File resKeyFile) {
+        if (resKeyFile == null)
+            return false;
         ObjectInputStream objectInputStream;
         BigInteger modulus;
         BigInteger exponent;
