@@ -112,18 +112,17 @@ public class manuleSettingsRESHYBRId {
         settings.setNumOFrepeteson(numOfRepetitions);
     }
 
-    private static File getFile(File startPath, boolean lengtchek, boolean diraktory) {
-        return getFile(startPath,lengtchek,diraktory,null);
+    private static File getFile(File startPath, boolean lengtchek, boolean diraktory , String title) {
+        return getFile(startPath,lengtchek,diraktory,title,null);
     }
 
-    private static File getFile(File startPath, boolean lengtchek, boolean diraktory, FileNameExtensionFilter filter) {
+    private static File getFile(File startPath, boolean lengtchek, boolean diraktory, String title, FileNameExtensionFilter filter) {
         JFileChooser fileChooser = new JFileChooser(startPath);
+        fileChooser.setDialogTitle(title);
         if (filter != null) {
-            fileChooser.setDialogTitle("select a key file.");
             fileChooser.setFileFilter(filter);
         }
         if (diraktory) {
-            fileChooser.setDialogTitle("select a directory for the key:s");
             fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             lengtchek = false;
         }
