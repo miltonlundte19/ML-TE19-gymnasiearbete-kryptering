@@ -3,6 +3,7 @@ package main;
 import setings.HYBRIDsettings;
 import setings.RESsettings;
 import setings.Settings;
+import setings.Settingsfile;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,7 +17,7 @@ import java.security.spec.RSAPublicKeySpec;
 
 public class manuleSettingsRESHYBRId {
     //------- globala -------------------------------------
-    static byte id = 2;
+    static byte id = 1;
     // 1 = RES : 2 = Hybrid.
 
     static boolean encrypt = true;
@@ -80,7 +81,7 @@ public class manuleSettingsRESHYBRId {
             System.exit(404);
         }
         if (id == 1)
-            resSettings();
+            settings.setRes(resSettings());
         if (id == 2)
             hybridSettings();
         System.out.println(settings.toString());
@@ -88,8 +89,6 @@ public class manuleSettingsRESHYBRId {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(settingsfile));
             objectOutputStream.writeObject(settings);
             objectOutputStream.flush();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -129,7 +128,7 @@ public class manuleSettingsRESHYBRId {
         int i;
         long lengt;
         boolean c = true;
-        File file = new File("");
+        File file = null;
         while (c) {
             i = fileChooser.showOpenDialog(null);
             if (i == 0) {
@@ -150,7 +149,7 @@ public class manuleSettingsRESHYBRId {
                                 if (JOptionPane.showConfirmDialog(null,
                                         "user\n" + "pres ok to continue") != 0) {
                                     c = false;
-                                    file = null;
+                                    return null;
                                 }
                             }
                             if (a == JFileChooser.ERROR_OPTION) {
@@ -158,7 +157,7 @@ public class manuleSettingsRESHYBRId {
                                         null,
                                         "error\n" + "pres ok to continue") != 0) {
                                     c = false;
-                                    file = null;
+                                    return null;
                                 }
                             }
                         }
@@ -173,14 +172,14 @@ public class manuleSettingsRESHYBRId {
                     if (JOptionPane.showConfirmDialog(null,
                             "user\n" + "pres ok to continue") != 0) {
                         c = false;
-                        file = null;
+                        return null;
                     }
                 }
                 if (i == JFileChooser.ERROR_OPTION) {
                     if (JOptionPane.showConfirmDialog(null,
                             "error\n" + "pres ok to continue") != 0) {
                         c = false;
-                        file = null;
+                        return null;
                     }
                 }
             }
@@ -188,7 +187,7 @@ public class manuleSettingsRESHYBRId {
         return file;
     }
 
-    private static void resSettings() {
+    private static RESsettings resSettings() {
         res = new RESsettings();
         res.setPriORpub(PrivetKey);
         File resKeyDir;
@@ -202,14 +201,14 @@ public class manuleSettingsRESHYBRId {
             resKeyPair = getResFilePair(resKeyDir);
             riteResKeyToFile(resKeyPair);
             if (PrivetKey) {
-                if (testResKey(PrivetKey, resKeyPair[0])) {
+                if (testResKey(true, resKeyPair[0])) {
                     res.setKeyfile(resKeyPair[0]);
                 } else {
                     System.err.println("An error a kurade setting the privet key");
                     System.exit(-3);
                 }
             } else {
-                if (testResKey(PrivetKey, resKeyPair[1])) {
+                if (testResKey(false, resKeyPair[1])) {
                     res.setKeyfile(resKeyPair[1]);
                 } else {
                     System.err.println("An error a kurade setting the publik key");
@@ -231,13 +230,14 @@ public class manuleSettingsRESHYBRId {
                 File resKeyPrivet;
                 while (true) {
                     resKeyPrivet = getFile(resKeyStartPath,false,false, "Select the res privet password file", keyfilter);
-                    if (resKeyPrivet.exists())
-                        if (resKeyPrivet.length() != 0)
-                            if (testResKey(PrivetKey, resKeyPrivet)) {
-                                res.setKeyfile(resKeyPrivet);
-                                break;
-                            } else if (JOptionPane.showConfirmDialog(null, nyckelError) != 0)
-                                System.exit(1);
+                    if (resKeyPrivet != null)
+                        if (resKeyPrivet.exists())
+                            if (resKeyPrivet.length() != 0)
+                                if (testResKey(PrivetKey, resKeyPrivet)) {
+                                    res.setKeyfile(resKeyPrivet);
+                                    break;
+                                } else if (JOptionPane.showConfirmDialog(null, nyckelError) != 0)
+                                    System.exit(1);
                     if (JOptionPane.showConfirmDialog(null, fileError) != 0)
                         System.exit(1);
                 }
@@ -245,19 +245,29 @@ public class manuleSettingsRESHYBRId {
                 File resKeyPublik;
                 while (true) {
                     resKeyPublik = getFile(resKeyStartPath, false, false, "Select the res publik password file", keyfilter);
-                    if (resKeyPublik.exists())
-                        if (resKeyPublik.length() != 0)
-                            if (testResKey(PrivetKey, resKeyPublik)) {
-                                res.setKeyfile(resKeyPublik);
-                                break;
-                            } else if (JOptionPane.showConfirmDialog(null, nyckelError) != 0)
-                                System.exit(1);
+                    if (resKeyPublik != null)
+                        if (resKeyPublik.exists())
+                            if (resKeyPublik.length() != 0)
+                                if (testResKey(PrivetKey, resKeyPublik)) {
+                                    res.setKeyfile(resKeyPublik);
+                                    break;
+                                } else if (JOptionPane.showConfirmDialog(null, nyckelError) != 0)
+                                    System.exit(1);
                     if (JOptionPane.showConfirmDialog(null, fileError) != 0)
                         System.exit(1);
                 }
             }
         }
-
+        //_
+        Settingsfile files = new Settingsfile();
+        files.setIN(getFile(messageInStartPath, true, false, "selekt fille in")); // ________________________----__---
+        if (storToFile) {
+            files.setOU(getFile(messageOutStartPath, false, false, "sellekt fille out")); // ________________----__---
+        } else {
+            files.setOuToNull();
+        }
+        res.setFiles(files);
+        return res;
     }
 
     private static File[] getResFilePair(File resKeyDir) {
@@ -337,11 +347,7 @@ public class manuleSettingsRESHYBRId {
             modulus = (BigInteger) objectInputStream.readObject();
             exponent = (BigInteger) objectInputStream.readObject();
             objectInputStream.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         KeyFactory keyFactory;
