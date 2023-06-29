@@ -161,6 +161,9 @@ public class manuleSettingsRESHYBRId {
                                 }
                             }
                         }
+                    } else {
+                        file = fileChooser.getSelectedFile();
+                        c = false;
                     }
                 } else {
                     file = fileChooser.getSelectedFile();
