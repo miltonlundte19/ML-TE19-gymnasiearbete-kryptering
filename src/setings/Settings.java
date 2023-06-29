@@ -25,7 +25,7 @@ public class Settings implements Serializable {
     // varabel som sejer hur många gånger krypteringen ska repiteras
     // om storTOfile är true så lagras bara första operationen
     private AESsettings aes;
-    private RESsettings res;
+    private RSAsettings rsa;
     private HYBRIDsettings hybrid;
     // under klaser som har variablerna för sin spesifika kryptering
 
@@ -77,8 +77,8 @@ public class Settings implements Serializable {
         this.aes = aes;
     }
 
-    public void setRes(RESsettings res) {
-        this.res = res;
+    public void setRsa(RSAsettings rsa) {
+        this.rsa = rsa;
     }
 
     public void setHybrid(HYBRIDsettings hybrid) {
@@ -108,8 +108,8 @@ public class Settings implements Serializable {
     public AESsettings getAes() {
         return aes;
     }
-    public RESsettings getRes() {
-        return res;
+    public RSAsettings getRsa() {
+        return rsa;
     }
     public HYBRIDsettings getHybrid() {
         return hybrid;
@@ -139,10 +139,10 @@ public class Settings implements Serializable {
             }
         }
         if (id == 1) {
-            if (res != null) {
-                mode = res.toString();
+            if (rsa != null) {
+                mode = rsa.toString();
             } else {
-                mode = "res ERROR!";
+                mode = "rsa ERROR!";
             }
         }
         return "Settings{" +

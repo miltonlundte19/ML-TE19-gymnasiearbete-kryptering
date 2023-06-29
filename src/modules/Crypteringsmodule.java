@@ -1,7 +1,7 @@
 package modules;
 
 import modules.crypterings.Cryptaes;
-import modules.crypterings.Cryptres;
+import modules.crypterings.Cryptrsa;
 import setings.*;
 
 import javax.crypto.SecretKey;
@@ -37,7 +37,7 @@ public class Crypteringsmodule {
             7 = in put File
             8 = ou put File
     ----------------------------------------------------------
-    -------- ras -----------------------------------------
+    -------- rsa -----------------------------------------
         5 = null
         6 = keyholder
     --------- String ------------------------------------
@@ -63,7 +63,7 @@ public class Crypteringsmodule {
         if (module[0].equals((byte) 0)) {
             AESset(settings.getAes());
         } else if (module[0].equals((byte) 1)) {
-            RESset(settings.getRes());
+            RSAset(settings.getRsa());
         } // titar efter vilken krypterings model som ska användas
     }
 
@@ -109,19 +109,19 @@ public class Crypteringsmodule {
         // inehålet av fillen (som en lång string)
     }
 
-    private void RESset(RESsettings res) {
-        File keyfile = res.getKeyfile();
+    private void RSAset(RSAsettings rsa) {
+        File keyfile = rsa.getKeyfile();
         if (!keyfile.exists()) {
-            keyfile = new File(res.getKeyfilepath());
-        }// hämtar filen som kykeln till RES krypteringen
+            keyfile = new File(rsa.getKeyfilepath());
+        }// hämtar filen som kykeln till RSA krypteringen
 
-        getpubOrpri(keyfile, res.isPriORpub());
-        // en funktion som hämtar och byger i-hop nykeln
+        getpubOrpri(keyfile, rsa.isPriORpub());
+        // en funktion som hämtar och bygger i-hop nyckeln
 
         if ((boolean) module[1]) {
-            module[7] = res.getMesige();
+            module[7] = rsa.getMesige();
         } else { // titar om det är en string eller fil
-            Settingsfile fileseter = res.getFileInOu();
+            Settingsfile fileseter = rsa.getFileInOu();
             setFilemod(fileseter);
         }
     }
@@ -134,11 +134,11 @@ public class Crypteringsmodule {
             BigInteger exponent = (BigInteger) inputStream.readObject();
             inputStream.close();
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            ResKeyholder keyholder;
+            RsaKeyholder keyholder;
             if (priOrpub) {
-                keyholder = new ResKeyholder(keyFactory.generatePrivate(new RSAPrivateKeySpec(modulus, exponent)));
+                keyholder = new RsaKeyholder(keyFactory.generatePrivate(new RSAPrivateKeySpec(modulus, exponent)));
             } else {
-                keyholder = new ResKeyholder(keyFactory.generatePublic(new RSAPublicKeySpec(modulus, exponent)));
+                keyholder = new RsaKeyholder(keyFactory.generatePublic(new RSAPublicKeySpec(modulus, exponent)));
             }
             module[6] = keyholder;
         } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeySpecException e) {
@@ -161,9 +161,9 @@ public class Crypteringsmodule {
             }
         } else if (module[0].equals((byte) 1)) {
             if ((boolean) module[1]) {
-                RESs();
+                RSAs();
             } else {
-                RESf();
+                RSAf();
             }
         }
     }
@@ -252,14 +252,14 @@ public class Crypteringsmodule {
         System.exit(0);
     }
 
-    private void RESs() {
+    private void RSAs() {
         try {
-            looger.write("string:\n" + module[5] + "\ntiden res crypteringen började: \n" + System.nanoTime() +
+            looger.write("string:\n" + module[5] + "\ntiden rsa crypteringen började: \n" + System.nanoTime() +
                     "\nden krypterade strengen blev:\n");
             looger.flush();
 
             String out;
-            out = Cryptres.Stringcry((boolean) module[2], (ResKeyholder) module[6], (String) module[7]);
+            out = Cryptrsa.Stringcry((boolean) module[2], (RsaKeyholder) module[6], (String) module[7]);
 
             looger.write(out + '\n');
             if (manulesnapshotAlurt) {
@@ -273,7 +273,7 @@ public class Crypteringsmodule {
         }
         System.exit(0);
     }
-    private void RESf() {
+    private void RSAf() {
         short nMAX  = (short) module[4];
         if (nMAX < 1) {
             System.err.println("Error: nMAX är negativ: " + nMAX);
@@ -284,7 +284,7 @@ public class Crypteringsmodule {
             }
         }
         try {
-            looger.write("File: " + filestrings[0] + "\nTiden res krypteringen började: \n" +
+            looger.write("File: " + filestrings[0] + "\nTiden rsa krypteringen började: \n" +
                     LocalTime.now() +
                     "\nDen krypterade filen är har:\n" + filestrings[1]);
             if (nMAX > 1) {
@@ -302,7 +302,7 @@ public class Crypteringsmodule {
         boolean f = true;
         short i = 1;
         for (int n = 0; n < nMAX; n++) {
-            Cryptres.Filebufercry((boolean) module[2], storchek,(ResKeyholder) module[6], (File) module[7], (File) module[8]);
+            Cryptrsa.Filebufercry((boolean) module[2], storchek,(RsaKeyholder) module[6], (File) module[7], (File) module[8]);
             if (i == 1000) {
                 System.out.print(n + 1 + ",");
                 i = 0;

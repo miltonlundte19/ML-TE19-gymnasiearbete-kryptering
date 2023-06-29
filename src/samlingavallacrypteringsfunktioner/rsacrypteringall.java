@@ -13,7 +13,7 @@ import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 
-public class rescrypteringall {
+public class rsacrypteringall {
     // Key pair genirator
     public static KeyPair generatekeyrng() throws NoSuchAlgorithmException {
         KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");

@@ -19,7 +19,7 @@ the number of times the program shall encrypt or decrypt the message. (min 1)
 
 ---
 
-## RES
+## RSA
 
 ---
 
@@ -58,6 +58,6 @@ start path for a file choser for the keyfile.
     static boolean generateNyAesKey = false;
 true = program generats a ny key
 
-message is res message variable.
+message is rsa message variable.
 
 ---

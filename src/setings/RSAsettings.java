@@ -3,9 +3,9 @@ package setings;
 import java.io.File;
 import java.io.Serializable;
 
-public class RESsettings implements Serializable {
+public class RSAsettings implements Serializable {
 
-    // en under kalss som har alltför att RES krypteringen ska fungera
+    // en under kalss som har alltför att RSA krypteringen ska fungera
 
     private boolean priORpub; // true = privet
     private File keyfile;
@@ -73,7 +73,7 @@ public class RESsettings implements Serializable {
         } else {
             Mesige = "Eror - mesige";
         }
-        return "RESsettings{" +
+        return "RSAsettings{" +
                 "PriORpub=" + PudOrPri +
                 ", keyfilepath='" + keyfilepath + '\'' +
                 Mesige +

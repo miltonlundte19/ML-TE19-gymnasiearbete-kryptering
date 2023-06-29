@@ -1,7 +1,7 @@
 package modules;
 
 import setings.AESsettings;
-import setings.RESsettings;
+import setings.RSAsettings;
 import setings.Settings;
 import setings.Settingsfile;
 
@@ -18,7 +18,7 @@ public class SetingsModelOLD {
     // har myket funktioner och variablar som inte fungerar eller används (måste tita i genome)
     private Settings settings;
     private AESsettings aes;
-    private RESsettings res;
+    private RSAsettings rsa;
     private byte id;
     private boolean[] check = new boolean[7];
     private boolean lastcheck = false;
@@ -49,7 +49,7 @@ public class SetingsModelOLD {
             aes = new AESsettings();
             generateIV();
         } else if (id == 2) {
-            res = new RESsettings();
+            rsa = new RSAsettings();
         }
     }
 
@@ -63,7 +63,7 @@ public class SetingsModelOLD {
         if (id == 1) {
             aes.setPlainText(mesige);
         } else if (id == 2) {
-            res.setMesige(mesige);
+            rsa.setMesige(mesige);
         }
         check[4] = true;
     }
@@ -75,7 +75,7 @@ public class SetingsModelOLD {
         if (id == 1) {
             aes.setFiles(files);
         } else if (id == 2) {
-            res.setFiles(files);
+            rsa.setFiles(files);
         }
     }
 
@@ -124,7 +124,7 @@ public class SetingsModelOLD {
         if (keyPair == null || !keyfile.exists()) {
             return false;
         }
-        res.setPriORpub(priORpub);
+        rsa.setPriORpub(priORpub);
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(keyfile)));
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
@@ -146,7 +146,7 @@ public class SetingsModelOLD {
         } catch (InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
-        res.setKeyfile(keyfile);
+        rsa.setKeyfile(keyfile);
         return true;
     }
 

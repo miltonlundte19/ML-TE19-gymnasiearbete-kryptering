@@ -1,7 +1,7 @@
 package tests;
 
 import setings.AESsettings;
-import setings.RESsettings;
+import setings.RSAsettings;
 import setings.Settings;
 import setings.Settingsfile;
 
@@ -108,7 +108,7 @@ public class testingsetings {
             throw new RuntimeException(e);
         }
 
-        RESsettings res = new RESsettings();
+        RSAsettings res = new RSAsettings();
         boolean priOrpub = true; // true = privet
 
         res.setKeyfile(tempkeyfilepri);
@@ -123,7 +123,7 @@ public class testingsetings {
         //res.setMesige(mesige); */
         res.setFiles(testfilesres(storTOfile));
 
-        settings.setRes(res);
+        settings.setRsa(res);
 
         return settings;
     }

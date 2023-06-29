@@ -5,6 +5,6 @@ public class HYBRIDsettings {
     private boolean storkeyInFile;
 
     private Boolean Aes;
-    private Boolean Res;
+    private Boolean Rsa;
 
 }

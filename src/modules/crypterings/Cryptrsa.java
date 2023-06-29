@@ -1,6 +1,6 @@
 package modules.crypterings;
 
-import setings.ResKeyholder;
+import setings.RsaKeyholder;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -15,10 +15,10 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-public class Cryptres {
+public class Cryptrsa {
     // kommer ändra Key till en egen som har antingen en pub eller en pri key
     // i if satsen ändrar till respective key type
-    public static String Stringcry(boolean enORde, ResKeyholder keyholder, String input) {
+    public static String Stringcry(boolean enORde, RsaKeyholder keyholder, String input) {
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             if (enORde) {
@@ -45,7 +45,7 @@ public class Cryptres {
         return null;
     }
 
-    public static void Filebufercry(boolean enORde, boolean s, ResKeyholder keyholder, File in, File ou) {
+    public static void Filebufercry(boolean enORde, boolean s, RsaKeyholder keyholder, File in, File ou) {
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             if (enORde) {
