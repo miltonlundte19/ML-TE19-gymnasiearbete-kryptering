@@ -88,7 +88,7 @@ public class SettingsModel {
         return true;
     }
     public byte[] getNumofNonCheck() {
-        ArrayList<Byte> byteArrayList = new ArrayList<Byte>();
+        ArrayList<Byte> byteArrayList = new ArrayList<>();
         for (byte i = 0; i < 10; i++) {
             if (!check[i]) {
                 byteArrayList.add(i);
