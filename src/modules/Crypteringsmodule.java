@@ -142,8 +142,7 @@ public class Crypteringsmodule {
             }
             module[6] = keyholder;
         } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-            e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException(e);
         }
     }
 
@@ -192,8 +191,7 @@ public class Crypteringsmodule {
                 // för att mäta programet (visa gör det inte automatiskt)
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException(e);
         }
         System.exit(0);
     }
@@ -219,8 +217,7 @@ public class Crypteringsmodule {
                 looger.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException(e);
         }
         boolean storchek = (boolean) module[3];
         boolean f = true;
@@ -244,8 +241,7 @@ public class Crypteringsmodule {
             looger.flush();
             looger.close();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException(e);
         }
         if (manulesnapshotAlurt)
             JOptionPane.showMessageDialog(null, "Krypteringen slutade, ta snap");
@@ -268,8 +264,7 @@ public class Crypteringsmodule {
             looger.flush();
             looger.close();
         } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException(e);
         }
         System.exit(0);
     }
@@ -325,8 +320,7 @@ public class Crypteringsmodule {
             looger.flush();
             looger.close();
         } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException(e);
         }
         if (manulesnapshotAlurt)
             JOptionPane.showMessageDialog(null, "Krypteringen slutade, ta snap");

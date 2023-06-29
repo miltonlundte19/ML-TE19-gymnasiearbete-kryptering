@@ -39,10 +39,8 @@ public class Cryptrsa {
                 return new String(result, StandardCharsets.UTF_8);
             }
         } catch (NoSuchPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException | BadPaddingException | InvalidKeyException e) {
-            e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     public static void Filebufercry(boolean enORde, boolean s, RsaKeyholder keyholder, File in, File ou) {
@@ -85,8 +83,7 @@ public class Cryptrsa {
                 outputStream.close();
             }
         } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | IOException | IllegalBlockSizeException | BadPaddingException e) {
-            e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException(e);
         }
     }
 }
