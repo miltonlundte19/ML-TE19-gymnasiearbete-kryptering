@@ -325,8 +325,8 @@ public class manuleSettingsRESHYBRId {
         RSAPrivateKeySpec privateKeySpec;
         RSAPublicKeySpec publicKeySpec;
         try {
-            privateKeySpec = keyFactory.getKeySpec(keyPair.getPrivate(), RSAPrivateCrtKeySpec.class);
-            publicKeySpec = keyFactory.getKeySpec(keyPair.getPrivate(), RSAPublicKeySpec.class);
+            privateKeySpec = keyFactory.getKeySpec(keyPair.getPrivate(), RSAPrivateKeySpec.class);
+            publicKeySpec = keyFactory.getKeySpec(keyPair.getPublic(), RSAPublicKeySpec.class);
         } catch (InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
