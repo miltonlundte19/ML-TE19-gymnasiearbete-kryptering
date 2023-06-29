@@ -2,14 +2,14 @@
 # Globala
 
 ---
-    static byte id = 2;
+    static byte id = 1;
 1 = RES : 2 = Hybrid.
 
     static boolean encrypt = true;
 true = encryption : fals = decryption.
 
     static boolean storToFile = false;
-true = stors output to a file.
+true = stores output to a file.
 
     static boolean manualSnapthot = true;
 true = if the program shall pause for the user to take a snapshot.
@@ -24,7 +24,7 @@ the number of times the program shall encrypt or decrypt the message. (min 1)
 ---
 
     static boolean PrivetKey = true;
-true = privet : // fals = publik.
+true = privet : // false = publik.
 
     static File messageInStartPath = new File("");
 start path for a file choser for the in message.
@@ -36,7 +36,7 @@ Start Path for the enkrypted or dekrypted messige out.
 start path for a file choser for the keyfile.
 
     static boolean generateNyResKey = false;
-true = program generats a ny key
+true = program generats a ny key:s
 
 ---
 
