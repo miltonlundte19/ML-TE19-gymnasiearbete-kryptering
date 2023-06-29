@@ -1,7 +1,7 @@
 package main;
 
 import setings.HYBRIDsettings;
-import setings.RESsettings;
+import setings.RSAsettings;
 import setings.Settings;
 import setings.Settingsfile;
 
@@ -18,7 +18,7 @@ import java.security.spec.RSAPublicKeySpec;
 public class manuleSettingsRESHYBRId {
     //------- globala -------------------------------------
     static byte id = 1;
-    // 1 = RES : 2 = Hybrid.
+    // 1 = RSA : 2 = Hybrid.
 
     static boolean encrypt = true;
     // true = encryption : fals = decryption.
@@ -33,9 +33,9 @@ public class manuleSettingsRESHYBRId {
     // the number of times the program shall encrypt or decrypt the message. (min 1)
 
     //----------------------------------------------------------
-    //-------- res -----------------------------------------
+    //-------- rsa -----------------------------------------
     static boolean PrivetKey = true;
-    // true = privet : // fals = publik.
+    // true = privet : // false = publik.
 
     static File messageInStartPath = new File("");
     // start path for a file choser for the in message.
@@ -64,7 +64,7 @@ public class manuleSettingsRESHYBRId {
     static boolean generateNyAesKey = false;
     // true = program generats a ny key
 
-    // message is res message variable.
+    // message is rsa message variable.
 
     //----------------------------------------------------------
 
@@ -81,7 +81,7 @@ public class manuleSettingsRESHYBRId {
             System.exit(404);
         }
         if (id == 1)
-            settings.setRes(resSettings());
+            settings.setRsa(rsaSettings());
         if (id == 2)
             hybridSettings();
         System.out.println(settings.toString());
@@ -97,7 +97,7 @@ public class manuleSettingsRESHYBRId {
     //------------ Fixt variable ----------------------------------
     static Settings settings = new Settings();
     static File settingsfile;
-    static RESsettings res;
+    static RSAsettings rsa;
     static HYBRIDsettings hybrid;
     static FileNameExtensionFilter keyfilter = new FileNameExtensionFilter("Key file filter", "key");
 
@@ -187,13 +187,13 @@ public class manuleSettingsRESHYBRId {
         return file;
     }
 
-    private static RESsettings resSettings() {
-        res = new RESsettings();
-        res.setPriORpub(PrivetKey);
+    private static RSAsettings rsaSettings() {
+        rsa = new RSAsettings();
+        rsa.setPriORpub(PrivetKey);
         File resKeyDir;
         if (generateNyResKey) {
             File[] resKeyPair;
-            resKeyDir = getFile(resKeyStartPath, false, true, "Select the res key directory");
+            resKeyDir = getFile(resKeyStartPath, false, true, "Select the rsa key directory");
             if (resKeyDir == null) {
                 System.err.println("inte implementerat om directory är null!!!");
                 System.exit(-4);
@@ -201,15 +201,15 @@ public class manuleSettingsRESHYBRId {
             resKeyPair = getResFilePair(resKeyDir);
             riteResKeyToFile(resKeyPair);
             if (PrivetKey) {
-                if (testResKey(true, resKeyPair[0])) {
-                    res.setKeyfile(resKeyPair[0]);
+                if (testRsaKey(true, resKeyPair[0])) {
+                    rsa.setKeyfile(resKeyPair[0]);
                 } else {
                     System.err.println("An error a kurade setting the privet key");
                     System.exit(-3);
                 }
             } else {
-                if (testResKey(false, resKeyPair[1])) {
-                    res.setKeyfile(resKeyPair[1]);
+                if (testRsaKey(false, resKeyPair[1])) {
+                    rsa.setKeyfile(resKeyPair[1]);
                 } else {
                     System.err.println("An error a kurade setting the publik key");
                     System.exit(-3);
@@ -228,33 +228,43 @@ public class manuleSettingsRESHYBRId {
                     """;
             if (PrivetKey) {
                 File resKeyPrivet;
+                boolean c;
                 while (true) {
+                    c = true;
                     resKeyPrivet = getFile(resKeyStartPath,false,false, "Select the res privet password file", keyfilter);
                     if (resKeyPrivet != null)
                         if (resKeyPrivet.exists())
-                            if (resKeyPrivet.length() != 0)
-                                if (testResKey(PrivetKey, resKeyPrivet)) {
-                                    res.setKeyfile(resKeyPrivet);
+                            if (resKeyPrivet.length() != 0) {
+                                c = false;
+                                if (testRsaKey(PrivetKey, resKeyPrivet)) {
+                                    rsa.setKeyfile(resKeyPrivet);
                                     break;
                                 } else if (JOptionPane.showConfirmDialog(null, nyckelError) != 0)
                                     System.exit(1);
-                    if (JOptionPane.showConfirmDialog(null, fileError) != 0)
-                        System.exit(1);
+                            }
+                    if (c)
+                        if (JOptionPane.showConfirmDialog(null, fileError) != 0)
+                            System.exit(1);
                 }
             } else {
                 File resKeyPublik;
+                boolean c;
                 while (true) {
+                    c = true;
                     resKeyPublik = getFile(resKeyStartPath, false, false, "Select the res publik password file", keyfilter);
                     if (resKeyPublik != null)
                         if (resKeyPublik.exists())
-                            if (resKeyPublik.length() != 0)
-                                if (testResKey(PrivetKey, resKeyPublik)) {
-                                    res.setKeyfile(resKeyPublik);
+                            if (resKeyPublik.length() != 0) {
+                                c = false;
+                                if (testRsaKey(PrivetKey, resKeyPublik)) {
+                                    rsa.setKeyfile(resKeyPublik);
                                     break;
                                 } else if (JOptionPane.showConfirmDialog(null, nyckelError) != 0)
                                     System.exit(1);
-                    if (JOptionPane.showConfirmDialog(null, fileError) != 0)
-                        System.exit(1);
+                            }
+                    if (c)
+                        if (JOptionPane.showConfirmDialog(null, fileError) != 0)
+                            System.exit(1);
                 }
             }
         }
@@ -266,12 +276,12 @@ public class manuleSettingsRESHYBRId {
         } else {
             files.setOuToNull();
         }
-        res.setFiles(files);
-        return res;
+        rsa.setFiles(files);
+        return rsa;
     }
 
     private static File[] getResFilePair(File resKeyDir) {
-        String nameFile = JOptionPane.showInputDialog(null, "name of the res key files.\n(adds .publik.key or .privet.key to the end");
+        String nameFile = JOptionPane.showInputDialog(null, "name of the rsa key files.\n(adds .publik.key or .privet.key to the end");
         File resKeyPrivet = new File(resKeyDir, nameFile + ".Privet.key");
         File resKeyPublik = new File(resKeyDir, nameFile + ".Publik.key");
         try {
@@ -305,8 +315,8 @@ public class manuleSettingsRESHYBRId {
         KeyPairGenerator keyPairGenerator;
         KeyFactory keyFactory;
         try {
-            keyPairGenerator = KeyPairGenerator.getInstance("RES");
-            keyFactory = KeyFactory.getInstance("RES");
+            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            keyFactory = KeyFactory.getInstance("RSA");
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
@@ -336,7 +346,7 @@ public class manuleSettingsRESHYBRId {
         }
     }
 
-    private static boolean testResKey(boolean privetKey, File resKeyFile) {
+    private static boolean testRsaKey(boolean privetKey, File resKeyFile) {
         if (resKeyFile == null)
             return false;
         ObjectInputStream objectInputStream;
@@ -352,7 +362,7 @@ public class manuleSettingsRESHYBRId {
         }
         KeyFactory keyFactory;
         try {
-            keyFactory = KeyFactory.getInstance("RES");
+            keyFactory = KeyFactory.getInstance("RSA");
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
@@ -360,7 +370,7 @@ public class manuleSettingsRESHYBRId {
             try {
                 keyFactory.generatePrivate(new RSAPrivateKeySpec(modulus,exponent));
             } catch (InvalidKeySpecException e) {
-                System.err.println(e);
+                e.printStackTrace();
                 return false;
                 //throw new RuntimeException(e);
             }
@@ -368,7 +378,7 @@ public class manuleSettingsRESHYBRId {
             try {
                 keyFactory.generatePublic(new RSAPublicKeySpec(modulus,exponent));
             } catch (InvalidKeySpecException e) {
-                System.err.println(e);
+                e.printStackTrace();
                 return false;
                 //throw new RuntimeException(e);
             }
