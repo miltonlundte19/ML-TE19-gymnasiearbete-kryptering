@@ -145,6 +145,22 @@ public class Settings implements Serializable {
                 mode = "rsa ERROR!";
             }
         }
+        if (id == 2)
+            if (hybrid != null) {
+                mode = "HYBRIDsettings{" +
+                "is-the-key-in-file=" + hybrid.isKeyinfile() +
+                ", output-key-to-file=" + hybrid.isStorkeyInFile();
+                if (hybrid.isAes() && (aes != null)) {
+                    mode += aes.toString();
+                } else
+                    mode += "rsa ERROR!, ";
+                if (hybrid.isRsa() && (rsa != null)) {
+                    mode += rsa.toString();
+                } else
+                    mode += "rsa ERROR!";
+                mode += "}";
+            } else
+                mode = "hybrid ERROR!";
         return "Settings{" +
                 "id=" + id +
                 typ +
