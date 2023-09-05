@@ -81,8 +81,12 @@ public class manuleSettingsRESHYBRId {
             System.out.println("Manual AES settings not implemented");
             System.exit(404);
         }
-        if (id == 1)
-            settings.setRsa(rsaSettings());
+        if (id == 1) {
+            rsa = rsaSettings();
+            rsa.setFiles(setRSAInOut(messageInStartPath,messageOutStartPath));
+            settings.setRsa(rsa);
+        }
+
         if (id == 2)
             hybridSettings();
         System.out.println(settings.toString());
@@ -273,16 +277,18 @@ public class manuleSettingsRESHYBRId {
                 }
             }
         }
-        //_
-        Settingsfile files = new Settingsfile();
-        files.setIN(getFile(messageInStartPath, true, false, "selekt fille in")); // ________________________----__---
-        if (storToFile) {
-            files.setOU(getFile(messageOutStartPath, false, false, "sellekt fille out")); // ________________----__---
-        } else {
-            files.setOuToNull();
-        }
-        rsa.setFiles(files);
         return rsa;
+    }
+
+    private static Settingsfile setRSAInOut(File messageInPath, File messageOutPath) {
+      Settingsfile files = new Settingsfile();
+      files.setIN(getFile(messageInPath, true, false, "selekt fille in"));
+      if (storToFile) {
+          files.setOU(getFile(messageOutPath,false,false,"sellekt file out"));
+      } else {
+          files.setOuToNull();
+      }
+      return files;
     }
 
     private static File[] getResFilePair(File resKeyDir) {
