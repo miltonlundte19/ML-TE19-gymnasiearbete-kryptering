@@ -153,7 +153,8 @@ public class Settings implements Serializable {
                 if (hybrid.isAes() && (aes != null)) {
                     mode += aes.toString();
                 } else
-                    mode += "rsa ERROR!, ";
+                    mode += "rsa ERROR!";
+                mode += ", ";
                 if (hybrid.isRsa() && (rsa != null)) {
                     mode += rsa.toString();
                 } else
