@@ -49,7 +49,7 @@ public class manuleSettingsRESHYBRId {
     //-------- Hybrid -----------------------------------------
     // set variable for res also.
     static byte iv = 0;
-    // 0-12 for a set of pre generated iv:s (-1 for override, manual inserting at:[rad]).
+    // 0-12 for a set of pre generated iv:s (-1 for override, manual inserting at:[70:32]).
 
     static boolean aesKeystoredInFile = false;
     // If the key for aes is stored in the file
