@@ -54,6 +54,9 @@ public class manuleSettingsRESHYBRId {
     static boolean aesKeystoredInFile = false;
     // If the key for aes is stored in the file
 
+    static boolean aesKeystorInFile = true;
+    // if the key for aes wiled be stored in the file
+
     static File aesKeyStartPath = new File("");
     // start path for a file choser for the keyfile.
 
@@ -63,6 +66,8 @@ public class manuleSettingsRESHYBRId {
     // message is rsa message variable.
 
     //----------------------------------------------------------
+
+    static byte[] ivOVERRIDE = null;
 
     public static void main(String[] args) {
         settingsfile = new File("setingsfile.txt");
