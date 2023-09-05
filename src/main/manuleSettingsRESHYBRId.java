@@ -1,9 +1,6 @@
 package main;
 
-import setings.HYBRIDsettings;
-import setings.RSAsettings;
-import setings.Settings;
-import setings.Settingsfile;
+import setings.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -11,7 +8,6 @@ import java.io.*;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAPrivateCrtKeySpec;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 
