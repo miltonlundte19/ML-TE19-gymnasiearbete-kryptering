@@ -100,6 +100,7 @@ public class manuleSettingsRESHYBRId {
     static File settingsfile;
     static RSAsettings rsa;
     static HYBRIDsettings hybrid;
+    static AESsettings aes;
     static FileNameExtensionFilter keyfilter = new FileNameExtensionFilter("Key file filter", "key");
 
     //-------------------------------------------------------------
