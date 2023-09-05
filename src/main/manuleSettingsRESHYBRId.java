@@ -398,7 +398,23 @@ public class manuleSettingsRESHYBRId {
     }
 
     private static void hybridSettings() {
-
+        hybrid = new HYBRIDsettings();
+        aes = new AESsettings();
+        aes.setIv(aesSetIv(iv));
+        hybrid.setAes(true);
+        hybrid.setKeyinfile(aesKeystoredInFile);
+        hybrid.setStorkeyInFile(storToFile);
+        rsa = new RSAsettings();
+        rsa = rsaSettings();
+        if (aesKeystorInFile) {
+            rsa.setFiles(aes.getFileInOu());
+        } else {
+            File filein = getFile(aesKeyStartPath, false,false,"select aes ket file");
+            if (filein == null)
+                System.exit(-1);//_____________________----------------------------------________________-----_
+            rsa.setFiles(new Settingsfile(filein,aes.getFileInOu().getOu()));
+        }
+        hybrid.setRsa(true);
     }
 
     private static byte[] aesSetIv(byte iv) {
