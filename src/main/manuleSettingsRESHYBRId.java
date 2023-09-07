@@ -140,8 +140,8 @@ public class manuleSettingsRESHYBRId {
         while (c) {
             i = fileChooser.showOpenDialog(null);
             if (i == 0) {
-                lengt = fileChooser.getSelectedFile().length();
                 if (lengtchek) {
+                    lengt = fileChooser.getSelectedFile().length();
                     if (lengt > 245) {
                         String m = "filen som är vald har " + lengt +
                                 " taken och kan vara för stor för krypteringen" +
@@ -401,12 +401,10 @@ public class manuleSettingsRESHYBRId {
 
     private static void hybridSettings() {
         hybrid = new HYBRIDsettings();
-        aes = new AESsettings();
-        aes.setIv(aesSetIv(iv));
+        aes = aesSettings();
         hybrid.setAes(true);
         hybrid.setKeyinfile(aesKeystoredInFile);
         hybrid.setStorkeyInFile(storToFile);
-        rsa = new RSAsettings();
         rsa = rsaSettings();
         if (aesKeystorInFile) {
             rsa.setFiles(aes.getFileInOu());
