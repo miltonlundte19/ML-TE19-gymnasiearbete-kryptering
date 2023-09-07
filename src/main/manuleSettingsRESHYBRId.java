@@ -83,7 +83,7 @@ public class manuleSettingsRESHYBRId {
         }
         if (id == 1) {
             rsa = rsaSettings();
-            rsa.setFiles(setRSAInOut(messageInStartPath,messageOutStartPath));
+            rsa.setFiles(setFileInOut(messageInStartPath,messageOutStartPath));
             settings.setRsa(rsa);
         }
 
@@ -280,7 +280,7 @@ public class manuleSettingsRESHYBRId {
         return rsa;
     }
 
-    private static Settingsfile setRSAInOut(File messageInPath, File messageOutPath) {
+    private static Settingsfile setFileInOut(File messageInPath, File messageOutPath) {
       Settingsfile files = new Settingsfile();
       files.setIN(getFile(messageInPath, true, false, "selekt fille in"));
       if (storToFile) {
