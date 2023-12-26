@@ -230,43 +230,35 @@ public class manuleSettingsRESHYBRId {
                     """;
             if (PrivetKey) {
                 File resKeyPrivet;
-                boolean c;
                 while (true) {
-                    c = true;
                     resKeyPrivet = getFile(resKeyStartPath,false,false, "Select the res privet password file", keyfilter);
-                    if (resKeyPrivet != null)
+                    if (resKeyPrivet != null) {
                         if (resKeyPrivet.exists())
                             if (resKeyPrivet.length() != 0) {
-                                c = false;
                                 if (testRsaKey(PrivetKey, resKeyPrivet)) {
                                     rsa.setKeyfile(resKeyPrivet);
                                     break;
                                 } else if (JOptionPane.showConfirmDialog(null, nyckelError) != 0)
                                     System.exit(1);
                             }
-                    if (c)
-                        if (JOptionPane.showConfirmDialog(null, fileError) != 0)
-                            System.exit(1);
+                    } else if (JOptionPane.showConfirmDialog(null, fileError) != 0)
+                        System.exit(1);
                 }
             } else {
                 File resKeyPublik;
-                boolean c;
                 while (true) {
-                    c = true;
                     resKeyPublik = getFile(resKeyStartPath, false, false, "Select the res publik password file", keyfilter);
-                    if (resKeyPublik != null)
+                    if (resKeyPublik != null) {
                         if (resKeyPublik.exists())
                             if (resKeyPublik.length() != 0) {
-                                c = false;
                                 if (testRsaKey(PrivetKey, resKeyPublik)) {
                                     rsa.setKeyfile(resKeyPublik);
                                     break;
                                 } else if (JOptionPane.showConfirmDialog(null, nyckelError) != 0)
                                     System.exit(1);
                             }
-                    if (c)
-                        if (JOptionPane.showConfirmDialog(null, fileError) != 0)
-                            System.exit(1);
+                    } else if (JOptionPane.showConfirmDialog(null, fileError) != 0)
+                        System.exit(1);
                 }
             }
         }
