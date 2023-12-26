@@ -269,7 +269,20 @@ public class manuleSettingsRESHYBRId {
       Settingsfile files = new Settingsfile();
       files.setIN(getFile(messageInPath, true, false, "selekt fille in"));
       if (storToFile) {
-          files.setOU(getFile(messageOutPath,false,false,"sellekt file out"));
+          File out;
+          while (true) {
+              out = getFile(messageOutPath,false,false,"sellekt file out");
+              if (out.length() != 0) {
+                  byte anser = (byte) JOptionPane.showConfirmDialog(null, "filen har text i sej vil du radera datan? \n annars välj en annan fill");
+                  if (anser == 0)
+                      break;
+                  if (anser == -1) {
+                      System.out.println("user canseld \n closing program");
+                      System.exit(-1);
+                  }
+              }
+          }
+          files.setOU(out);
       } else {
           files.setOuToNull();
       }
