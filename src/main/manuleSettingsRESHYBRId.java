@@ -90,8 +90,16 @@ public class manuleSettingsRESHYBRId {
             settings.setRsa(rsa);
         }
 
-        if (id == 2)
-            hybridSettings();
+        if (id == 2) {
+            Object[] hybridsettingsobjekt = hybridSettings();
+            settings.setHybrid((HYBRIDsettings) hybridsettingsobjekt[0]);
+            settings.setAes((AESsettings) hybridsettingsobjekt[1]);
+            settings.setRsa((RSAsettings) hybridsettingsobjekt[2]);
+        }
+        if  (id < 2) {
+            System.out.println("id values is to high");
+            System.exit(404);
+        }
         System.out.println(settings.toString());
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(settingsfile));
@@ -411,7 +419,7 @@ public class manuleSettingsRESHYBRId {
         return true;
     }
 
-    private static void hybridSettings() {
+    private static Object[] hybridSettings() {
         hybrid = new HYBRIDsettings();
         aes = aesSettings();
         hybrid.setAes(true);
@@ -422,11 +430,12 @@ public class manuleSettingsRESHYBRId {
             rsa.setFiles(aes.getFileInOu());
         } else {
             File filein = getFile(aesKeyStartPath, false,false,"select aes ket file");
-            if (filein == null)
-                System.exit(-1);//_____________________----------------------------------________________-----_
+             if (filein == null)
+                 System.exit(-1);
             rsa.setFiles(new Settingsfile(filein,aes.getFileInOu().getOu()));
         }
         hybrid.setRsa(true);
+        return new Object[] {hybrid, aes, rsa};
     }
 
     private static AESsettings aesSettings() {
