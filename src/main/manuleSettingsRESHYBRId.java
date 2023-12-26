@@ -363,12 +363,27 @@ public class manuleSettingsRESHYBRId {
         BigInteger exponent;
         try {
             objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(resKeyFile)));
-            modulus = (BigInteger) objectInputStream.readObject();
-            exponent = (BigInteger) objectInputStream.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Object objmodule;
+        Object objexponent;
+        try {
+            objmodule = objectInputStream.readObject();
+            objexponent = objectInputStream.readObject();
             objectInputStream.close();
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        if (objmodule.getClass() == BigInteger.class) {
+            modulus = (BigInteger) objmodule;
+        } else
+            throw new RuntimeException("modulus på res kykeln är inte en BigInteger");
+        if (objexponent.getClass() == BigInteger.class) {
+            exponent = (BigInteger) objexponent;
+        } else
+            throw new RuntimeException("Exponent på res kykeln är inte en BigInteger");
+
         KeyFactory keyFactory;
         try {
             keyFactory = KeyFactory.getInstance("RSA");
