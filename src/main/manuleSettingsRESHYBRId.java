@@ -135,9 +135,8 @@ public class manuleSettingsRESHYBRId {
         }
         int i;
         long lengt;
-        boolean c = true;
-        File file = null;
-        while (c) {
+        String prok = "Pres ok to continue";
+        while (true) {
             i = fileChooser.showOpenDialog(null);
             if (i == 0) {
                 if (lengtchek) {
@@ -150,52 +149,44 @@ public class manuleSettingsRESHYBRId {
                                 "Filen kan vara för stor",
                                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
                         if (a == 0) {
-                            file = fileChooser.getSelectedFile();
-                            c = false;
+                            return fileChooser.getSelectedFile();
                         } else {
                             if (a == JFileChooser.CANCEL_OPTION) {
                                 if (JOptionPane.showConfirmDialog(null,
-                                        "user\n" + "pres ok to continue") != 0) {
-                                    c = false;
+                                        "user\n" + prok) != 0) {
                                     return null;
                                 }
                             }
                             if (a == JFileChooser.ERROR_OPTION) {
                                 if (JOptionPane.showConfirmDialog(
                                         null,
-                                        "error\n" + "pres ok to continue") != 0) {
-                                    c = false;
+                                        "error\n" + prok) != 0) {
                                     return null;
                                 }
                             }
                         }
                     } else {
-                        file = fileChooser.getSelectedFile();
-                        c = false;
+                        return fileChooser.getSelectedFile();
                     }
                 } else {
-                    file = fileChooser.getSelectedFile();
-                    c = false;
+                    return fileChooser.getSelectedFile();
                 }
             }
             if (i != 0) {
                 if (i == JFileChooser.CANCEL_OPTION) {
                     if (JOptionPane.showConfirmDialog(null,
-                            "user\n" + "pres ok to continue") != 0) {
-                        c = false;
+                            "user\n" + prok) != 0) {
                         return null;
                     }
                 }
                 if (i == JFileChooser.ERROR_OPTION) {
                     if (JOptionPane.showConfirmDialog(null,
-                            "error\n" + "pres ok to continue") != 0) {
-                        c = false;
+                            "error\n" + prok) != 0) {
                         return null;
                     }
                 }
             }
         }
-        return file;
     }
 
     private static RSAsettings rsaSettings() {
