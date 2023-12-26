@@ -2,6 +2,7 @@ package main;
 
 import setings.*;
 
+import javax.crypto.SecretKey;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
@@ -427,6 +428,37 @@ public class manuleSettingsRESHYBRId {
         }
         hybrid.setRsa(true);
     }
+
+    private static AESsettings aesSettings() {
+        aes = new AESsettings();
+        aes.setIv(aesSetIv(iv));
+        aes.setKey(getAesKey(aesKeyStartPath));
+        aes.setFiles(setFileInOut(messageInStartPath,messageOutStartPath));
+        return aes;
+    }
+
+    private static SecretKey getAesKey(File aesKeyStartPath) {
+        File aeskey = getFile(aesKeyStartPath,false,false,"Select the aes key file");
+        ObjectInputStream objectInputStream;
+        try {
+            objectInputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(aeskey)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        SecretKey key;
+        //Object objsecrkey;
+        try {
+            key = (SecretKey) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        /*
+        if (objsecrkey.getClass() == SecretKey.class) {
+            key = (SecretKey) objsecrkey;
+        }*/
+        return key;
+    }
+
 
     private static byte[] aesSetIv(byte iv) {
         if (iv == -1) {
