@@ -200,9 +200,9 @@ public class Crypteringsmodule {
     private void AESf() {
         short nMAX = (short) module[4];
         if (nMAX < 1) {
-            System.err.println("Error: nMAX är negativ: " + nMAX);
+            System.err.println("Error: nMAX är mindre än 1: " + nMAX);
             try {
-                looger.write("\nError: ingen kryptering händer nMAX är negativt\n" + nMAX + '\n');
+                looger.write("\nError: ingen kryptering händer nMAX är mindre än 1\n" + nMAX + '\n');
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -273,9 +273,9 @@ public class Crypteringsmodule {
     private void RSAf() {
         short nMAX  = (short) module[4];
         if (nMAX < 1) {
-            System.err.println("Error: nMAX är negativ: " + nMAX);
+            System.err.println("Error: nMAX är mindre än 1: " + nMAX);
             try {
-                looger.write("\nError: ingen kryptering händer nMAX är negativt\n" + nMAX + '\n');
+                looger.write("\nError: ingen kryptering händer nMAX är mindre än 1\n" + nMAX + '\n');
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
