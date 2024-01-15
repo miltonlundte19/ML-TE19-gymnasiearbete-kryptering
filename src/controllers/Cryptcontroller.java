@@ -72,6 +72,7 @@ public class Cryptcontroller {
             crypteringsmodule.start();
             // ladar in några objekt till krypteringen och sedan startar klasen.
         } else {
+            System.out.println("Objektet i setingsfile.txt är inte ett Settings objekt");
             System.exit(7);
         }
     }
