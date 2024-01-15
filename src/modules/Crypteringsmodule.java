@@ -17,7 +17,7 @@ import java.security.spec.RSAPublicKeySpec;
 import java.time.LocalTime;
 
 public class Crypteringsmodule {
-    private Object[] module = new Object[9];
+    private final Object[] module = new Object[9];
     /* Visar vilka värden som hamnav vart beroende på vilken krypterings metod som används
      och om det är en text eller fill.
      module[  ]
@@ -47,7 +47,9 @@ public class Crypteringsmodule {
             8 = ou put File
     ----------------------------------------------------------
      */
-    private String[] filestrings = new String[2];
+    private final String[] filestrings = new String[2];
+
+    private final Object[] hybridmodule = new Object[5];
     private final boolean manulesnapshotAlurt;
     private FileWriter looger;
 
