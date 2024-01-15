@@ -82,7 +82,10 @@ public class Crypteringsmodule {
             AESset(settings.getAes());
         } else if (module[0].equals((byte) 1)) {
             RSAset(settings.getRsa());
-        } // titar efter vilken krypterings model som ska användas
+        } else if (module[0].equals((byte) 2)) {
+            Hybridset(settings.getHybrid(), settings.getAes(), settings.getRsa());
+        }
+        // titar efter vilken krypterings model som ska användas
     }
 
     private void AESset(AESsettings aes) {
@@ -162,6 +165,23 @@ public class Crypteringsmodule {
         } catch (IOException | ClassNotFoundException | NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void Hybridset(HYBRIDsettings hybrid, AESsettings aes, RSAsettings rsa) {
+        module[5] = hybrid.isKeyinfile();
+        module[6] = hybrid.isStorkeyInFile();
+        hybridmodule[0] = aes.getIv();
+/*
+        if (!((boolean) module[5])) {
+            hybridmodule[1] =;
+        } else
+            hybridmodule[1] =;
+
+        hybridmodule[2] =;
+        hybridmodule[3] =;
+        hybridmodule[4] =;
+        module[7] = hybridmodule;
+*/
     }
 
     public void setLooger(FileWriter looger) {
