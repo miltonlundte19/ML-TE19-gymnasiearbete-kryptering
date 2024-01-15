@@ -46,6 +46,22 @@ public class Crypteringsmodule {
             7 = in put File
             8 = ou put File
     ----------------------------------------------------------
+    -------- hybrid -----------------------------------------
+    (2 = File)
+        5 = is the aes key in the file
+        6 = if the rsa key vile bi stord in the file
+        7 = aes and rsa settings
+    (-------- aes and res settings --------------
+    0 = iv
+    1 = aes key (if its not in the file)
+    2 = in put File
+    3 = ou put File
+    4 = ras keyholder
+    ---------------------------------------------)
+    ----------------------------------------------------------
+
+
+
      */
     private final String[] filestrings = new String[2];
 
