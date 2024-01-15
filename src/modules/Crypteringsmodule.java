@@ -202,6 +202,8 @@ public class Crypteringsmodule {
             } else {
                 RSAf();
             }
+        } else if (module[0].equals(2)) {
+            HYBRID();
         }
     }
 
@@ -363,5 +365,17 @@ public class Crypteringsmodule {
         if (manulesnapshotAlurt)
             JOptionPane.showMessageDialog(null, "Krypteringen slutade, ta snap");
         System.exit(0);
+    }
+
+    private void HYBRID() {
+        short nMAX = (short) module[4];
+        if (nMAX < 1) {
+            System.err.println("Error: nMAX är mindre än 1: " + nMAX);
+            try {
+                looger.write("\nError: ingen kryptering händer nMAX är mindre än 1\n" + nMAX + '\n');
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
