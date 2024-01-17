@@ -63,7 +63,7 @@ public class Crypteringsmodule {
 
 
      */
-    private final String[] filestrings = new String[2];
+    private final String[] filestrings = new String[3];
 
     private final Object[] hybridmodule = new Object[5];
     private final boolean manulesnapshotAlurt;
@@ -378,6 +378,20 @@ public class Crypteringsmodule {
             looger.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+        boolean storchek = (boolean) module[3];
+        boolean f = true;
+        for (int n = 0; n < nMAX; n++) {
+            if (f) {
+                try {
+                    looger.write("Första krypteringen slutade:\n" + LocalTime.now() + "\n");
+                    looger.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                storchek = false;
+                f = false;
+            }
         }
     }
 }
