@@ -220,19 +220,16 @@ public class Crypteringsmodule {
             // Här krypteraren och får utt den krypterade strengen som sedan blir nedsriven.
 
             looger.write(out + '\n');
-            if (manulesnapshotAlurt) {
-                looger.write("keypteringen slutate \n" + System.nanoTime());
-            }
+            looger.write("keypteringen slutate \n" + System.nanoTime());
             looger.flush();
             looger.close();
-            if (manulesnapshotAlurt) {
-                JOptionPane.showMessageDialog(null, "keypteringen slutate, ta snap");
-                // Är här för att seja till att programet är färdigt och att ta en sapshot i programet som används
-                // för att mäta programet (visa gör det inte automatiskt)
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        if (manulesnapshotAlurt)
+            JOptionPane.showMessageDialog(null, "Krypteringen slutade, ta snap");
+            // Är här för att seja till att programet är färdigt och att ta en sapshot i programet som används
+            // för att mäta programet (visa gör det inte automatiskt)
         System.exit(0);
     }
     private void AESf() {
@@ -253,9 +250,6 @@ public class Crypteringsmodule {
                 looger.write("krypteringen kördes: " + nMAX + " gånger\n");
             }
             looger.flush();
-            if (!manulesnapshotAlurt) {
-                looger.close();
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -265,12 +259,10 @@ public class Crypteringsmodule {
             Cryptaes.Filebufercry((boolean) module[2], storchek, (IvParameterSpec) module[5], (SecretKey) module[6], (File) module[7], (File) module[8]);
             System.out.print(n + ',');
             if (f) {
-                if (manulesnapshotAlurt && (nMAX == 1)) {
-                    try {
-                        looger.write("Första krypteringen slutade:\n" + LocalTime.now() + "\n");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                try {
+                    looger.write("Första krypteringen slutade:\n" + LocalTime.now() + "\n");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
                 storchek = false;
                 f = false;
@@ -298,14 +290,14 @@ public class Crypteringsmodule {
             out = Cryptrsa.Stringcry((boolean) module[2], (RsaKeyholder) module[6], (String) module[7]);
 
             looger.write(out + '\n');
-            if (manulesnapshotAlurt) {
-                looger.write("keypteringen slutate \n" + System.nanoTime());
-            }
+            looger.write("keypteringen slutate \n" + System.nanoTime());
             looger.flush();
             looger.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        if (manulesnapshotAlurt)
+            JOptionPane.showMessageDialog(null, "Krypteringen slutade, ta snap");
         System.exit(0);
     }
     private void RSAf() {
@@ -325,10 +317,6 @@ public class Crypteringsmodule {
             if (nMAX > 1) {
                 looger.write("krypteringen kördes: " + nMAX + " gånger\n");
             }
-            looger.flush();
-            if (!manulesnapshotAlurt) {
-                looger.close();
-            }
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(-1);
@@ -343,13 +331,12 @@ public class Crypteringsmodule {
                 i = 0;
             }
             if (f) {
-                if (manulesnapshotAlurt && (nMAX == 1)) {
-                    try {
-                        looger.write("Första krypteringen slutade:\n" + LocalTime.now() + "\n");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                try {
+                    looger.write("Första krypteringen slutade:\n" + LocalTime.now() + "\n");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
+
                 storchek = false;
                 f = false;
             }
