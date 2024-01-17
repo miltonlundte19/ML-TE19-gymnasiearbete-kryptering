@@ -49,7 +49,7 @@ public class Crypteringsmodule {
     -------- hybrid -----------------------------------------
     (2 = File)
         5 = is the aes key in the file
-        6 = if the rsa key vile bi stord in the file
+        6 = if the rsa key vile bi stored in the file
         7 = aes and rsa settings
     (-------- aes and res settings --------------
     0 = iv
