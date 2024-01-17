@@ -393,5 +393,8 @@ public class Crypteringsmodule {
                 f = false;
             }
         }
+        if (manulesnapshotAlurt)
+            JOptionPane.showMessageDialog(null, "Krypteringen slutade, ta snap");
+        System.exit(0);
     }
 }
