@@ -364,5 +364,20 @@ public class Crypteringsmodule {
                 throw new RuntimeException(e);
             }
         }
+        try {
+            looger.write("Hybrid krypteringen startade: " + LocalTime.now()
+                        + "\nFiledn som ska krypteras är: " + filestrings[0]
+                        + "\nDen krypterade filen är: " + filestrings[1] + '\n'
+                        );
+            if(!(boolean) module[5]) {
+                looger.write("aes nyckeln fins här: " + filestrings[2] + '\n');
+            } else
+                looger.write("aes nyckeln  fins redan i filen\n");
+            if (nMAX > 1)
+                looger.write("krypteringen kördes " + nMAX + "gånger");
+            looger.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
